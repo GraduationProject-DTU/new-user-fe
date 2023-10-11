@@ -1,4 +1,41 @@
+import axios from "axios"
+import { Link } from "react-router-dom"
+import { useEffect, useState } from "react"
+import Category from "./Category"
 function Blog(){
+  const [getItem, setItem] = useState("")
+        useEffect(() => {
+            axios.get("http://localhost:8000/blogs/")
+                .then(response => {
+                    setItem(response.data.blog)
+                })
+                .catch(function (error) {
+                    console.log(error)
+                })
+        }, [])
+        function fetchData(){
+            if(getItem.length>0){
+              return getItem.map((value,key)=>{
+                return(
+                  <div className="col-sm-6 col-lg-4 col-xl-6 mb-8">
+                  <div className="post-item">
+                    <a href="blog-details.html" className="thumb">
+                      <img src={""+ value.image} width={370} height={320} alt="Image-HasTech" />
+                    </a>
+                    <div className="content">
+                      <a className="post-category" href="blog.html">beauty</a>
+                      <h4 className="title"><a href="blog-details.html">{value.title}</a></h4>
+                      <ul className="meta">
+                        <li className="author-info"><span>By:</span> <a href="blog.html">{value.author}</a></li>
+                        <li className="post-date">{value.updatedAt}</li>
+                      </ul>
+                    </div>
+                  </div>
+                  </div>
+                )
+              })
+            }
+        }
     return(
         <>
         {/*== Start Page Header Area Wrapper ==*/}
@@ -16,126 +53,7 @@ function Blog(){
             <div className="row justify-content-between flex-xl-row-reverse">
               <div className="col-xl-8">
                 <div className="row">
-                  <div className="col-sm-6 col-lg-4 col-xl-6 mb-8">
-                    {/*== Start Blog Item ==*/}
-                    <div className="post-item">
-                      <a href="blog-details.html" className="thumb">
-                        <img src="assets/images/blog/1.webp" width={370} height={320} alt="Image-HasTech" />
-                      </a>
-                      <div className="content">
-                        <a className="post-category" href="blog.html">beauty</a>
-                        <h4 className="title"><a href="blog-details.html">Lorem ipsum dolor sit amet consectetur adipiscing.</a></h4>
-                        <ul className="meta">
-                          <li className="author-info"><span>By:</span> <a href="blog.html">Tomas De Momen</a></li>
-                          <li className="post-date">February 13, 2021</li>
-                        </ul>
-                      </div>
-                    </div>
-                    {/*== End Blog Item ==*/}
-                  </div>
-                  <div className="col-sm-6 col-lg-4 col-xl-6 mb-8">
-                    {/*== Start Blog Item ==*/}
-                    <div className="post-item">
-                      <a href="blog-details.html" className="thumb">
-                        <img src="assets/images/blog/2.webp" width={370} height={320} alt="Image-HasTech" />
-                      </a>
-                      <div className="content">
-                        <a className="post-category post-category-two" data-bg-color="#A49CFF" href="blog.html">beauty</a>
-                        <h4 className="title"><a href="blog-details.html">Lorem ipsum dolor sit amet consectetur adipiscing.</a></h4>
-                        <ul className="meta">
-                          <li className="author-info"><span>By:</span> <a href="blog.html">Tomas De Momen</a></li>
-                          <li className="post-date">February 13, 2021</li>
-                        </ul>
-                      </div>
-                    </div>
-                    {/*== End Blog Item ==*/}
-                  </div>
-                  <div className="col-sm-6 col-lg-4 col-xl-6 mb-8">
-                    {/*== Start Blog Item ==*/}
-                    <div className="post-item">
-                      <a href="blog-details.html" className="thumb">
-                        <img src="assets/images/blog/3.webp" width={370} height={320} alt="Image-HasTech" />
-                      </a>
-                      <div className="content">
-                        <a className="post-category post-category-three" data-bg-color="#9CDBFF" href="blog.html">beauty</a>
-                        <h4 className="title"><a href="blog-details.html">Lorem ipsum dolor sit amet consectetur adipiscing.</a></h4>
-                        <ul className="meta">
-                          <li className="author-info"><span>By:</span> <a href="blog.html">Tomas De Momen</a></li>
-                          <li className="post-date">February 13, 2021</li>
-                        </ul>
-                      </div>
-                    </div>
-                    {/*== End Blog Item ==*/}
-                  </div>
-                  <div className="col-sm-6 col-lg-4 col-xl-6 mb-8">
-                    {/*== Start Blog Item ==*/}
-                    <div className="post-item">
-                      <a href="blog-details.html" className="thumb">
-                        <img src="assets/images/blog/5.webp" width={370} height={320} alt="Image-HasTech" />
-                      </a>
-                      <div className="content">
-                        <a className="post-category" href="blog.html">beauty</a>
-                        <h4 className="title"><a href="blog-details.html">Lorem ipsum dolor sit amet consectetur adipiscing.</a></h4>
-                        <ul className="meta">
-                          <li className="author-info"><span>By:</span> <a href="blog.html">Tomas De Momen</a></li>
-                          <li className="post-date">February 13, 2021</li>
-                        </ul>
-                      </div>
-                    </div>
-                    {/*== End Blog Item ==*/}
-                  </div>
-                  <div className="col-sm-6 col-lg-4 col-xl-6 mb-8">
-                    {/*== Start Blog Item ==*/}
-                    <div className="post-item">
-                      <a href="blog-details.html" className="thumb">
-                        <img src="assets/images/blog/6.webp" width={370} height={320} alt="Image-HasTech" />
-                      </a>
-                      <div className="content">
-                        <a className="post-category post-category-two" data-bg-color="#A49CFF" href="blog.html">beauty</a>
-                        <h4 className="title"><a href="blog-details.html">Lorem ipsum dolor sit amet consectetur adipiscing.</a></h4>
-                        <ul className="meta">
-                          <li className="author-info"><span>By:</span> <a href="blog.html">Tomas De Momen</a></li>
-                          <li className="post-date">February 13, 2021</li>
-                        </ul>
-                      </div>
-                    </div>
-                    {/*== End Blog Item ==*/}
-                  </div>
-                  <div className="col-sm-6 col-lg-4 col-xl-6 mb-8">
-                    {/*== Start Blog Item ==*/}
-                    <div className="post-item">
-                      <a href="blog-details.html" className="thumb">
-                        <img src="assets/images/blog/7.webp" width={370} height={320} alt="Image-HasTech" />
-                      </a>
-                      <div className="content">
-                        <a className="post-category post-category-three" data-bg-color="#9CDBFF" href="blog.html">beauty</a>
-                        <h4 className="title"><a href="blog-details.html">Lorem ipsum dolor sit amet consectetur adipiscing.</a></h4>
-                        <ul className="meta">
-                          <li className="author-info"><span>By:</span> <a href="blog.html">Tomas De Momen</a></li>
-                          <li className="post-date">February 13, 2021</li>
-                        </ul>
-                      </div>
-                    </div>
-                    {/*== End Blog Item ==*/}
-                  </div>
-                  <div className="col-12">
-                    <ul className="pagination justify-content-center me-auto ms-auto mt-7 mb-8 mb-xl-0">
-                      <li className="page-item">
-                        <a className="page-link previous" href="product.html" aria-label="Previous">
-                          <span className="fa fa-chevron-left" aria-hidden="true" />
-                        </a>
-                      </li>
-                      <li className="page-item"><a className="page-link" href="product.html">01</a></li>
-                      <li className="page-item"><a className="page-link" href="product.html">02</a></li>
-                      <li className="page-item"><a className="page-link" href="product.html">03</a></li>
-                      <li className="page-item"><a className="page-link" href="product.html">....</a></li>
-                      <li className="page-item">
-                        <a className="page-link next" href="product.html" aria-label="Next">
-                          <span className="fa fa-chevron-right" aria-hidden="true" />
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
+                      {fetchData()}
                 </div>
               </div>
               <div className="col-xl-4">
@@ -146,16 +64,7 @@ function Blog(){
                       <button type="submit"><i className="fa fa-search" /></button>
                     </form>
                   </div>
-                  <div className="blog-widget">
-                    <h4 className="blog-widget-title">Popular Categoris</h4>
-                    <ul className="blog-widget-category">
-                      <li><a href="blog.html">Accesasories <span>(6)</span></a></li>
-                      <li><a href="blog.html">Computer <span>(4)</span></a></li>
-                      <li><a href="blog.html">Covid-19 <span>(2)</span></a></li>
-                      <li><a href="blog.html">Electronics <span>(12)</span></a></li>
-                      <li><a href="blog.html">Furniture <span>(9)</span></a></li>
-                    </ul>
-                  </div>
+                    {Category()}
                   <div className="blog-widget">
                     <h4 className="blog-widget-title">Recent Posts</h4>
                     <div className="blog-widget-post">
