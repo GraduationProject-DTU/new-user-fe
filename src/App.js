@@ -5,7 +5,6 @@ import Footer from './Components/Footer/Footer';
 import About from './Components/Contents/About';
 import Homepage from './Components/Contents/Homepage';
 import Scroll from './Components/Scroll/Scroll';
-
 function App(props) {
   return (
     <div>

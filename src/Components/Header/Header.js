@@ -5,7 +5,7 @@ function Header(){
           <div className="row align-items-center">
             <div className="col-5 col-sm-6 col-lg-3">
               <div className="header-logo">
-                <a href="index.html">
+                <a href="/">
                   <img className="logo-main" src="assets/images/logo.webp" width={95} height={68} alt="Logo" />
                 </a>
               </div>
@@ -13,14 +13,14 @@ function Header(){
             <div className="col-lg-6 d-none d-lg-block">
               <div className="header-navigation">
                 <ul className="main-nav justify-content-start">
-                  <li className="has-submenu"><a href="index.html">home</a>
+                  <li className="has-submenu"><a href="/">home</a>
                     <ul className="submenu-nav">
                       <li><a href="index.html">Home One</a></li>
                       <li><a href="index-two.html">Home Two</a></li>
                     </ul>
                   </li>
-                  <li><a href="about-us.html">about</a></li>
-                  <li className="has-submenu position-static"><a href="product.html">shop</a>
+                  <li><a href="about">about</a></li>
+                  <li className="has-submenu position-static"><a href="product">shop</a>
                     <ul className="submenu-nav-mega">
                       <li><a href="#/" className="mega-title">Shop Layout</a>
                         <ul>
@@ -48,7 +48,7 @@ function Header(){
                       </li>
                     </ul>
                   </li>
-                  <li className="has-submenu"><a href="blog.html">Blog</a>
+                  <li className="has-submenu"><a href="blog">Blog</a>
                     <ul className="submenu-nav">
                       <li className="has-submenu"><a href="#/">Blog Layout</a>
                         <ul className="submenu-nav">

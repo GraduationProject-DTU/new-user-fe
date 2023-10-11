@@ -1,8 +1,8 @@
 function About(){
     return(
         <>
-                {/*== Start Page Header Area Wrapper ==*/}
-                <section className="page-header-area">
+        {/*== Start Page Header Area Wrapper ==*/}
+          <section className="page-header-area">
           <div className="container">
             <div className="row align-items-center">
               <div className="col-md-7 col-lg-7 col-xl-5">

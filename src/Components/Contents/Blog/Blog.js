@@ -10,325 +10,191 @@ function Blog(){
             </ol>
           </div>
         </nav>
-        <section className="page-header-area page-header-style2-area" data-bg-img="assets/images/photos/page-header1.webp">
-          <div className="container">
-            <div className="row align-items-center">
-              <div className="col-md-7">
-                <div className="page-header-content page-header-st2-content">
-                  <div className="title-img"><img src="assets/images/photos/page-header-text1.webp" alt="Image" /></div>
-                  <h2 className="page-header-title">Whats the beauty secrets?</h2>
-                  <p className="page-header-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus venenatis.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-        {/*== End Page Header Area Wrapper ==*/}
         {/*== Start Blog Area Wrapper ==*/}
-        <section className="section-space pb-0">
+        <section className="section-space pt-0">
           <div className="container">
-            <div className="row">
-              <div className="col-12">
-                <div className="section-title text-center">
-                  <h2 className="title">New Posts</h2>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus venenatis</p>
-                </div>
-              </div>
-            </div>
-            <div className="row mb-n9">
-              <div className="col-sm-6 col-lg-4 mb-8">
-                {/*== Start Blog Item ==*/}
-                <div className="post-item">
-                  <a href="blog-details.html" className="thumb">
-                    <img src="assets/images/blog/1.webp" width={370} height={320} alt="Image-HasTech" />
-                  </a>
-                  <div className="content">
-                    <a className="post-category" href="blog.html">beauty</a>
-                    <h4 className="title"><a href="blog-details.html">Lorem ipsum dolor sit amet consectetur adipiscing.</a></h4>
-                    <ul className="meta">
-                      <li className="author-info"><span>By:</span> <a href="blog.html">Tomas De Momen</a></li>
-                      <li className="post-date">February 13, 2022</li>
-                    </ul>
-                  </div>
-                </div>
-                {/*== End Blog Item ==*/}
-              </div>
-              <div className="col-sm-6 col-lg-4 mb-8">
-                {/*== Start Blog Item ==*/}
-                <div className="post-item">
-                  <a href="blog-details.html" className="thumb">
-                    <img src="assets/images/blog/4.webp" width={370} height={320} alt="Image-HasTech" />
-                  </a>
-                  <div className="content">
-                    <a className="post-category post-category-two" data-bg-color="#A49CFF" href="blog.html">beauty</a>
-                    <h4 className="title"><a href="blog-details.html">Benefit of Hot Ston Spa for your health &amp; life.</a></h4>
-                    <ul className="meta">
-                      <li className="author-info"><span>By:</span> <a href="blog.html">Tomas De Momen</a></li>
-                      <li className="post-date">February 13, 2022</li>
-                    </ul>
-                  </div>
-                </div>
-                {/*== End Blog Item ==*/}
-              </div>
-              <div className="col-sm-12 col-lg-4 mb-8">
-                <div className="row mb-n10">
-                  <div className="col-md-6  col-lg-12 mb-10">
+            <div className="row justify-content-between flex-xl-row-reverse">
+              <div className="col-xl-8">
+                <div className="row">
+                  <div className="col-sm-6 col-lg-4 col-xl-6 mb-8">
                     {/*== Start Blog Item ==*/}
                     <div className="post-item">
+                      <a href="blog-details.html" className="thumb">
+                        <img src="assets/images/blog/1.webp" width={370} height={320} alt="Image-HasTech" />
+                      </a>
                       <div className="content">
-                        <h4 className="title mt-0"><a href="blog-details.html">Lorem ipsum dolor sit amet, consectetur adipiscing</a></h4>
-                        <p className="desc">Lorem ipsum dolor sit amet, conseur adipiscing elit ut aliqua, purus sit amet luctus venenatis.</p>
-                        <a className="btn-link" href="blog.html">Learn more</a>
+                        <a className="post-category" href="blog.html">beauty</a>
+                        <h4 className="title"><a href="blog-details.html">Lorem ipsum dolor sit amet consectetur adipiscing.</a></h4>
+                        <ul className="meta">
+                          <li className="author-info"><span>By:</span> <a href="blog.html">Tomas De Momen</a></li>
+                          <li className="post-date">February 13, 2021</li>
+                        </ul>
                       </div>
                     </div>
                     {/*== End Blog Item ==*/}
                   </div>
-                  <div className="col-md-6  col-lg-12 mb-10 pt-0 pt-lg-4">
+                  <div className="col-sm-6 col-lg-4 col-xl-6 mb-8">
                     {/*== Start Blog Item ==*/}
                     <div className="post-item">
+                      <a href="blog-details.html" className="thumb">
+                        <img src="assets/images/blog/2.webp" width={370} height={320} alt="Image-HasTech" />
+                      </a>
                       <div className="content">
-                        <h4 className="title mt-0"><a href="blog-details.html">Facial Scrub is natural treatment for face.</a></h4>
-                        <p className="desc">Lorem ipsum dolor sit amet, conseur adipiscing elit ut aliqua, purus.</p>
-                        <a className="btn-link" href="blog.html">Learn more</a>
+                        <a className="post-category post-category-two" data-bg-color="#A49CFF" href="blog.html">beauty</a>
+                        <h4 className="title"><a href="blog-details.html">Lorem ipsum dolor sit amet consectetur adipiscing.</a></h4>
+                        <ul className="meta">
+                          <li className="author-info"><span>By:</span> <a href="blog.html">Tomas De Momen</a></li>
+                          <li className="post-date">February 13, 2021</li>
+                        </ul>
                       </div>
                     </div>
                     {/*== End Blog Item ==*/}
                   </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-        {/*== End Blog Area Wrapper ==*/}
-        {/*== Start Blog Area Wrapper ==*/}
-        <section className="section-space">
-          <div className="container">
-            <div className="row mb-n9">
-              <div className="col-sm-6 mb-8">
-                {/*== Start Blog Item ==*/}
-                <div className="post-item">
-                  <a href="blog-details.html" className="thumb">
-                    <img src="assets/images/blog/col6-1.webp" width={570} height={340} alt="Image-HasTech" />
-                  </a>
-                  <div className="content">
-                    <h4 className="title"><a href="blog-details.html">Facial Scrub is natural treatment for face.</a></h4>
-                    <p className="desc">Lorem ipsum dolor sit amet, conseur adipiscing elit ut aliqua, purus sit amet luctus venenatis.</p>
-                    <ul className="meta">
-                      <li className="author-info"><span>By:</span> <a href="blog.html">Tomas De Momen</a></li>
-                      <li className="post-date">February 13, 2022</li>
+                  <div className="col-sm-6 col-lg-4 col-xl-6 mb-8">
+                    {/*== Start Blog Item ==*/}
+                    <div className="post-item">
+                      <a href="blog-details.html" className="thumb">
+                        <img src="assets/images/blog/3.webp" width={370} height={320} alt="Image-HasTech" />
+                      </a>
+                      <div className="content">
+                        <a className="post-category post-category-three" data-bg-color="#9CDBFF" href="blog.html">beauty</a>
+                        <h4 className="title"><a href="blog-details.html">Lorem ipsum dolor sit amet consectetur adipiscing.</a></h4>
+                        <ul className="meta">
+                          <li className="author-info"><span>By:</span> <a href="blog.html">Tomas De Momen</a></li>
+                          <li className="post-date">February 13, 2021</li>
+                        </ul>
+                      </div>
+                    </div>
+                    {/*== End Blog Item ==*/}
+                  </div>
+                  <div className="col-sm-6 col-lg-4 col-xl-6 mb-8">
+                    {/*== Start Blog Item ==*/}
+                    <div className="post-item">
+                      <a href="blog-details.html" className="thumb">
+                        <img src="assets/images/blog/5.webp" width={370} height={320} alt="Image-HasTech" />
+                      </a>
+                      <div className="content">
+                        <a className="post-category" href="blog.html">beauty</a>
+                        <h4 className="title"><a href="blog-details.html">Lorem ipsum dolor sit amet consectetur adipiscing.</a></h4>
+                        <ul className="meta">
+                          <li className="author-info"><span>By:</span> <a href="blog.html">Tomas De Momen</a></li>
+                          <li className="post-date">February 13, 2021</li>
+                        </ul>
+                      </div>
+                    </div>
+                    {/*== End Blog Item ==*/}
+                  </div>
+                  <div className="col-sm-6 col-lg-4 col-xl-6 mb-8">
+                    {/*== Start Blog Item ==*/}
+                    <div className="post-item">
+                      <a href="blog-details.html" className="thumb">
+                        <img src="assets/images/blog/6.webp" width={370} height={320} alt="Image-HasTech" />
+                      </a>
+                      <div className="content">
+                        <a className="post-category post-category-two" data-bg-color="#A49CFF" href="blog.html">beauty</a>
+                        <h4 className="title"><a href="blog-details.html">Lorem ipsum dolor sit amet consectetur adipiscing.</a></h4>
+                        <ul className="meta">
+                          <li className="author-info"><span>By:</span> <a href="blog.html">Tomas De Momen</a></li>
+                          <li className="post-date">February 13, 2021</li>
+                        </ul>
+                      </div>
+                    </div>
+                    {/*== End Blog Item ==*/}
+                  </div>
+                  <div className="col-sm-6 col-lg-4 col-xl-6 mb-8">
+                    {/*== Start Blog Item ==*/}
+                    <div className="post-item">
+                      <a href="blog-details.html" className="thumb">
+                        <img src="assets/images/blog/7.webp" width={370} height={320} alt="Image-HasTech" />
+                      </a>
+                      <div className="content">
+                        <a className="post-category post-category-three" data-bg-color="#9CDBFF" href="blog.html">beauty</a>
+                        <h4 className="title"><a href="blog-details.html">Lorem ipsum dolor sit amet consectetur adipiscing.</a></h4>
+                        <ul className="meta">
+                          <li className="author-info"><span>By:</span> <a href="blog.html">Tomas De Momen</a></li>
+                          <li className="post-date">February 13, 2021</li>
+                        </ul>
+                      </div>
+                    </div>
+                    {/*== End Blog Item ==*/}
+                  </div>
+                  <div className="col-12">
+                    <ul className="pagination justify-content-center me-auto ms-auto mt-7 mb-8 mb-xl-0">
+                      <li className="page-item">
+                        <a className="page-link previous" href="product.html" aria-label="Previous">
+                          <span className="fa fa-chevron-left" aria-hidden="true" />
+                        </a>
+                      </li>
+                      <li className="page-item"><a className="page-link" href="product.html">01</a></li>
+                      <li className="page-item"><a className="page-link" href="product.html">02</a></li>
+                      <li className="page-item"><a className="page-link" href="product.html">03</a></li>
+                      <li className="page-item"><a className="page-link" href="product.html">....</a></li>
+                      <li className="page-item">
+                        <a className="page-link next" href="product.html" aria-label="Next">
+                          <span className="fa fa-chevron-right" aria-hidden="true" />
+                        </a>
+                      </li>
                     </ul>
                   </div>
                 </div>
-                {/*== End Blog Item ==*/}
               </div>
-              <div className="col-sm-6 mb-8">
-                {/*== Start Blog Item ==*/}
-                <div className="post-item">
-                  <a href="blog-details.html" className="thumb">
-                    <img src="assets/images/blog/col6-2.webp" width={570} height={340} alt="Image-HasTech" />
-                  </a>
-                  <div className="content">
-                    <h4 className="title"><a href="blog-details.html">Benefit of Hot Ston Spa for your health</a></h4>
-                    <p className="desc">Lorem ipsum dolor sit amet, conseur adipiscing elit ut aliqua, purus sit amet luctus venenatis.</p>
-                    <ul className="meta">
-                      <li className="author-info"><span>By:</span> <a href="blog.html">Tomas De Momen</a></li>
-                      <li className="post-date">February 13, 2022</li>
+              <div className="col-xl-4">
+                <div className="blog-sidebar-widget">
+                  <div className="blog-search-widget">
+                    <form action="#">
+                      <input type="search" placeholder="Search Here" />
+                      <button type="submit"><i className="fa fa-search" /></button>
+                    </form>
+                  </div>
+                  <div className="blog-widget">
+                    <h4 className="blog-widget-title">Popular Categoris</h4>
+                    <ul className="blog-widget-category">
+                      <li><a href="blog.html">Accesasories <span>(6)</span></a></li>
+                      <li><a href="blog.html">Computer <span>(4)</span></a></li>
+                      <li><a href="blog.html">Covid-19 <span>(2)</span></a></li>
+                      <li><a href="blog.html">Electronics <span>(12)</span></a></li>
+                      <li><a href="blog.html">Furniture <span>(9)</span></a></li>
+                    </ul>
+                  </div>
+                  <div className="blog-widget">
+                    <h4 className="blog-widget-title">Recent Posts</h4>
+                    <div className="blog-widget-post">
+                      <div className="blog-widget-single-post">
+                        <a href="blog-details.html">
+                          <img src="assets/images/blog/s1.webp" width={75} height={78} alt="Images" />
+                          <span className="title">Lorem ipsum dolor sit amet conse adipis.</span>
+                        </a>
+                        <span className="date">Sep 24,2022</span>
+                      </div>
+                      <div className="blog-widget-single-post">
+                        <a href="blog-details.html">
+                          <img src="assets/images/blog/s2.webp" width={75} height={78} alt="Images" />
+                          <span className="title">Lorem ipsum dolor sit amet conse adipis.</span>
+                        </a>
+                        <span className="date">Sep 25,2022</span>
+                      </div>
+                      <div className="blog-widget-single-post">
+                        <a href="blog-details.html">
+                          <img src="assets/images/blog/s3.webp" width={75} height={78} alt="Images" />
+                          <span className="title">Lorem ipsum dolor sit amet conse adipis.</span>
+                        </a>
+                        <span className="date">Sep 26,2022</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="blog-widget mb-0">
+                    <h4 className="blog-widget-title">Popular Tags</h4>
+                    <ul className="blog-widget-tags">
+                      <li><a href="blog.html">Beauty</a></li>
+                      <li><a href="blog.html">MakeupArtist</a></li>
+                      <li><a href="blog.html">Makeup</a></li>
+                      <li><a href="blog.html">Hair</a></li>
+                      <li><a href="blog.html">Nails</a></li>
+                      <li><a href="blog.html">Hairstyle</a></li>
+                      <li><a href="blog.html">Skincare</a></li>
                     </ul>
                   </div>
                 </div>
-                {/*== End Blog Item ==*/}
-              </div>
-            </div>
-          </div>
-        </section>
-        {/*== End Blog Area Wrapper ==*/}
-        {/*== Start Blog Area Wrapper ==*/}
-        <section className="section-space pt-0">
-          <div className="container">
-            <div className="row">
-              <div className="col-12">
-                <div className="section-title text-center">
-                  <h2 className="title">Others Posts</h2>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus venenatis</p>
-                </div>
-              </div>
-            </div>
-            <div className="row mb-n9">
-              <div className="col-sm-6 col-lg-4 mb-8">
-                {/*== Start Blog Item ==*/}
-                <div className="post-item">
-                  <a href="blog-details.html" className="thumb">
-                    <img src="assets/images/blog/1.webp" width={370} height={320} alt="Image-HasTech" />
-                  </a>
-                  <div className="content">
-                    <a className="post-category" href="blog.html">beauty</a>
-                    <h4 className="title"><a href="blog-details.html">Lorem ipsum dolor sit amet consectetur adipiscing.</a></h4>
-                    <ul className="meta">
-                      <li className="author-info"><span>By:</span> <a href="blog.html">Tomas De Momen</a></li>
-                      <li className="post-date">February 13, 2022</li>
-                    </ul>
-                  </div>
-                </div>
-                {/*== End Blog Item ==*/}
-              </div>
-              <div className="col-sm-6 col-lg-4 mb-8">
-                {/*== Start Blog Item ==*/}
-                <div className="post-item">
-                  <a href="blog-details.html" className="thumb">
-                    <img src="assets/images/blog/2.webp" width={370} height={320} alt="Image-HasTech" />
-                  </a>
-                  <div className="content">
-                    <a className="post-category post-category-two" data-bg-color="#A49CFF" href="blog.html">beauty</a>
-                    <h4 className="title"><a href="blog-details.html">Lorem ipsum dolor sit amet consectetur adipiscing.</a></h4>
-                    <ul className="meta">
-                      <li className="author-info"><span>By:</span> <a href="blog.html">Tomas De Momen</a></li>
-                      <li className="post-date">February 13, 2022</li>
-                    </ul>
-                  </div>
-                </div>
-                {/*== End Blog Item ==*/}
-              </div>
-              <div className="col-sm-6 col-lg-4 mb-8">
-                {/*== Start Blog Item ==*/}
-                <div className="post-item">
-                  <a href="blog-details.html" className="thumb">
-                    <img src="assets/images/blog/3.webp" width={370} height={320} alt="Image-HasTech" />
-                  </a>
-                  <div className="content">
-                    <a className="post-category post-category-three" data-bg-color="#9CDBFF" href="blog.html">beauty</a>
-                    <h4 className="title"><a href="blog-details.html">Lorem ipsum dolor sit amet consectetur adipiscing.</a></h4>
-                    <ul className="meta">
-                      <li className="author-info"><span>By:</span> <a href="blog.html">Tomas De Momen</a></li>
-                      <li className="post-date">February 13, 2022</li>
-                    </ul>
-                  </div>
-                </div>
-                {/*== End Blog Item ==*/}
-              </div>
-              <div className="col-sm-6 col-lg-4 mb-8">
-                {/*== Start Blog Item ==*/}
-                <div className="post-item">
-                  <a href="blog-details.html" className="thumb">
-                    <img src="assets/images/blog/5.webp" width={370} height={320} alt="Image-HasTech" />
-                  </a>
-                  <div className="content">
-                    <a className="post-category" href="blog.html">beauty</a>
-                    <h4 className="title"><a href="blog-details.html">Lorem ipsum dolor sit amet consectetur adipiscing.</a></h4>
-                    <ul className="meta">
-                      <li className="author-info"><span>By:</span> <a href="blog.html">Tomas De Momen</a></li>
-                      <li className="post-date">February 13, 2022</li>
-                    </ul>
-                  </div>
-                </div>
-                {/*== End Blog Item ==*/}
-              </div>
-              <div className="col-sm-6 col-lg-4 mb-8">
-                {/*== Start Blog Item ==*/}
-                <div className="post-item">
-                  <a href="blog-details.html" className="thumb">
-                    <img src="assets/images/blog/6.webp" width={370} height={320} alt="Image-HasTech" />
-                  </a>
-                  <div className="content">
-                    <a className="post-category post-category-two" data-bg-color="#A49CFF" href="blog.html">beauty</a>
-                    <h4 className="title"><a href="blog-details.html">Lorem ipsum dolor sit amet consectetur adipiscing.</a></h4>
-                    <ul className="meta">
-                      <li className="author-info"><span>By:</span> <a href="blog.html">Tomas De Momen</a></li>
-                      <li className="post-date">February 13, 2022</li>
-                    </ul>
-                  </div>
-                </div>
-                {/*== End Blog Item ==*/}
-              </div>
-              <div className="col-sm-6 col-lg-4 mb-8">
-                {/*== Start Blog Item ==*/}
-                <div className="post-item">
-                  <a href="blog-details.html" className="thumb">
-                    <img src="assets/images/blog/7.webp" width={370} height={320} alt="Image-HasTech" />
-                  </a>
-                  <div className="content">
-                    <a className="post-category post-category-three" data-bg-color="#9CDBFF" href="blog.html">beauty</a>
-                    <h4 className="title"><a href="blog-details.html">Lorem ipsum dolor sit amet consectetur adipiscing.</a></h4>
-                    <ul className="meta">
-                      <li className="author-info"><span>By:</span> <a href="blog.html">Tomas De Momen</a></li>
-                      <li className="post-date">February 13, 2022</li>
-                    </ul>
-                  </div>
-                </div>
-                {/*== End Blog Item ==*/}
-              </div>
-            </div>
-          </div>
-        </section>
-        {/*== End Blog Area Wrapper ==*/}
-        {/*== Start Product Banner Area Wrapper ==*/}
-        <section className="section-space pt-0">
-          <div className="container">
-            <div className="row justify-content-center">
-              <div className="col-sm-10 col-lg-8">
-                {/*== Start Product Category Item ==*/}
-                <a href="product.html" className="product-banner-item">
-                  <img src="assets/images/shop/banner/8.webp" width={770} height={250} alt="Image-HasTech" />
-                </a>
-                {/*== End Product Category Item ==*/}
-              </div>
-            </div>
-          </div>
-        </section>
-        {/*== End Product Banner Area Wrapper ==*/}
-        {/*== Start Blog Area Wrapper ==*/}
-        <section className="section-space pt-0">
-          <div className="container">
-            <div className="row mb-n9">
-              <div className="col-sm-6 col-lg-4 mb-8">
-                {/*== Start Blog Item ==*/}
-                <div className="post-item">
-                  <a href="blog-details.html" className="thumb">
-                    <img src="assets/images/blog/1.webp" width={370} height={320} alt="Image-HasTech" />
-                  </a>
-                  <div className="content">
-                    <a className="post-category" href="blog.html">beauty</a>
-                    <h4 className="title"><a href="blog-details.html">Lorem ipsum dolor sit amet consectetur adipiscing.</a></h4>
-                    <ul className="meta">
-                      <li className="author-info"><span>By:</span> <a href="blog.html">Tomas De Momen</a></li>
-                      <li className="post-date">February 13, 2022</li>
-                    </ul>
-                  </div>
-                </div>
-                {/*== End Blog Item ==*/}
-              </div>
-              <div className="col-sm-6 col-lg-4 mb-8">
-                {/*== Start Blog Item ==*/}
-                <div className="post-item">
-                  <a href="blog-details.html" className="thumb">
-                    <img src="assets/images/blog/2.webp" width={370} height={320} alt="Image-HasTech" />
-                  </a>
-                  <div className="content">
-                    <a className="post-category post-category-two" data-bg-color="#A49CFF" href="blog.html">beauty</a>
-                    <h4 className="title"><a href="blog-details.html">Lorem ipsum dolor sit amet consectetur adipiscing.</a></h4>
-                    <ul className="meta">
-                      <li className="author-info"><span>By:</span> <a href="blog.html">Tomas De Momen</a></li>
-                      <li className="post-date">February 13, 2022</li>
-                    </ul>
-                  </div>
-                </div>
-                {/*== End Blog Item ==*/}
-              </div>
-              <div className="col-sm-6 col-lg-4 mb-8">
-                {/*== Start Blog Item ==*/}
-                <div className="post-item">
-                  <a href="blog-details.html" className="thumb">
-                    <img src="assets/images/blog/3.webp" width={370} height={320} alt="Image-HasTech" />
-                  </a>
-                  <div className="content">
-                    <a className="post-category post-category-three" data-bg-color="#9CDBFF" href="blog.html">beauty</a>
-                    <h4 className="title"><a href="blog-details.html">Lorem ipsum dolor sit amet consectetur adipiscing.</a></h4>
-                    <ul className="meta">
-                      <li className="author-info"><span>By:</span> <a href="blog.html">Tomas De Momen</a></li>
-                      <li className="post-date">February 13, 2022</li>
-                    </ul>
-                  </div>
-                </div>
-                {/*== End Blog Item ==*/}
               </div>
             </div>
           </div>
