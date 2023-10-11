@@ -1,3 +1,6 @@
+import { useState } from "react"
+import axios from "axios"
+import Register from "./Register"
 function Account(){
     return(
         <>
@@ -51,25 +54,7 @@ function Account(){
               </div>
               <div className="col-lg-6 mb-8">
                 {/*== Start Register Area Wrapper ==*/}
-                <div className="my-account-item-wrap">
-                  <h3 className="title">Register</h3>
-                  <div className="my-account-form">
-                    <form action="#" method="post">
-                      <div className="form-group mb-6">
-                        <label htmlFor="register_username">Username or Email Address <sup>*</sup></label>
-                        <input type="email" id="register_username" />
-                      </div>
-                      <div className="form-group mb-6">
-                        <label htmlFor="register_pwsd">Password <sup>*</sup></label>
-                        <input type="password" id="register_pwsd" />
-                      </div>
-                      <div className="form-group">
-                        <p className="desc mb-4">Your personal data will be used to support your experience throughout this website, to manage access to your account, and for other purposes described in our privacy policy.</p>
-                        <a className="btn" href="my-account.html">Register</a>
-                      </div>
-                    </form>
-                  </div>
-                </div>
+                    {Register()}
                 {/*== End Register Area Wrapper ==*/}
               </div>
             </div>

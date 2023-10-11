@@ -138,32 +138,13 @@ function Scroll(){
             <button className="btn-aside-cart-close" data-bs-dismiss="offcanvas" aria-label="Close">Shopping Cart <i className="fa fa-chevron-right" /></button>
           </div>
           <div className="offcanvas-body">
-            <ul className="aside-cart-product-list">
-              <li className="aside-product-list-item">
-                <a href="#/" className="remove">×</a>
-                <a href="product-details.html">
-                  <img src="assets/images/shop/cart1.webp" width={68} height={84} alt="Image" />
-                  <span className="product-title">Leather Mens Slipper</span>
-                </a>
-                <span className="product-price">1 × £69.99</span>
-              </li>
-              <li className="aside-product-list-item">
-                <a href="#/" className="remove">×</a>
-                <a href="product-details.html">
-                  <img src="assets/images/shop/cart2.webp" width={68} height={84} alt="Image" />
-                  <span className="product-title">Quickiin Mens shoes</span>
-                </a>
-                <span className="product-price">1 × £20.00</span>
-              </li>
-            </ul>
-            <p className="cart-total"><span>Subtotal:</span><span className="amount">£89.99</span></p>
             <a className="btn-total" href="product-cart.html">View cart</a>
             <a className="btn-total" href="product-checkout.html">Checkout</a>
           </div>
         </aside>
         {/*== End Aside Cart ==*/}
         {/*== Start Aside Menu ==*/}
-        <aside className="off-canvas-wrapper offcanvas offcanvas-start" tabIndex={-1} id="AsideOffcanvasMenu" aria-labelledby="offcanvasExampleLabel">
+        {/* <aside className="off-canvas-wrapper offcanvas offcanvas-start" tabIndex={-1} id="AsideOffcanvasMenu" aria-labelledby="offcanvasExampleLabel">
           <div className="offcanvas-header">
             <h1 className="d-none" id="offcanvasExampleLabel">Aside Menu</h1>
             <button className="btn-menu-close" data-bs-dismiss="offcanvas" aria-label="Close">menu <i className="fa fa-chevron-left" /></button>
@@ -229,7 +210,7 @@ function Scroll(){
               </ul>
             </div>
           </div>
-        </aside>
+        </aside> */}
         {/*== End Aside Menu ==*/}</>
     )
 }

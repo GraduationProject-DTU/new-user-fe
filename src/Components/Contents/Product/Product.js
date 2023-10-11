@@ -8,7 +8,7 @@ function Product(){
               <div className="col-md-5">
                 <div className="page-header-st3-content text-center text-md-start">
                   <ol className="breadcrumb justify-content-center justify-content-md-start">
-                    <li className="breadcrumb-item"><a className="text-dark" href="index.html">Home</a></li>
+                    <li className="breadcrumb-item"><a className="text-dark" href="/">Home</a></li>
                     <li className="breadcrumb-item active text-dark" aria-current="page">Products</li>
                   </ol>
                   <h2 className="page-header-title">All Products</h2>

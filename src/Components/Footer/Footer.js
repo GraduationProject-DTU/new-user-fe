@@ -19,14 +19,14 @@ function Footer(){
               <div className="widget-item">
                 <h4 className="widget-title">Information</h4>
                 <ul className="widget-nav">
-                  <li><a href="blog.html">Blog</a></li>
-                  <li><a href="about-us.html">About us</a></li>
-                  <li><a href="contact.html">Contact</a></li>
-                  <li><a href="faq.html">Privacy</a></li>
-                  <li><a href="account-login.html">Login</a></li>
-                  <li><a href="product.html">Shop</a></li>
-                  <li><a href="my-account.html">My Account</a></li>
-                  <li><a href="faq.html">FAQs</a></li>
+                  <li><a href="blog">Blog</a></li>
+                  <li><a href="about">About us</a></li>
+                  <li><a href="contact">Contact</a></li>
+                  <li><a href="faq">Privacy</a></li>
+                  <li><a href="accountl">Login</a></li>
+                  <li><a href="product">Shop</a></li>
+                  <li><a href="myaccount">My Account</a></li>
+                  <li><a href="faq">FAQs</a></li>
                 </ul>
               </div>
             </div>

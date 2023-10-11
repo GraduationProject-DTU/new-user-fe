@@ -14,14 +14,14 @@ function Header() {
             <div className="header-navigation">
               <ul className="main-nav justify-content-start">
                 <li className="has-submenu"><a href="/">home</a>
-                  <ul className="submenu-nav">
+                  {/* <ul className="submenu-nav">
                     <li><a href="index.html">Home One</a></li>
                     <li><a href="index-two.html">Home Two</a></li>
-                  </ul>
+                  </ul> */}
                 </li>
                 <li><a href="about">about</a></li>
                 <li className="has-submenu position-static"><a href="product">shop</a>
-                  <ul className="submenu-nav-mega">
+                  {/* <ul className="submenu-nav-mega">
                     <li><a href="#/" className="mega-title">Shop Layout</a>
                       <ul>
                         <li><a href="product.html">Shop 3 Column</a></li>
@@ -46,10 +46,10 @@ function Header() {
                         <li><a href="product-compare.html">Compare</a></li>
                       </ul>
                     </li>
-                  </ul>
+                  </ul> */}
                 </li>
                 <li className="has-submenu"><a href="blog">Blog</a>
-                  <ul className="submenu-nav">
+                  {/* <ul className="submenu-nav">
                     <li className="has-submenu"><a href="#/">Blog Layout</a>
                       <ul className="submenu-nav">
                         <li><a href="blog.html">Blog Grid</a></li>
@@ -58,16 +58,16 @@ function Header() {
                       </ul>
                     </li>
                     <li><a href="blog-details.html">Blog Details</a></li>
-                  </ul>
+                  </ul> */}
                 </li>
-                <li className="has-submenu"><a href="account-login.html">Pages</a>
+                {/* <li className="has-submenu"><a href="account-login.html">Pages</a>
                   <ul className="submenu-nav">
                     <li><a href="account-login.html">My Account</a></li>
                     <li><a href="faq.html">Frequently Questions</a></li>
                     <li><a href="page-not-found.html">Page Not Found</a></li>
                   </ul>
-                </li>
-                <li><a href="contact.html">Contact</a></li>
+                </li> */}
+                <li><a href="contact">Contact</a></li>
               </ul>
             </div>
           </div>

@@ -5,7 +5,7 @@ function Blog(){
         <nav aria-label="breadcrumb" className="breadcrumb-style1 mb-10">
           <div className="container">
             <ol className="breadcrumb justify-content-center">
-              <li className="breadcrumb-item"><a href="index.html">Home</a></li>
+              <li className="breadcrumb-item"><a href="/">Home</a></li>
               <li className="breadcrumb-item active" aria-current="page">Blog</li>
             </ol>
           </div>
