@@ -16,7 +16,6 @@ function Category(){
         function fetchData(){
             if(getItem.length>0){
               return getItem.map((value,key)=>{
-                console.log(value)
                 return(
                     <li><a href="#">{value.title}<span>(6)</span></a></li>
                 )

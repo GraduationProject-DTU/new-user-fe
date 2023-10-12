@@ -1,6 +1,7 @@
 import { useState } from "react"
 import axios from "axios"
 import Register from "./Register"
+import Login from "./Login"
 function Account(){
     return(
         <>
@@ -29,26 +30,7 @@ function Account(){
                 {/*== Start Login Area Wrapper ==*/}
                 <div className="my-account-item-wrap">
                   <h3 className="title">Login</h3>
-                  <div className="my-account-form">
-                    <form action="#" method="post">
-                      <div className="form-group mb-6">
-                        <label htmlFor="login_username">Username or Email Address <sup>*</sup></label>
-                        <input type="email" id="login_username" />
-                      </div>
-                      <div className="form-group mb-6">
-                        <label htmlFor="login_pwsd">Password <sup>*</sup></label>
-                        <input type="password" id="login_pwsd" />
-                      </div>
-                      <div className="form-group d-flex align-items-center mb-14">
-                        <a className="btn" href="my-account.html">Login</a>
-                        <div className="form-check ms-3">
-                          <input type="checkbox" className="form-check-input" id="remember_pwsd" />
-                          <label className="form-check-label" htmlFor="remember_pwsd">Remember Me</label>
-                        </div>
-                      </div>
-                      <a className="lost-password" href="my-account.html">Lost your Password?</a>
-                    </form>
-                  </div>
+                    {Login()}
                 </div>
                 {/*== End Login Area Wrapper ==*/}
               </div>

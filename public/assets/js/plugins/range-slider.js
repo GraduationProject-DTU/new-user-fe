@@ -11,7 +11,7 @@ $(document).ready(function() {
     decimals: 0,
     thousand: ',',
     prefix: '$'
-  });
+  })
   noUiSlider.create(rangeSlider, {
     start: [450, 2500],
     step: 50,
