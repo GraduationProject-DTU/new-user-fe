@@ -31,7 +31,7 @@ root.render(
             <Route index path="/" element={<Homepage />} />
             <Route path="/about" element={<About />} />
             <Route path="/blog" element={<Blog />} />
-            <Route path="/blogdetails" element={<Blogdetails />} />
+            <Route path="/blog-details/:id" element={<Blogdetails />} />
             <Route path="/account" element={<Account />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/faq" element={<Faq />} />

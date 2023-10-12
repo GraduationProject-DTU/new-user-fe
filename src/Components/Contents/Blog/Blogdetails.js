@@ -1,33 +1,38 @@
-function Blogdetails(){
-    return(
-        <>
-        {/*== Start Page Header Area Wrapper ==*/}
-        <nav aria-label="breadcrumb" className="breadcrumb-style1">
-          <div className="container">
-            <ol className="breadcrumb justify-content-center">
-              <li className="breadcrumb-item"><a href="index.html">Home</a></li>
-              <li className="breadcrumb-item active" aria-current="page">Blog Detail</li>
-            </ol>
-          </div>
-        </nav>
-        {/*== End Page Header Area Wrapper ==*/}
-        {/*== Start Blog Detail Area Wrapper ==*/}
-        <section className="section-space pb-0">
-          <div className="container">
-            <div className="blog-detail">
-              <h3 className="blog-detail-title">Lorem ipsum dolor sit amet, ctetur adipiscing elit</h3>
+import axios from "axios"
+import { useEffect, useState } from "react"
+import { useParams } from "react-router-dom"
+import Comment from "./Comment"
+import './Comment.css'
+function Blogdetails(props){
+  const [getdata1, setdata1] = useState("")
+    let params = useParams()
+    useEffect(() => {
+      axios.get("http://localhost:8000/blogs/get-view/" + params.id)
+          .then(response => {
+              setdata1(response.data.blog)
+          })
+          .catch(function (error) {
+              console.log(error)
+          })
+  }, [])
+      function fetchData() {
+        if (Object.keys(getdata1).length > 0) {
+          console.log(getdata1)
+            return (
+              <>
+              <div className="blog-detail">
+              <h3 className="blog-detail-title">{getdata1.title}</h3>
               <div className="blog-detail-category">
-                <a className="category" href="blog.html">beauty</a>
-                <a className="category" data-bg-color="#957AFF" href="blog.html">Fashion</a>
+                <a className="category" href="/">{getdata1.category}</a>
               </div>
-              <img className="blog-detail-img mb-7 mb-lg-10" src="assets/images/blog/blog-detail1.webp" width={1170} height={1012} alt="Image" />
+              <img className="blog-detail-img mb-7 mb-lg-10" src={""+getdata1.image} style={{width:"1170px" , height:"1012px"}} alt="Image" />
               <div className="row justify-content-center">
                 <div className="col-lg-10">
                   <div className="row">
                     <div className="col-md-7">
                       <ul className="blog-detail-meta">
-                        <li className="meta-admin"><img src="assets/images/blog/admin.webp" alt="Image" /> Tomas Alva Addison</li>
-                        <li>February 13, 2022</li>
+                        <li className="meta-admin"><img src="assets/images/blog/admin.webp" alt="Image" /> {getdata1.author}</li>
+                        <li>{getdata1.updatedAt}</li>
                       </ul>
                     </div>
                     <div className="col-md-5">
@@ -39,7 +44,7 @@ function Blogdetails(){
                       </div>
                     </div>
                   </div>
-                  <p className="desc mt-4 mt-lg-7">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae mauris, feugiat malesuada adipiscing est. Turpis at cras scelerisque cursus et enim. Tellus integer purus scelerisque convallis gravida volutpat elit. In purus amet, suspendisse et lorem. At in id et facilisi molestie interdum blandit elementum. Arcu lectus in ultrices mauris amet, volutpat arcu. Habitant ac vitae, quam egestas in sed. Dignissim odio nunc fermentum donec risus. Volutpat elementum aliquet nec ligula. Rhoncus sem condimentum egestas scelerisque. Ac commodo neque auctor porttitor enim, tristique mollis laoreet. Interdum tellus tortor senectus erat enim in. Penatibus odio sed in dui a id urna. Tellus odio adipiscing erat viverra tempor.</p>
+                  <p className="desc mt-4 mt-lg-7">{getdata1.description}</p>
                   <p className="desc mb-6 mb-lg-10">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Gravida quis turpis feugiat sapien venenatis. Iaculis nunc nisl risus mattis elit id lobortis. Proin erat fermentum tempor elementum bibendum. Proin sed in nunc purus. Non duis eu pretium dictumst sed habitant sit vitae eget. Nisi sit lacus, fusce diam. Massa odio sit velit sed purus quis dolor.</p>
                 </div>
               </div>
@@ -104,31 +109,27 @@ function Blogdetails(){
                 </a>
               </div>
             </div>
-            <div className="blog-comment-form-wrap">
-              <div className="row justify-content-center">
-                <div className="col-lg-10">
-                  <h4 className="blog-comment-form-title">Comment</h4>
-                  <div className="blog-comment-form-info">
-                    <div className="blog-comment-form-social">
-                      <span>Share:</span>
-                      <a href="https://www.pinterest.com/" target="_blank" rel="noopener"><i className="fa fa-pinterest-p" /></a>
-                      <a href="https://twitter.com/" target="_blank" rel="noopener"><i className="fa fa-twitter" /></a>
-                      <a href="https://www.facebook.com/" target="_blank" rel="noopener"><i className="fa fa-facebook" /></a>
-                    </div>
-                    <select className="blog-comment-form-select">
-                      <option selected>Short By Newest</option>
-                      <option value={1}>Best</option>
-                      <option value={2}>Newest</option>
-                      <option value={3}>Oldest</option>
-                    </select>
-                  </div>
-                  <div className="blog-comment-form">
-                    <img className="blog-comment-img" src="assets/images/blog/form1.webp" width={110} height={110} alt="Image" />
-                    <textarea className="blog-comment-control" placeholder="type your comment" defaultValue={""} />
-                  </div>
-                </div>
-              </div>
-            </div>
+              </>
+            )
+        }
+      }
+    return(
+        <>
+        {/*== Start Page Header Area Wrapper ==*/}
+        <nav aria-label="breadcrumb" className="breadcrumb-style1">
+          <div className="container">
+            <ol className="breadcrumb justify-content-center">
+              <li className="breadcrumb-item"><a href="/">Home</a></li>
+              <li className="breadcrumb-item active" aria-current="page">Blog Detail</li>
+            </ol>
+          </div>
+        </nav>
+        {/*== End Page Header Area Wrapper ==*/}
+        {/*== Start Blog Detail Area Wrapper ==*/}
+        <section className="section-space pb-0">
+          <div className="container">
+              {fetchData()}
+              {Comment()}
           </div>
         </section>
         {/*== End Blog Detail Area Wrapper ==*/}

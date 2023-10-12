@@ -45,10 +45,15 @@ function Login(){
             }
                 axios.post("http://localhost:8000/auth/login",data)
                 .then((res)=>{
-                  console.log(res)
+                  const user ={
+                    user: res.data.user,
+                    token: res.data.access_token
+                  }
+                  localStorage.setItem("User", JSON.stringify(user))
+                  hook: navigate("/")
                 })
                 .catch((res)=>{   
-                    console.log(res)
+                    alert(res.response.data.mess)
                 })
         }
     }
