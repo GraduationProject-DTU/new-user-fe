@@ -24,6 +24,19 @@ function Register(){
             })
         }
     }
+    // function isValidEmail(email) {
+    //       // Regular expression pattern for email validation
+    //       var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;        
+    //       // Test the input email against the pattern
+    //       return emailPattern.test(email);
+    //     }        
+    //     // Usage example
+    //     var email = "example@example.com";
+    //     if (isValidEmail(email)) {
+    //       console.log("Valid email address");
+    //     } else {
+    //       console.log("Invalid email address");
+    //     }
     function handleSubmit(e){
       var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
       e.preventDefault()
@@ -72,16 +85,18 @@ function Register(){
           lastname: inputs.lastname,
           phone: inputs.phone
         }
-        axios.post("http://localhost:8000/auth/register",data)
-          .then((res) => {
-            if (res.data.errors) {
-              setErrors(res.data.errors)
-          } else {
-              alert("Dang ky thanh cong")
-          }
-        })
+          axios.post("http://localhost:8000/auth/register",data)
+          .then((res)=>{
+            alert("Dang ky thanh cong")
+            window.location.reload();
+          })
+          .catch((error)=>{
+            if(error.response){
+              alert(error.response.data.mess)
+            }
+          })
+        }
       }
-  }
     return(
       <div className="my-account-item-wrap">
       <h3 className="title">Register</h3>

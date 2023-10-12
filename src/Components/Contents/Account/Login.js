@@ -41,16 +41,14 @@ function Login(){
         if (flag) {
             const data = {
                 email: inputs.email,
-                password: inputs.password,
+                password: inputs.password
             }
-            console.log(data)
-            axios.post("http://localhost:8000/auth/login", data)
-                .then(res =>{
-                    if (res.data.errors) {
-                        setErrors(res.data.errors)
-                    } else{
-                        alert("Dang nhap thanh cong")
-                    }
+                axios.post("http://localhost:8000/auth/login",data)
+                .then((res)=>{
+                  console.log(res)
+                })
+                .catch((res)=>{   
+                    console.log(res)
                 })
         }
     }
