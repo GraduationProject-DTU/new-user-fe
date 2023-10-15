@@ -17,7 +17,6 @@ function Blogdetails(props){
   }, [])
       function fetchData() {
         if (Object.keys(getdata1).length > 0) {
-          console.log(getdata1)
             return (
               <>
               <div className="blog-detail">
@@ -129,6 +128,7 @@ function Blogdetails(props){
         <section className="section-space pb-0">
           <div className="container">
               {fetchData()}
+              <Comment idBlog={params.id}/>
               {Comment()}
           </div>
         </section>

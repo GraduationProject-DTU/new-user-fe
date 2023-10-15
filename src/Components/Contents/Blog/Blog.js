@@ -14,28 +14,31 @@ function Blog(){
                 })
         }, [])
         function fetchData(){
+          if(Object.keys(getItem).length>0){
             if(getItem.length>0){
               return getItem.map((value,key)=>{
-                console.log(value._id)
-                return(
-                  <div className="col-sm-6 col-lg-4 col-xl-6 mb-8">
-                  <div className="post-item">
-                    <a href={"/blog-details/"+ value._id} className="thumb">
-                      <img src={""+ value.image} width={370} height={320} alt="Image-HasTech" />
-                    </a>
-                    <div className="content">
-                      <a className="post-category" href="blog.html">beauty</a>
-                      <h4 className="title"><a href={"/blog-details/"+ value._id}>{value.title}</a></h4>
-                      <ul className="meta">
-                        <li className="author-info"><span>By:</span> <a href={"/blog-details/"+ value._id}>{value.author}</a></li>
-                        <li className="post-date">{value.updatedAt}</li>
-                      </ul>
-                    </div>
+                console.log(value.images)
+                const setimage = value.images["0"]
+              return(
+                <div className="col-sm-6 col-lg-4 col-xl-6 mb-8">
+                <div className="post-item">
+                  <a href={"/blog-details/"+ value._id} className="thumb">
+                    <img src={"" +setimage} style={{width : "370px" , height: "320px"}} alt="Image-HasTech" />
+                  </a>
+                  <div className="content">
+                    <a className="post-category" href="blog.html">beauty</a>
+                    <h4 className="title"><a href={"/blog-details/"+ value._id}>{value.title}</a></h4>
+                    <ul className="meta">
+                      <li className="author-info"><span>By:</span> <a href={"/blog-details/"+ value._id}>{value.author}</a></li>
+                      <li className="post-date">{value.updatedAt}</li>
+                    </ul>
                   </div>
-                  </div>
-                )
+                </div>
+                </div>
+              )
               })
             }
+          }
         }
     return(
         <>
