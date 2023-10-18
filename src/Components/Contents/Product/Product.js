@@ -2,12 +2,12 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 
 function Product() {
-  const [product, setProduct] = useState([])
+  const [products, setProducts] = useState([])
   useEffect(() => {
     try {
       axios.get('http://localhost:8000/products')
         .then(res => {
-          setProduct(res.data.mess)
+          setProducts(res.data.mess)
         })
     } catch (error) {
       console.log('err', error)
@@ -143,13 +143,13 @@ function Product() {
           <div className="row mb-n4 mb-sm-n10 g-3 g-sm-6">
             {/* START MAP PRODUCT */}
             {
-              product.map((e, i) => (
+              products.map((e, i) => (
                 <div key={i} className="col-6 col-lg-4 mb-4 mb-sm-8">
                   {console.log(e)}
                   {/*== Start Product Item ==*/}
                   <div style={{ objectFit: 'cover' }} className="product-item">
                     <div className="product-thumb">
-                      <a className="d-block" href="product-details.html">
+                      <a className="d-block" href={"product-details/" + e._id}>
                         <img src={e.image} style={{ height: '430px', width: '350px' }} width={370} height={450} alt="Image-HasTech" />
                       </a>
                       <span className="flag-new">new</span>

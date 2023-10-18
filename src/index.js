@@ -28,19 +28,19 @@ root.render(
     <Router>
       <App>
         <Routes>
-            <Route index path="/" element={<Homepage />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/blog-details/:id" element={<Blogdetails />} />
-            <Route path="/account" element={<Account />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/faq" element={<Faq />} />
-            <Route path="/myaccount" element={<Myaccount />} />
-            <Route path="/product" element={<Product />} />
-            <Route path="/productcart" element={<Productcart/>} />
-            <Route path="/productcheckout" element={<Productcheckout/>} />
-            <Route path="/productdetails" element={<Productdetails/>} />
-            <Route path="/wishlist" element={<Wishlist/>} />
+          <Route index path="/" element={<Homepage />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog-details/:id" element={<Blogdetails />} />
+          <Route path="/account" element={<Account />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/faq" element={<Faq />} />
+          <Route path="/myaccount" element={<Myaccount />} />
+          <Route path="/product" element={<Product />} />
+          <Route path="/productcart" element={<Productcart />} />
+          <Route path="/productcheckout" element={<Productcheckout />} />
+          <Route path="/product-details/:id" element={<Productdetails />} />
+          <Route path="/wishlist" element={<Wishlist />} />
         </Routes>
       </App>
     </Router>
