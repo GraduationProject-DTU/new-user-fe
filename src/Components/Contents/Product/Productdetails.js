@@ -1,6 +1,7 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
+import './product.css'
 
 function Productdetails() {
   const [product, setProduct] = useState([])
@@ -77,7 +78,7 @@ function Productdetails() {
             <div className="col-lg-6">
               <div className="product-details-content">
                 <h5 className="product-details-collection">Premioum collection</h5>
-                <h3 className="product-details-title">{product.title}</h3>
+                <h1 className="product-details-title" style={{ fontSize: '26px' }}>{product.title}</h1>
                 <div className="product-details-review mb-7">
                   <div className="product-review-icon">
                     <i className="fa fa-star-o" />
@@ -88,7 +89,6 @@ function Productdetails() {
                   </div>
                   <button type="button" className="product-review-show">150 reviews</button>
                 </div>
-                <p className="mb-7">{product.description}</p>
                 <div className="product-details-pro-qty">
                   <div className="pro-qty">
                     <input type="text" title="Quantity" defaultValue={1} />
@@ -99,7 +99,7 @@ function Productdetails() {
                   <label className="form-check-label" htmlFor="ShippingCost">Shipping from USA, Shipping Fees $4.22</label>
                 </div>
                 <div className="product-details-action">
-                  <h4 className="price">{product.price}</h4>
+                  <h4 className="price">₫{product.price}</h4>
                   <div className="product-details-cart-wishlist">
                     <button type="button" className="btn-wishlist" data-bs-toggle="modal" data-bs-target="#action-WishlistModal"><i className="fa fa-heart-o" /></button>
                     <button type="button" className="btn" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">Add to cart</button>
@@ -119,21 +119,7 @@ function Productdetails() {
               </div>
               <div className="tab-content" id="product-details-nav-tabContent">
                 <div className="tab-pane" id="specification" role="tabpanel" aria-labelledby="specification-tab">
-                  <ul className="product-details-info-wrap">
-                    <li><span>Weight</span>
-                      <p>250 g</p>
-                    </li>
-                    <li><span>Dimensions</span>
-                      <p>10 x 10 x 15 cm</p>
-                    </li>
-                    <li><span>Materials</span>
-                      <p>60% cotton, 40% polyester</p>
-                    </li>
-                    <li><span>Other Info</span>
-                      <p>American heirloom jean shorts pug seitan letterpress</p>
-                    </li>
-                  </ul>
-                  <p>uta, esse accusamus, sunt quia omnis amet temporibus sapiente harum quam itaque libero tempore. Ipsum, ducimus. lorem</p>
+                  <p>{product.description}</p>
                 </div>
                 <div className="tab-pane fade show active" id="review" role="tabpanel" aria-labelledby="review-tab">
                   {/*== Start Reviews Content Item ==*/}
@@ -254,11 +240,11 @@ function Productdetails() {
                   {/*== Start Product Item ==*/}
                   {
                     products?.map((e, i) => (
-                      <div key={i} className="swiper mb-10">
+                      <div key={i} style={{ width: '370px' }} className="swiper mb-10">
                         <div className="product-item product-st2-item">
                           <div className="product-thumb">
-                            <a className="d-block" href="product-details.html">
-                              <img src={e.image} style={{ height: '430px', width: '350px' }} width={370} height={450} alt="Image-HasTech" />
+                            <a className="d-block" href={"/product-details/" + e._id}>
+                              <img src={e.image} style={{ height: '400px' }} width={370} height={450} alt="Image-HasTech" />
                             </a>
                             <span className="flag-new">new</span>
                           </div>
@@ -275,9 +261,9 @@ function Productdetails() {
 
                               <div className="reviews">150 reviews</div>
                             </div>
-                            <h4 className="title"><a href="product-details.html">{e.title}</a></h4>
+                            <h4 className="title"><a href={"/product-details/" + e._id}>{e.title}</a></h4>
                             <div className="prices">
-                              <span className="price">{e.price}</span>
+                              <span className="price">₫{e.price}</span>
                               <span className="price-old">300.00</span>
                             </div>
                             <div className="product-action">

@@ -1,5 +1,6 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
+import './product.css'
 
 function Product() {
   const [products, setProducts] = useState([])
@@ -150,7 +151,7 @@ function Product() {
                   <div style={{ objectFit: 'cover' }} className="product-item">
                     <div className="product-thumb">
                       <a className="d-block" href={"product-details/" + e._id}>
-                        <img src={e.image} style={{ height: '430px', width: '350px' }} width={370} height={450} alt="Image-HasTech" />
+                        <img src={e.image} style={{ height: '400px' }} width={370} height={450} alt="Image-HasTech" />
                       </a>
                       <span className="flag-new">new</span>
                       <div className="product-action">
@@ -176,9 +177,13 @@ function Product() {
                         </div>
                         <div className="reviews">150 reviews</div>
                       </div>
-                      <h4 className="title"><a href="product-details.html">{e.title}</a></h4>
+                      <h4 className="title">
+                        <a href={"product-details/" + e._id} >
+                          {e.title}
+                        </a>
+                      </h4>
                       <div className="prices">
-                        <span className="price">{e.price} $</span>
+                        <span className="price">₫{e.price} $</span>
                         <span className="price-old">300.00</span>
                       </div>
                     </div>
@@ -224,7 +229,7 @@ function Product() {
             </div>
           </div>
         </div>
-      </section>
+      </section >
       {/*== End Product Area Wrapper ==*/}
       {/*== Start Product Banner Area Wrapper ==*/}
       <section>
