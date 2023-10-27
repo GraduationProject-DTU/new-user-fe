@@ -1,4 +1,45 @@
+import axios from "axios"
+import { Link } from "react-router-dom"
+import { useEffect, useState } from "react"
 function Scroll(){
+  const [getItem, setItem] = useState("")
+  useEffect(() => {
+    axios.get("http://localhost:8000/products")
+        .then(response => {
+            setItem(response.data.mess)
+        })
+        .catch(function (error) {
+            console.log(error)
+        })
+      }, [])
+      function fetchData(){
+        if(getItem.length>0){
+          return getItem.map((value,key)=>{
+            return(
+              <div className="modal-dialog modal-dialog-centered">
+              <div className="modal-content">
+              <div className="modal-body">
+                <div className="product-action-view-content">
+                  <button type="button" className="btn-close" data-bs-dismiss="modal">
+                    <i className="fa fa-times" />
+                  </button>
+                  <div className="modal-action-messages">
+                    <i className="fa fa-check-square-o" /> Added to cart successfully!
+                  </div>
+                  <div className="modal-action-product">
+                    <div className="thumb">
+                      <img src={""+value.image} style={{width:"466px", height: "322px"}} alt="Organic Food Juice" width={466} height={320} />
+                    </div>
+                    <h4 className="product-name"><a href="product-details.html">{value.title}</a></h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          )
+          })
+        }
+      }
     return(
         <>
         {/*== Scroll Top Button ==*/}
@@ -29,26 +70,7 @@ function Scroll(){
         {/*== End Product Quick Wishlist Modal ==*/}
         {/*== Start Product Quick Add Cart Modal ==*/}
         <aside className="product-action-modal modal fade" id="action-CartAddModal" tabIndex={-1} aria-hidden="true">
-          <div className="modal-dialog modal-dialog-centered">
-            <div className="modal-content">
-              <div className="modal-body">
-                <div className="product-action-view-content">
-                  <button type="button" className="btn-close" data-bs-dismiss="modal">
-                    <i className="fa fa-times" />
-                  </button>
-                  <div className="modal-action-messages">
-                    <i className="fa fa-check-square-o" /> Added to cart successfully!
-                  </div>
-                  <div className="modal-action-product">
-                    <div className="thumb">
-                      <img src="assets/images/shop/modal1.webp" alt="Organic Food Juice" width={466} height={320} />
-                    </div>
-                    <h4 className="product-name"><a href="product-details.html">Readable content DX22</a></h4>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          {fetchData()}
         </aside>
         {/*== End Product Quick Add Cart Modal ==*/}
         {/*== Start Aside Search Form ==*/}
@@ -142,7 +164,7 @@ function Scroll(){
             <a className="btn-total" href="product-checkout.html">Checkout</a>
           </div>
         </aside>
-        {/*== End Aside Cart ==*/}
+        == End Aside Cart ==
         {/*== Start Aside Menu ==*/}
         {/* <aside className="off-canvas-wrapper offcanvas offcanvas-start" tabIndex={-1} id="AsideOffcanvasMenu" aria-labelledby="offcanvasExampleLabel">
           <div className="offcanvas-header">

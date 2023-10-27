@@ -3,20 +3,30 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import Comment from "./Comment"
 import './Comment.css'
+import Listcomment from "./Listcomment"
 function Blogdetails(props){
   const [getdata1, setdata1] = useState("")
+  const [getComment, setcomment] = useState("")
     let params = useParams()
     useEffect(() => {
       axios.get("http://localhost:8000/blogs/get-view/" + params.id)
           .then(response => {
               setdata1(response.data.blog)
+              setcomment(response.data.blog.comments)
+              console.log(response.data.blog)
           })
           .catch(function (error) {
               console.log(error)
           })
   }, [])
+    function getcmt(getdata1) {
+      const concatter = getComment.concat(getdata1)
+      console.log(concatter)
+      setcomment(concatter)
+  }
       function fetchData() {
         if (Object.keys(getdata1).length > 0) {
+          // console.log(getdata1.images)
             return (
               <>
               <div className="blog-detail">
@@ -24,7 +34,7 @@ function Blogdetails(props){
               <div className="blog-detail-category">
                 <a className="category" href="/">{getdata1.category}</a>
               </div>
-              <img className="blog-detail-img mb-7 mb-lg-10" src={""+getdata1.image} style={{width:"1170px" , height:"1012px"}} alt="Image" />
+              <img className="blog-detail-img mb-7 mb-lg-10" src={""+getdata1.images["0"]} style={{width:"1170px" , height:"1012px"}} alt="Image" />
               <div className="row justify-content-center">
                 <div className="col-lg-10">
                   <div className="row">
@@ -128,8 +138,9 @@ function Blogdetails(props){
         <section className="section-space pb-0">
           <div className="container">
               {fetchData()}
-              <Comment idBlog={params.id}/>
-              {Comment()}
+              <Listcomment getComment={getComment}/>
+              <Comment idBlog={params.id} getcmt={getcmt}/>
+              {/* {Comment()} */}
           </div>
         </section>
         {/*== End Blog Detail Area Wrapper ==*/}

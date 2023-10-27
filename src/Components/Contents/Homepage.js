@@ -1,4 +1,116 @@
+import axios from "axios"
+import { Link } from "react-router-dom"
+import { useEffect, useState } from "react"
 function Homepage(){
+  const [getItem, setItem] = useState("")
+  const [getItemBlog, setItemBlog] = useState("")
+  const [getid,setid] = useState("")
+      useEffect(() => {
+        axios.get("http://localhost:8000/products")
+            .then(response => {
+                setItem(response.data.mess)
+            })
+            .catch(function (error) {
+                console.log(error)
+            })
+            axios.get("http://localhost:8000/blogs/")
+            .then(response1 => {
+              setItemBlog(response1.data.blog)
+            })
+            .catch(function (error) {
+                console.log(error)
+            })
+    }, [])
+    const handleClick = (e) => {
+      setid(e.target.id)
+      console.log(e.target.id)
+    }
+      function fetchData(){
+        if(getItem.length>0){
+          return getItem.map((value,key)=>{
+            // console.log(value._id)
+            return(
+              <div className="col-6 col-lg-4 mb-4 mb-sm-9" key={key}>
+              <div className="product-item">
+                  <div className="product-thumb">
+                    <a className="d-block" href={"product-details/" + value._id}>
+                      <img  src={""+value.image} style={{width: "370px", height: "450px"}} width={370} height={450} alt="Image-HasTech" />
+                    </a>
+                    <span className="flag-new">new</span>
+                    <div className="product-action">
+                      <button type="button" className="product-action-btn action-btn-quick-view" data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
+                        <i className="fa fa-expand" />
+                      </button>
+                      <button onClick={handleClick} id={value._id} type="button" className="product-action-btn action-btn-cart" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">
+                        <span>Add to cart</span>
+                      </button>
+                      <button type="button" className="product-action-btn action-btn-wishlist" data-bs-toggle="modal" data-bs-target="#action-WishlistModal">
+                        <i className="fa fa-heart-o" />
+                      </button>
+                    </div>
+                  </div>
+                  <div className="product-info">
+                    <div className="product-rating">
+                      <div className="rating">
+                        <i className="fa fa-star-o" />
+                        <i className="fa fa-star-o" />
+                        <i className="fa fa-star-o" />
+                        <i className="fa fa-star-o" />
+                        <i className="fa fa-star-half-o" />
+                      </div>
+                      <div className="reviews">150 reviews</div>
+                    </div>
+                    <h4 className="title"><a href={"product-details/" + value._id}>{value.title}</a></h4>
+                    <div className="prices">
+                      <span className="price">{value.price}</span>
+                      <span className="price-old">300.00</span>
+                    </div>
+                  </div>
+                  <div className="product-action-bottom">
+                    <button type="button" className="product-action-btn action-btn-quick-view" data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
+                      <i className="fa fa-expand" />
+                    </button>
+                    <button type="button" className="product-action-btn action-btn-wishlist" data-bs-toggle="modal" data-bs-target="#action-WishlistModal">
+                      <i className="fa fa-heart-o" />
+                    </button>
+                    <button onClick={handleClick} id={value._id} type="button" className="product-action-btn action-btn-cart" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">
+                      <span>Add to cart</span>
+                    </button>
+                  </div>
+                </div>
+                </div>
+            )
+          })
+        }
+    }
+      function fetchDataBlog(){
+        if(Object.keys(getItemBlog).length>0){
+          if(getItemBlog.length>0){
+            return getItemBlog.map((value,key1)=>{
+              const setimage = value.images["0"]
+              return(
+                <div className="col-sm-6 col-lg-4 mb-8" key={key1}>
+                {/*== Start Blog Item ==*/}
+                <div className="post-item">
+                  <a href="blog-details.html" className="thumb">
+                    <img src={""+setimage} style={{width: " 370px", height:"320px"}} width={370} height={320} alt="Image-HasTech" />
+                  </a>
+                  <div className="content">
+                    <a className="post-category" href="blog.html">{value.category}</a>
+                    <h4 className="title"><a href="blog-details.html">{value.title}</a></h4>
+                    <ul className="meta">
+                      <li className="author-info"><span>By:</span> <a href="blog.html">{value.author}</a></li>
+                      <li className="post-date">{value.createdAt}</li>
+                    </ul>
+                  </div>
+                </div>
+                {/*== End Blog Item ==*/}
+              </div>
+              )
+            }
+          )}
+      }
+    }
     return(
         <>
         {/*== Start Hero Area Wrapper ==*/}
@@ -128,312 +240,9 @@ function Homepage(){
               </div>
             </div>
             <div className="row mb-n4 mb-sm-n10 g-3 g-sm-6">
-              <div className="col-6 col-lg-4 mb-4 mb-sm-9">
                 {/*== Start Product Item ==*/}
-                <div className="product-item">
-                  <div className="product-thumb">
-                    <a className="d-block" href="product-details.html">
-                      <img src="assets/images/shop/1.webp" width={370} height={450} alt="Image-HasTech" />
-                    </a>
-                    <span className="flag-new">new</span>
-                    <div className="product-action">
-                      <button type="button" className="product-action-btn action-btn-quick-view" data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
-                        <i className="fa fa-expand" />
-                      </button>
-                      <button type="button" className="product-action-btn action-btn-cart" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">
-                        <span>Add to cart</span>
-                      </button>
-                      <button type="button" className="product-action-btn action-btn-wishlist" data-bs-toggle="modal" data-bs-target="#action-WishlistModal">
-                        <i className="fa fa-heart-o" />
-                      </button>
-                    </div>
-                  </div>
-                  <div className="product-info">
-                    <div className="product-rating">
-                      <div className="rating">
-                        <i className="fa fa-star-o" />
-                        <i className="fa fa-star-o" />
-                        <i className="fa fa-star-o" />
-                        <i className="fa fa-star-o" />
-                        <i className="fa fa-star-half-o" />
-                      </div>
-                      <div className="reviews">150 reviews</div>
-                    </div>
-                    <h4 className="title"><a href="product-details.html">Readable content DX22</a></h4>
-                    <div className="prices">
-                      <span className="price">$210.00</span>
-                      <span className="price-old">300.00</span>
-                    </div>
-                  </div>
-                  <div className="product-action-bottom">
-                    <button type="button" className="product-action-btn action-btn-quick-view" data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
-                      <i className="fa fa-expand" />
-                    </button>
-                    <button type="button" className="product-action-btn action-btn-wishlist" data-bs-toggle="modal" data-bs-target="#action-WishlistModal">
-                      <i className="fa fa-heart-o" />
-                    </button>
-                    <button type="button" className="product-action-btn action-btn-cart" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">
-                      <span>Add to cart</span>
-                    </button>
-                  </div>
-                </div>
+                {fetchData()}              
                 {/*== End prPduct Item ==*/}
-              </div>
-              <div className="col-6 col-lg-4 mb-4 mb-sm-9">
-                {/*== Start Product Item ==*/}
-                <div className="product-item">
-                  <div className="product-thumb">
-                    <a className="d-block" href="product-details.html">
-                      <img src="assets/images/shop/2.webp" width={370} height={450} alt="Image-HasTech" />
-                    </a>
-                    <span className="flag-new">new</span>
-                    <div className="product-action">
-                      <button type="button" className="product-action-btn action-btn-quick-view" data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
-                        <i className="fa fa-expand" />
-                      </button>
-                      <button type="button" className="product-action-btn action-btn-cart" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">
-                        <span>Add to cart</span>
-                      </button>
-                      <button type="button" className="product-action-btn action-btn-wishlist" data-bs-toggle="modal" data-bs-target="#action-WishlistModal">
-                        <i className="fa fa-heart-o" />
-                      </button>
-                    </div>
-                  </div>
-                  <div className="product-info">
-                    <div className="product-rating">
-                      <div className="rating">
-                        <i className="fa fa-star-o" />
-                        <i className="fa fa-star-o" />
-                        <i className="fa fa-star-o" />
-                        <i className="fa fa-star-o" />
-                        <i className="fa fa-star-half-o" />
-                      </div>
-                      <div className="reviews">150 reviews</div>
-                    </div>
-                    <h4 className="title"><a href="product-details.html">Modern Eye Brush</a></h4>
-                    <div className="prices">
-                      <span className="price">$210.00</span>
-                      <span className="price-old">300.00</span>
-                    </div>
-                  </div>
-                  <div className="product-action-bottom">
-                    <button type="button" className="product-action-btn action-btn-quick-view" data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
-                      <i className="fa fa-expand" />
-                    </button>
-                    <button type="button" className="product-action-btn action-btn-wishlist" data-bs-toggle="modal" data-bs-target="#action-WishlistModal">
-                      <i className="fa fa-heart-o" />
-                    </button>
-                    <button type="button" className="product-action-btn action-btn-cart" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">
-                      <span>Add to cart</span>
-                    </button>
-                  </div>
-                </div>
-                {/*== End prPduct Item ==*/}
-              </div>
-              <div className="col-6 col-lg-4 mb-4 mb-sm-9">
-                {/*== Start Product Item ==*/}
-                <div className="product-item">
-                  <div className="product-thumb">
-                    <a className="d-block" href="product-details.html">
-                      <img src="assets/images/shop/3.webp" width={370} height={450} alt="Image-HasTech" />
-                    </a>
-                    <span className="flag-new">new</span>
-                    <div className="product-action">
-                      <button type="button" className="product-action-btn action-btn-quick-view" data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
-                        <i className="fa fa-expand" />
-                      </button>
-                      <button type="button" className="product-action-btn action-btn-cart" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">
-                        <span>Add to cart</span>
-                      </button>
-                      <button type="button" className="product-action-btn action-btn-wishlist" data-bs-toggle="modal" data-bs-target="#action-WishlistModal">
-                        <i className="fa fa-heart-o" />
-                      </button>
-                    </div>
-                  </div>
-                  <div className="product-info">
-                    <div className="product-rating">
-                      <div className="rating">
-                        <i className="fa fa-star-o" />
-                        <i className="fa fa-star-o" />
-                        <i className="fa fa-star-o" />
-                        <i className="fa fa-star-o" />
-                        <i className="fa fa-star-half-o" />
-                      </div>
-                      <div className="reviews">150 reviews</div>
-                    </div>
-                    <h4 className="title"><a href="product-details.html">Voyage face cleaner</a></h4>
-                    <div className="prices">
-                      <span className="price">$210.00</span>
-                      <span className="price-old">300.00</span>
-                    </div>
-                  </div>
-                  <div className="product-action-bottom">
-                    <button type="button" className="product-action-btn action-btn-quick-view" data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
-                      <i className="fa fa-expand" />
-                    </button>
-                    <button type="button" className="product-action-btn action-btn-wishlist" data-bs-toggle="modal" data-bs-target="#action-WishlistModal">
-                      <i className="fa fa-heart-o" />
-                    </button>
-                    <button type="button" className="product-action-btn action-btn-cart" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">
-                      <span>Add to cart</span>
-                    </button>
-                  </div>
-                </div>
-                {/*== End prPduct Item ==*/}
-              </div>
-              <div className="col-6 col-lg-4 mb-4 mb-sm-9">
-                {/*== Start Product Item ==*/}
-                <div className="product-item">
-                  <div className="product-thumb">
-                    <a className="d-block" href="product-details.html">
-                      <img src="assets/images/shop/4.webp" width={370} height={450} alt="Image-HasTech" />
-                    </a>
-                    <span className="flag-new">new</span>
-                    <div className="product-action">
-                      <button type="button" className="product-action-btn action-btn-quick-view" data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
-                        <i className="fa fa-expand" />
-                      </button>
-                      <button type="button" className="product-action-btn action-btn-cart" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">
-                        <span>Add to cart</span>
-                      </button>
-                      <button type="button" className="product-action-btn action-btn-wishlist" data-bs-toggle="modal" data-bs-target="#action-WishlistModal">
-                        <i className="fa fa-heart-o" />
-                      </button>
-                    </div>
-                  </div>
-                  <div className="product-info">
-                    <div className="product-rating">
-                      <div className="rating">
-                        <i className="fa fa-star-o" />
-                        <i className="fa fa-star-o" />
-                        <i className="fa fa-star-o" />
-                        <i className="fa fa-star-o" />
-                        <i className="fa fa-star-half-o" />
-                      </div>
-                      <div className="reviews">150 reviews</div>
-                    </div>
-                    <h4 className="title"><a href="product-details.html">Impulse Duffle</a></h4>
-                    <div className="prices">
-                      <span className="price">$210.00</span>
-                      <span className="price-old">300.00</span>
-                    </div>
-                  </div>
-                  <div className="product-action-bottom">
-                    <button type="button" className="product-action-btn action-btn-quick-view" data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
-                      <i className="fa fa-expand" />
-                    </button>
-                    <button type="button" className="product-action-btn action-btn-wishlist" data-bs-toggle="modal" data-bs-target="#action-WishlistModal">
-                      <i className="fa fa-heart-o" />
-                    </button>
-                    <button type="button" className="product-action-btn action-btn-cart" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">
-                      <span>Add to cart</span>
-                    </button>
-                  </div>
-                </div>
-                {/*== End prPduct Item ==*/}
-              </div>
-              <div className="col-6 col-lg-4 mb-4 mb-sm-9">
-                {/*== Start Product Item ==*/}
-                <div className="product-item">
-                  <div className="product-thumb">
-                    <a className="d-block" href="product-details.html">
-                      <img src="assets/images/shop/5.webp" width={370} height={450} alt="Image-HasTech" />
-                    </a>
-                    <span className="flag-new">new</span>
-                    <div className="product-action">
-                      <button type="button" className="product-action-btn action-btn-quick-view" data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
-                        <i className="fa fa-expand" />
-                      </button>
-                      <button type="button" className="product-action-btn action-btn-cart" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">
-                        <span>Add to cart</span>
-                      </button>
-                      <button type="button" className="product-action-btn action-btn-wishlist" data-bs-toggle="modal" data-bs-target="#action-WishlistModal">
-                        <i className="fa fa-heart-o" />
-                      </button>
-                    </div>
-                  </div>
-                  <div className="product-info">
-                    <div className="product-rating">
-                      <div className="rating">
-                        <i className="fa fa-star-o" />
-                        <i className="fa fa-star-o" />
-                        <i className="fa fa-star-o" />
-                        <i className="fa fa-star-o" />
-                        <i className="fa fa-star-half-o" />
-                      </div>
-                      <div className="reviews">150 reviews</div>
-                    </div>
-                    <h4 className="title"><a href="product-details.html">Sprite Yoga Straps1</a></h4>
-                    <div className="prices">
-                      <span className="price">$210.00</span>
-                      <span className="price-old">300.00</span>
-                    </div>
-                  </div>
-                  <div className="product-action-bottom">
-                    <button type="button" className="product-action-btn action-btn-quick-view" data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
-                      <i className="fa fa-expand" />
-                    </button>
-                    <button type="button" className="product-action-btn action-btn-wishlist" data-bs-toggle="modal" data-bs-target="#action-WishlistModal">
-                      <i className="fa fa-heart-o" />
-                    </button>
-                    <button type="button" className="product-action-btn action-btn-cart" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">
-                      <span>Add to cart</span>
-                    </button>
-                  </div>
-                </div>
-                {/*== End prPduct Item ==*/}
-              </div>
-              <div className="col-6 col-lg-4 mb-4 mb-sm-9">
-                {/*== Start Product Item ==*/}
-                <div className="product-item">
-                  <div className="product-thumb">
-                    <a className="d-block" href="product-details.html">
-                      <img src="assets/images/shop/6.webp" width={370} height={450} alt="Image-HasTech" />
-                    </a>
-                    <span className="flag-new">new</span>
-                    <div className="product-action">
-                      <button type="button" className="product-action-btn action-btn-quick-view" data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
-                        <i className="fa fa-expand" />
-                      </button>
-                      <button type="button" className="product-action-btn action-btn-cart" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">
-                        <span>Add to cart</span>
-                      </button>
-                      <button type="button" className="product-action-btn action-btn-wishlist" data-bs-toggle="modal" data-bs-target="#action-WishlistModal">
-                        <i className="fa fa-heart-o" />
-                      </button>
-                    </div>
-                  </div>
-                  <div className="product-info">
-                    <div className="product-rating">
-                      <div className="rating">
-                        <i className="fa fa-star-o" />
-                        <i className="fa fa-star-o" />
-                        <i className="fa fa-star-o" />
-                        <i className="fa fa-star-o" />
-                        <i className="fa fa-star-half-o" />
-                      </div>
-                      <div className="reviews">150 reviews</div>
-                    </div>
-                    <h4 className="title"><a href="product-details.html">Fusion facial cream</a></h4>
-                    <div className="prices">
-                      <span className="price">$210.00</span>
-                      <span className="price-old">300.00</span>
-                    </div>
-                  </div>
-                  <div className="product-action-bottom">
-                    <button type="button" className="product-action-btn action-btn-quick-view" data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
-                      <i className="fa fa-expand" />
-                    </button>
-                    <button type="button" className="product-action-btn action-btn-wishlist" data-bs-toggle="modal" data-bs-target="#action-WishlistModal">
-                      <i className="fa fa-heart-o" />
-                    </button>
-                    <button type="button" className="product-action-btn action-btn-cart" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">
-                      <span>Add to cart</span>
-                    </button>
-                  </div>
-                </div>
-                {/*== End prPduct Item ==*/}
-              </div>
             </div>
           </div>
         </section>
@@ -640,57 +449,7 @@ function Homepage(){
               </div>
             </div>
             <div className="row mb-n9">
-              <div className="col-sm-6 col-lg-4 mb-8">
-                {/*== Start Blog Item ==*/}
-                <div className="post-item">
-                  <a href="blog-details.html" className="thumb">
-                    <img src="assets/images/blog/1.webp" width={370} height={320} alt="Image-HasTech" />
-                  </a>
-                  <div className="content">
-                    <a className="post-category" href="blog.html">beauty</a>
-                    <h4 className="title"><a href="blog-details.html">Lorem ipsum dolor sit amet consectetur adipiscing.</a></h4>
-                    <ul className="meta">
-                      <li className="author-info"><span>By:</span> <a href="blog.html">Tomas De Momen</a></li>
-                      <li className="post-date">February 13, 2022</li>
-                    </ul>
-                  </div>
-                </div>
-                {/*== End Blog Item ==*/}
-              </div>
-              <div className="col-sm-6 col-lg-4 mb-8">
-                {/*== Start Blog Item ==*/}
-                <div className="post-item">
-                  <a href="blog-details.html" className="thumb">
-                    <img src="assets/images/blog/2.webp" width={370} height={320} alt="Image-HasTech" />
-                  </a>
-                  <div className="content">
-                    <a className="post-category post-category-two" data-bg-color="#A49CFF" href="blog.html">beauty</a>
-                    <h4 className="title"><a href="blog-details.html">Facial Scrub is natural treatment for face.</a></h4>
-                    <ul className="meta">
-                      <li className="author-info"><span>By:</span> <a href="blog.html">Tomas De Momen</a></li>
-                      <li className="post-date">February 13, 2022</li>
-                    </ul>
-                  </div>
-                </div>
-                {/*== End Blog Item ==*/}
-              </div>
-              <div className="col-sm-6 col-lg-4 mb-8">
-                {/*== Start Blog Item ==*/}
-                <div className="post-item">
-                  <a href="blog-details.html" className="thumb">
-                    <img src="assets/images/blog/3.webp" width={370} height={320} alt="Image-HasTech" />
-                  </a>
-                  <div className="content">
-                    <a className="post-category post-category-three" data-bg-color="#9CDBFF" href="blog.html">beauty</a>
-                    <h4 className="title"><a href="blog-details.html">Benefit of Hot Ston Spa for your health &amp; life.</a></h4>
-                    <ul className="meta">
-                      <li className="author-info"><span>By:</span> <a href="blog.html">Tomas De Momen</a></li>
-                      <li className="post-date">February 13, 2022</li>
-                    </ul>
-                  </div>
-                </div>
-                {/*== End Blog Item ==*/}
-              </div>
+                {fetchDataBlog()}             
             </div>
           </div>
         </section>

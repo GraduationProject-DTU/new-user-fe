@@ -202,13 +202,7 @@ function Product() {
                   {/*== End prPduct Item ==*/}
                 </div>
               ))
-
             }
-
-
-
-
-
             <div className="col-12">
               <ul className="pagination justify-content-center me-auto ms-auto mt-5 mb-0 mb-sm-10">
                 <li className="page-item">
