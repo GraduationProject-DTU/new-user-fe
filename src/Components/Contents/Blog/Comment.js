@@ -38,6 +38,7 @@ function Comment(props){
             // formData.append("comment",comment)
             axios.post(url, data, config)
                 .then(response => {
+                    //Chỗ này trả về giá trị mới nhất được post
                     console.log(response.data)
                     props.getcmt(response.data.data.comments)
                 })

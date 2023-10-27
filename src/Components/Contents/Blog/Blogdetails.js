@@ -19,6 +19,7 @@ function Blogdetails(props){
               console.log(error)
           })
   }, [])
+  //Hàm nhận giá trị trả về từ comment
     function getcmt(getdata1) {
       const concatter = getComment.concat(getdata1)
       console.log(concatter)
