@@ -9,6 +9,7 @@ function Homepage(){
         axios.get("http://localhost:8000/products")
             .then(response => {
                 setItem(response.data.mess)
+                // console.log(response.data.mess)
             })
             .catch(function (error) {
                 console.log(error)
@@ -21,9 +22,27 @@ function Homepage(){
                 console.log(error)
             })
     }, [])
+    //Lỗi đôi khi không target được ID
     const handleClick = (e) => {
-      setid(e.target.id)
-      console.log(e.target.id)
+        let main = {}
+        let nameInput = e.target.id
+        alert(nameInput)
+        let value = 1
+        let test1 = localStorage.getItem("CartItem")
+        if(nameInput != ""){
+          if(test1){
+            main = JSON.parse(test1)
+            for(var key in main){
+                const getqty = main[key]
+                if(nameInput == key){
+                    value = main[nameInput] +1
+                    localStorage.setItem("CartItem",JSON.stringify(main))
+                }
+            }
+        }
+        main[nameInput] = value
+        localStorage.setItem("CartItem",JSON.stringify(main))
+        }
     }
       function fetchData(){
         if(getItem.length>0){
@@ -41,7 +60,7 @@ function Homepage(){
                       <button type="button" className="product-action-btn action-btn-quick-view" data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
                         <i className="fa fa-expand" />
                       </button>
-                      <button onClick={handleClick} id={value._id} type="button" className="product-action-btn action-btn-cart" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">
+                      <button onClick={handleClick} id={value._id} className="product-action-btn action-btn-cart" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">
                         <span>Add to cart</span>
                       </button>
                       <button type="button" className="product-action-btn action-btn-wishlist" data-bs-toggle="modal" data-bs-target="#action-WishlistModal">
@@ -66,7 +85,7 @@ function Homepage(){
                       <span className="price-old">300.00</span>
                     </div>
                   </div>
-                  <div className="product-action-bottom">
+                  {/* <div className="product-action-bottom">
                     <button type="button" className="product-action-btn action-btn-quick-view" data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
                       <i className="fa fa-expand" />
                     </button>
@@ -76,7 +95,7 @@ function Homepage(){
                     <button onClick={handleClick} id={value._id} type="button" className="product-action-btn action-btn-cart" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">
                       <span>Add to cart</span>
                     </button>
-                  </div>
+                  </div> */}
                 </div>
                 </div>
             )
@@ -92,12 +111,12 @@ function Homepage(){
                 <div className="col-sm-6 col-lg-4 mb-8" key={key1}>
                 {/*== Start Blog Item ==*/}
                 <div className="post-item">
-                  <a href="blog-details.html" className="thumb">
+                  <a href={"blog-details/"+value._id} className="thumb">
                     <img src={""+setimage} style={{width: " 370px", height:"320px"}} width={370} height={320} alt="Image-HasTech" />
                   </a>
                   <div className="content">
-                    <a className="post-category" href="blog.html">{value.category}</a>
-                    <h4 className="title"><a href="blog-details.html">{value.title}</a></h4>
+                    <a className="post-category" href={"blog-details/"+value._id}>{value.category}</a>
+                    <h4 className="title"><a href={"blog-details/"+value._id}>{value.title}</a></h4>
                     <ul className="meta">
                       <li className="author-info"><span>By:</span> <a href="blog.html">{value.author}</a></li>
                       <li className="post-date">{value.createdAt}</li>

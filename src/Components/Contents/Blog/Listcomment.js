@@ -2,6 +2,7 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 function Listcomment(props){
+    const getDataUser = JSON.parse(localStorage.getItem("User"))
     // const [getdata1, setdata1] = useState("")
     // let params = useParams()
     // const [check,setCheck] = useState("checked")
@@ -23,7 +24,7 @@ function Listcomment(props){
             return getComment.map((value,key)=>{
                 return(
                     <div className="comment_box">
-                     <img className="media_man" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/800px-User_icon_2.svg.png" alt="" />
+                     <img className="media_man" src={""+getDataUser.user.avatar} alt="" />
                      <div className="media-body">
                      <div className="custom_flex">
                          <h5 className="custom_para">{value.userId.firstname} {value.userId.lastname} <span>{value.date}</span></h5>

@@ -1,4 +1,20 @@
+import axios from "axios"
+import { Link } from "react-router-dom"
+import { useEffect, useState } from "react"
 function Productcart(){
+  const [getItem, setItem] = useState("")
+  const getCart = JSON.parse(localStorage.getItem("CartItem"))
+  var gettong1 = 0
+  useEffect(() => {
+    axios.get("http://localhost:8000/products")
+        .then(response => {
+            setItem(response.data.mess)
+            // console.log(response.data.mess)
+        })
+        .catch(function (error) {
+            console.log(error)
+        })
+      }, [])
     return(
         <>
         {/*== Start Page Header Area Wrapper ==*/}

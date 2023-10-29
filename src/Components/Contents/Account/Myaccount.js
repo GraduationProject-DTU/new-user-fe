@@ -1,4 +1,6 @@
 function Myaccount(){
+  const getDataUser = JSON.parse(localStorage.getItem("User"))
+  
     return(
         <>
         {/*== Start Page Header Area Wrapper ==*/}
@@ -149,7 +151,7 @@ function Myaccount(){
                             <div className="col-lg-6">
                               <div className="single-input-item">
                                 <label htmlFor="last-name" className="required">Last Name</label>
-                                <input type="text" id="last-name" />
+                                <input type="text" id="last-name" value={getDataUser.lastname} />
                               </div>
                             </div>
                           </div>
