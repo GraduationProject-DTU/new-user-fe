@@ -17,7 +17,6 @@ function Blog(){
           if(Object.keys(getItem).length>0){
             if(getItem.length>0){
               return getItem.map((value,key)=>{
-                console.log(value.images)
                 const setimage = value.images["0"]
               return(
                 <div className="col-sm-6 col-lg-4 col-xl-6 mb-8">
@@ -58,7 +57,8 @@ function Blog(){
               <div className="col-xl-8">
                 <div className="row">
                       {fetchData()}
-                </div>
+                </div>           
+              <a href="/createblog"><button>Create new blog</button></a>
               </div>
               <div className="col-xl-4">
                 <div className="blog-sidebar-widget">

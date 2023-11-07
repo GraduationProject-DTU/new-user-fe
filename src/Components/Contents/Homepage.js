@@ -5,6 +5,7 @@ function Homepage(){
   const [getItem, setItem] = useState("")
   const [getItemBlog, setItemBlog] = useState("")
   const [getid,setid] = useState("")
+  const getDataUser = JSON.parse(localStorage.getItem("User"))
       useEffect(() => {
         axios.get("http://localhost:8000/products")
             .then(response => {
@@ -26,7 +27,8 @@ function Homepage(){
     const handleClick = (e) => {
         let main = {}
         let nameInput = e.target.id
-        alert(nameInput)
+        // alert(nameInput)
+        console.log(nameInput)
         let value = 1
         let test1 = localStorage.getItem("CartItem")
         if(nameInput != ""){
@@ -42,6 +44,22 @@ function Homepage(){
         }
         main[nameInput] = value
         localStorage.setItem("CartItem",JSON.stringify(main))
+        const data ={
+          "pid": nameInput,
+          "quatity": value
+        }
+        let accessToken = getDataUser.token
+        let config = {
+            headers: {
+                'token': 'Bearer ' + accessToken,
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Accept': 'application/json'
+            }
+        }
+        axios.put("http://localhost:8000/users/cart", data, config)
+        .then(response => {
+            console.log(response)
+        })
         }
     }
       function fetchData(){

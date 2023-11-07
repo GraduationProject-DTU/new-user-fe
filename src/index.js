@@ -41,6 +41,7 @@ root.render(
           <Route path="/productcheckout" element={<Productcheckout />} />
           <Route path="/product-details/:id" element={<Productdetails />} />
           <Route path="/wishlist" element={<Wishlist />} />
+          <Route path='/createblog'/>
         </Routes>
       </App>
     </Router>

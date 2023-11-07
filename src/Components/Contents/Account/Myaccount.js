@@ -1,6 +1,9 @@
 function Myaccount(){
   const getDataUser = JSON.parse(localStorage.getItem("User"))
-  
+    const logout =(e) =>{
+      localStorage.removeItem("User")
+      alert("Logout successfully")
+    }
     return(
         <>
         {/*== Start Page Header Area Wrapper ==*/}
@@ -41,7 +44,7 @@ function Myaccount(){
                     <div className="myaccount-content">
                       <h3>Dashboard</h3>
                       <div className="welcome">
-                        <p>Hello, <strong>Alex Tuntuni</strong> (If Not <strong>Tuntuni !</strong><a href="account-login.html" className="logout"> Logout</a>)</p>
+                        <p>Hello, <strong>{getDataUser.user.firstname} {getDataUser.user.lastname}</strong> (If Not <strong>{getDataUser.user.firstname} {getDataUser.user.lastname} !</strong><a href="/" onClick={logout} className="logout"> Logout</a>)</p>
                       </div>
                       <p>From your account dashboard. you can easily check &amp; view your recent orders, manage your shipping and billing addresses and edit your password and account details.</p>
                     </div>
@@ -151,7 +154,7 @@ function Myaccount(){
                             <div className="col-lg-6">
                               <div className="single-input-item">
                                 <label htmlFor="last-name" className="required">Last Name</label>
-                                <input type="text" id="last-name" value={getDataUser.lastname} />
+                                <input type="text" id="last-name"  />
                               </div>
                             </div>
                           </div>

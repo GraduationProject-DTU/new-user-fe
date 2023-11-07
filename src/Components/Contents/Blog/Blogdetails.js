@@ -5,122 +5,73 @@ import Comment from "./Comment"
 import './Comment.css'
 import Listcomment from "./Listcomment"
 function Blogdetails(props){
+  const [novalue,setnovalue] = useState("valueao")
   const [getdata1, setdata1] = useState("")
   const [getComment, setcomment] = useState("")
+  const [getcheck,setcheck] = useState("")
     let params = useParams()
     useEffect(() => {
       axios.get("http://localhost:8000/blogs/get-view/" + params.id)
           .then(response => {
               setdata1(response.data.blog)
               setcomment(response.data.blog.comments)
-              console.log(response.data.blog)
           })
           .catch(function (error) {
               console.log(error)
           })
-  }, [])
-  //Hàm nhận giá trị trả về từ comment
-    function getcmt(getdata1) {
-      const concatter = getComment.concat(getdata1)
-      console.log(concatter)
-      setcomment(concatter)
-  }
-      function fetchData() {
-        if (Object.keys(getdata1).length > 0) {
-          // console.log(getdata1.images)
-            return (
-              <>
-              <div className="blog-detail">
+    },[getcheck])
+      //Hàm nhận giá trị trả về từ comment
+        function getcmt(novalue) {
+          const concatter = getcheck.concat(novalue)
+          setcheck(concatter)
+      }
+      function fetchDataicon(){
+        return(
+          <>
               <h3 className="blog-detail-title">{getdata1.title}</h3>
               <div className="blog-detail-category">
-                <a className="category" href="/">{getdata1.category}</a>
+                  <a className="category" href="/">{getdata1.category}</a>
               </div>
-              <img className="blog-detail-img mb-7 mb-lg-10" src={""+getdata1.images["0"]} style={{width:"1170px" , height:"1012px"}} alt="Image" />
               <div className="row justify-content-center">
-                <div className="col-lg-10">
-                  <div className="row">
-                    <div className="col-md-7">
-                      <ul className="blog-detail-meta">
-                        <li className="meta-admin"><img src="assets/images/blog/admin.webp" alt="Image" /> {getdata1.author}</li>
-                        <li>{getdata1.updatedAt}</li>
-                      </ul>
-                    </div>
-                    <div className="col-md-5">
-                      <div className="blog-detail-social">
-                        <span>Share:</span>
-                        <a href="https://www.pinterest.com/" target="_blank" rel="noopener"><i className="fa fa-pinterest-p" /></a>
-                        <a href="https://twitter.com/" target="_blank" rel="noopener"><i className="fa fa-twitter" /></a>
-                        <a href="https://www.facebook.com/" target="_blank" rel="noopener"><i className="fa fa-facebook" /></a>
+                  <div className="col-lg-10">
+                    <div className="row">
+                      <div className="col-md-7">
+                        <ul className="blog-detail-meta">
+                          <li className="meta-admin"><img src="assets/images/blog/admin.webp" alt="Image" /> {getdata1.author}</li>
+                          <li>{getdata1.updatedAt}</li>
+                        </ul>
+                      </div>
+                      <div className="col-md-5">
+                        <div className="blog-detail-social">
+                          <span>Share:</span>
+                          <a href="https://www.pinterest.com/" target="_blank" rel="noopener"><i className="fa fa-pinterest-p" /></a>
+                          <a href="https://twitter.com/" target="_blank" rel="noopener"><i className="fa fa-twitter" /></a>
+                          <a href="https://www.facebook.com/" target="_blank" rel="noopener"><i className="fa fa-facebook" /></a>
+                        </div>
                       </div>
                     </div>
                   </div>
-                  <p className="desc mt-4 mt-lg-7">{getdata1.description}</p>
-                  <p className="desc mb-6 mb-lg-10">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Gravida quis turpis feugiat sapien venenatis. Iaculis nunc nisl risus mattis elit id lobortis. Proin erat fermentum tempor elementum bibendum. Proin sed in nunc purus. Non duis eu pretium dictumst sed habitant sit vitae eget. Nisi sit lacus, fusce diam. Massa odio sit velit sed purus quis dolor.</p>
                 </div>
+          </>
+        )
+      }
+      function fetchData() {
+        const getdata2 = getdata1.images
+          if(getdata2 >0){
+            getdata2.splice(getdata2,0)
+          }
+        if (Object.keys(getdata1).length > 0) {
+          if(getdata2.length){
+            return getdata2.map((value,key)=>{
+              return (
+              <div className="blog-detail">
+                <img className="blog-detail-img mb-7 mb-lg-10" src={""+value} style={{width:"1170px" , height:"1012px"}} alt="Image" />
+                <p className="desc mt-4 mt-lg-7">{getdata1.description}</p>
+                <p className="desc mb-6 mb-lg-10">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Gravida quis turpis feugiat sapien venenatis. Iaculis nunc nisl risus mattis elit id lobortis. Proin erat fermentum tempor elementum bibendum. Proin sed in nunc purus. Non duis eu pretium dictumst sed habitant sit vitae eget. Nisi sit lacus, fusce diam. Massa odio sit velit sed purus quis dolor.</p>
               </div>
-              <img className="blog-detail-img" src="assets/images/blog/blog-detail2.webp" width={1170} height={700} alt="Image" />
-              <div className="row justify-content-center">
-                <div className="col-lg-10">
-                  <p className="desc mt-6 mt-lg-10">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Gravida quis turpis feugiat sapien venenatis. Iaculis nunc nisl risus mattis elit id lobortis. Proin erat fermentum tempor elementum bibendum. Proin sed in nunc purus. Non duis eu pretium dictumst sed habitant sit vitae eget. Nisi sit lacus, fusce diam. Massa odio sit velit sed purus quis dolor.</p>
-                  <ul className="blog-detail-list">
-                    <li>• Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-                    <li>• Massa odio sit velit sed purus quis dolor.</li>
-                    <li>• Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-                    <li>• Proin sed in nunc purus. Non duis eu pretium dictumst</li>
-                  </ul>
-                </div>
-              </div>
-              <div className="row justify-content-center">
-                <div className="col-lg-8">
-                  <blockquote className="blog-detail-blockquote mt-6 mt-lg-10 mb-6 mb-lg-10">
-                    <p className="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris semper purus, at venenatis scelerisque nibh. Nisl sit convallis accumsan integer lorem. Nibh nunc in nulla quis pulvinar dictum. Eget nisi, praesent proin viverra.</p>
-                    <span className="user-name">BY Momen de tomas</span>
-                    <img className="quote-icon" src="assets/images/icons/quote1.webp" width={84} height={60} alt="Icon" />
-                  </blockquote>
-                </div>
-              </div>
-              <div className="row justify-content-center">
-                <div className="col-lg-10">
-                  <p className="desc mb-6 mb-lg-10">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Gravida quis turpis feugiat sapien venenatis. Iaculis nunc nisl risus mattis elit id lobortis. Proin erat fermentum tempor elementum bibendum. Proin sed in nunc purus. Non duis eu pretium dictumst sed habitant sit vitae eget. Nisi sit lacus, fusce diam. Massa odio sit velit sed purus quis dolor.</p>
-                  <img className="blog-detail-img" src="assets/images/blog/blog-detail3.webp" width={1070} height={340} alt="Image" />
-                </div>
-              </div>
-            </div>
-            <div className="section-space pb-0">
-              {/*== Start Product Category Item ==*/}
-              <a href="product.html" className="product-banner-item">
-                <img src="assets/images/shop/banner/9.webp" width={1170} height={200} alt="Image-HasTech" />
-              </a>
-              {/*== End Product Category Item ==*/}
-            </div>
-            <div className="row justify-content-between align-items-center pt-10 mt-4 section-space">
-              <div className="col-sm-6">
-                <a href="blog-details.html" className="blog-next-previous">
-                  <div className="thumb">
-                    <span className="arrow">PREV</span>
-                    <img src="assets/images/blog/next-previous1.webp" width={93} height={80} alt="Image" />
-                  </div>
-                  <div className="content">
-                    <h4 className="title">Lorem ipsum dolor amet, consectetur adipiscing.</h4>
-                    <h5 className="post-date">February 13, 2022</h5>
-                  </div>
-                </a>
-              </div>
-              <div className="col-sm-6">
-                <a href="blog-details.html" className="blog-next-previous blog-next">
-                  <div className="thumb">
-                    <span className="arrow">NEXT</span>
-                    <img src="assets/images/blog/next-previous2.webp" width={93} height={80} alt="Image" />
-                  </div>
-                  <div className="content">
-                    <h4 className="title">Lorem ipsum dolor amet, consectetur adipiscing.</h4>
-                    <h5 className="post-date">February 13, 2022</h5>
-                  </div>
-                </a>
-              </div>
-            </div>
-              </>
-            )
+              )
+            })
+          }
         }
       }
     return(
@@ -138,7 +89,41 @@ function Blogdetails(props){
         {/*== Start Blog Detail Area Wrapper ==*/}
         <section className="section-space pb-0">
           <div className="container">
-              {fetchData()}
+              {fetchDataicon()}
+              {fetchData()}              
+              <div className="section-space pb-0">
+                {/*== Start Product Category Item ==*/}
+                <a href="product.html" className="product-banner-item">
+                  <img src="assets/images/shop/banner/9.webp" width={1170} height={200} alt="Image-HasTech" />
+                </a>
+                {/*== End Product Category Item ==*/}
+              </div>
+              <div className="row justify-content-between align-items-center pt-10 mt-4 section-space">
+                <div className="col-sm-6">
+                  <a href="blog-details.html" className="blog-next-previous">
+                    <div className="thumb">
+                      <span className="arrow">PREV</span>
+                      <img src="assets/images/blog/next-previous1.webp" width={93} height={80} alt="Image" />
+                    </div>
+                    <div className="content">
+                      <h4 className="title">Lorem ipsum dolor amet, consectetur adipiscing.</h4>
+                      <h5 className="post-date">February 13, 2022</h5>
+                    </div>
+                  </a>
+                </div>
+                <div className="col-sm-6">
+                  <a href="blog-details.html" className="blog-next-previous blog-next">
+                    <div className="thumb">
+                      <span className="arrow">NEXT</span>
+                      <img src="assets/images/blog/next-previous2.webp" width={93} height={80} alt="Image" />
+                    </div>
+                    <div className="content">
+                      <h4 className="title">Lorem ipsum dolor amet, consectetur adipiscing.</h4>
+                      <h5 className="post-date">February 13, 2022</h5>
+                    </div>
+                  </a>
+                </div>
+              </div>
               <Listcomment getComment={getComment}/>
               <Comment idBlog={params.id} getcmt={getcmt}/>
               {/* {Comment()} */}

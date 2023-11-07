@@ -11,6 +11,7 @@ function Comment(props){
         e.preventDefault(e)
         let errorsubmit = {}
         // console.log(props.idBlog)
+        console.log(props)
         let flag = true
         if (!getDataUser) {
             alert("Must login")
@@ -29,21 +30,17 @@ function Comment(props){
                     'Accept': 'application/json'
                 }
             }
-            // const formData = new FormData()
             const data ={
                 "bid": props.idBlog,
                 "comment": comment
             }
-            // formData.append("bid", props.idBlog)
-            // formData.append("comment",comment)
             axios.post(url, data, config)
                 .then(response => {
-                    //Chỗ này trả về giá trị mới nhất được post
                     console.log(response.data)
-                    props.getcmt(response.data.data.comments)
+                    props.getcmt("ok")
                 })
+            }
         }
-    }
     return(
         <>
             <div className="comment_wrapper">
