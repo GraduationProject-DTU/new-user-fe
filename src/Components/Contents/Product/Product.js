@@ -4,6 +4,10 @@ import './product.css'
 
 function Product() {
   const [products, setProducts] = useState([])
+  const [value, setValue] = useState(0)
+
+
+
   useEffect(() => {
     try {
       axios.get('http://localhost:8000/products')
@@ -14,6 +18,74 @@ function Product() {
       console.log('err', error)
     }
   }, [])
+
+  const hanldeChangeOption = (e) => {
+    const value = e.target.value
+
+    switch (value) {
+      case '2':
+        axios.get('http://localhost:8000/products')
+          .then(res => {
+            setProducts(res.data.mess);
+          })
+          .catch(err => {
+            console.log('err', err);
+          })
+        break;
+      case '3':
+        axios.get('http://localhost:8000/products?sort=title&type=asc&page=1')
+          .then(res => {
+            setProducts(res.data.mess);
+          })
+          .catch(err => {
+            console.log('err', err);
+          })
+        break;
+      case '4':
+        axios.get('http://localhost:8000/products?sort=title&type=desc&page=1')
+          .then(res => {
+            setProducts(res.data.mess);
+          })
+          .catch(err => {
+            console.log('err', err);
+          })
+        break
+      case '5':
+        axios.get('http://localhost:8000/products?sort=price&type=asc&page=1')
+          .then(res => {
+            setProducts(res.data.mess);
+          })
+          .catch(err => {
+            console.log('err', err);
+          })
+        break
+      case '6':
+        axios.get('http://localhost:8000/products?sort=price&type=desc&page=1')
+          .then(res => {
+            setProducts(res.data.mess);
+          })
+          .catch(err => {
+            console.log('err', err);
+          })
+        break
+      default:
+        break;
+    }
+  }
+
+  const hanldeChangePrice = (e) => {
+    const value = e.target.value
+    const valueNext = Number(e.target.value) + 200000
+    axios(`http://localhost:8000/products?price[gte]=${value}&price[lte]=${valueNext}&page=1`)
+      .then(res => {
+        setProducts(res.data.mess)
+      })
+      .catch(err => {
+        console.log('err', err)
+      })
+  }
+
+
   return (
     <>
       {/*== Start Page Header Area Wrapper ==*/}
@@ -40,45 +112,35 @@ function Product() {
       <div className="shop-top-bar-area">
         <div className="container">
           <div className="shop-top-bar">
-            <select className="select-shoing">
-              <option data-display="Trending">Trending</option>
-              <option value={1}>Featured</option>
-              <option value={2}>Best Selling</option>
+            <select style={{ border: 'none' }} onChange={e => hanldeChangeOption(e)}>
+              <option value={2} data-display="Trending">Trending</option>
               <option value={3}>Alphabetically, A-Z</option>
               <option value={4}>Alphabetically, Z-A</option>
               <option value={5}>Price, low to high</option>
               <option value={6}>Price, high to low</option>
-              <option value={7}>Date, new to old</option>
-              <option value={8}>Date, old to new</option>
             </select>
-            <div className="select-on-sale d-flex d-md-none">
-              <span>On Sale :</span>
-              <select className="select-on-sale-form">
-                <option selected>Yes</option>
-                <option value={1}>No</option>
-              </select>
+
+            <div className="select-price-range" onChange={e => hanldeChangePrice(e)} >
+              <h4 className="title" style={{ marginRight: '16px' }}>Pricing</h4>
+              <input style={{ width: '100px' }} min={0} max={800000} step={10000} type="range"
+                class="form-range" id="customRange1" onChange={(e) => setValue(e.currentTarget.value)}>
+              </input>
+              <p style={{ marginLeft: '10px' }}>
+                ₫{value} - ₫{Number(value) + 200000}
+              </p>
+
             </div>
-            <div className="select-price-range">
-              <h4 className="title">Pricing</h4>
-              <div className="select-price-range-slider">
-                <div className="slider-range" id="slider-range" />
-                <div className="slider-labels">
-                  <span id="slider-range-value1" />
-                  <span>-</span>
-                  <span id="slider-range-value2" />
-                </div>
-              </div>
-            </div>
+
             <div className="select-on-sale d-none d-md-flex">
               <span>On Sale :</span>
-              <select className="select-on-sale-form">
+              <select style={{ border: 'none' }}>
                 <option selected>Yes</option>
                 <option value={1}>No</option>
               </select>
             </div>
           </div>
         </div>
-      </div>
+      </div >
       {/*== End Shop Top Bar Area Wrapper ==*/}
       {/*== Start Product Category Area Wrapper ==*/}
       <section className="section-space pb-0">
@@ -183,8 +245,8 @@ function Product() {
                         </a>
                       </h4>
                       <div className="prices">
-                        <span className="price">₫{e.price} $</span>
-                        <span className="price-old">300.00</span>
+                        <span className="price">₫{e.price}</span>
+                        {/* <span className="price-old">300.00</span> */}
                       </div>
                     </div>
                     <div className="product-action-bottom">
