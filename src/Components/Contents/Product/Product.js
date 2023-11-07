@@ -102,7 +102,7 @@ function Product() {
               </div>
             </div>
             <div className="col-md-7">
-              <h5 className="showing-pagination-results mt-5 mt-md-9 text-center text-md-end">Showing 09 Results</h5>
+              <h5 className="showing-pagination-results mt-5 mt-md-9 text-center text-md-end">Showing {products.length} Results</h5>
             </div>
           </div>
         </div>
@@ -231,21 +231,23 @@ function Product() {
                     <div className="product-info">
                       <div className="product-rating">
                         <div className="rating">
-                          <i className="fa fa-star-o" />
-                          <i className="fa fa-star-o" />
-                          <i className="fa fa-star-o" />
-                          <i className="fa fa-star-o" />
-                          <i className="fa fa-star-half-o" />
+                          {Array.from({ length: e.totalRatings }, (_, index) => (
+                            <i key={index} className="fa fa-star-o" />
+                          ))}
                         </div>
-                        <div className="reviews">150 reviews</div>
+
+                        <div className="reviews">{e.brand}</div>
                       </div>
                       <h4 className="title">
                         <a href={"product-details/" + e._id} >
                           {e.title}
                         </a>
                       </h4>
+                      <div className="product-rating">
+                        <div className="reviews">Đã bán {e.sold}</div>
+                      </div>
                       <div className="prices">
-                        <span className="price">₫{e.price}</span>
+                        <span style={{ color: 'rgb(239,84,53)' }} className="price">₫{e.price}</span>
                         {/* <span className="price-old">300.00</span> */}
                       </div>
                     </div>

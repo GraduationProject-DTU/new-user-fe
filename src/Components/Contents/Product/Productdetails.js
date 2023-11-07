@@ -81,13 +81,14 @@ function Productdetails() {
                 <h1 className="product-details-title" style={{ fontSize: '26px' }}>{product.title}</h1>
                 <div className="product-details-review mb-7">
                   <div className="product-review-icon">
-                    <i className="fa fa-star-o" />
-                    <i className="fa fa-star-o" />
-                    <i className="fa fa-star-o" />
-                    <i className="fa fa-star-o" />
-                    <i className="fa fa-star-half-o" />
+                    <div className="rating">
+                      {Array.from({ length: product.totalRatings }, (_, index) => (
+                        <i key={index} className="fa fa-star-o" />
+                      ))}
+                    </div>
                   </div>
-                  <button type="button" className="product-review-show">150 reviews</button>
+                  <button type="button" className="product-review-show">{product.brand}</button>
+                  <button style={{ marginLeft: '32px' }} type="button" className="product-review-show">Đã bán {product.sold}</button>
                 </div>
                 <div className="product-details-pro-qty">
                   <div className="pro-qty">
@@ -96,10 +97,12 @@ function Productdetails() {
                 </div>
                 <div className="product-details-shipping-cost">
                   <input className="form-check-input" type="checkbox" defaultValue id="ShippingCost" defaultChecked />
-                  <label className="form-check-label" htmlFor="ShippingCost">Shipping from USA, Shipping Fees $4.22</label>
+                  <label className="form-check-label" htmlFor="ShippingCost">Shipping Fees $3.22 ,Fast delivery</label>
+                  <input style={{ marginLeft: '32px' }} className="form-check-input" type="checkbox" defaultValue id="ShippingCost" defaultChecked />
+                  <label className="form-check-label" htmlFor="ShippingCost">FreeShip, Slow delivery</label>
                 </div>
                 <div className="product-details-action">
-                  <h4 className="price">₫{product.price}</h4>
+                  <h4 style={{ color: 'rgb(239,84,53)' }} className="price">₫{product.price}</h4>
                   <div className="product-details-cart-wishlist">
                     <button type="button" className="btn-wishlist" data-bs-toggle="modal" data-bs-target="#action-WishlistModal"><i className="fa fa-heart-o" /></button>
                     <button type="button" className="btn" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">Add to cart</button>
@@ -252,19 +255,20 @@ function Productdetails() {
                             <div className="product-rating">
 
                               <div className="rating">
-                                <i className="fa fa-star-o" />
-                                <i className="fa fa-star-o" />
-                                <i className="fa fa-star-o" />
-                                <i className="fa fa-star-o" />
-                                <i className="fa fa-star-half-o" />
+                                {Array.from({ length: e.totalRatings }, (_, index) => (
+                                  <i key={index} className="fa fa-star-o" />
+                                ))}
                               </div>
 
-                              <div className="reviews">150 reviews</div>
+                              <div className="reviews">{e.brand}</div>
                             </div>
                             <h4 className="title"><a href={"/product-details/" + e._id}>{e.title}</a></h4>
+                            <div className="product-rating">
+                              <div className="reviews">Đã bán {e.sold}</div>
+                            </div>
                             <div className="prices">
-                              <span className="price">₫{e.price}</span>
-                              <span className="price-old">300.00</span>
+                              <span style={{ color: 'rgb(239,84,53)' }} className="price">₫{e.price}</span>
+                              {/* <span className="price-old">300.00</span> */}
                             </div>
                             <div className="product-action">
                               <button type="button" className="product-action-btn action-btn-cart" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">
