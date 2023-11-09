@@ -22,6 +22,7 @@ import Productdetails from './Components/Contents/Product/Productdetails';
 import Wishlist from './Components/Contents/Product/Wishlist';
 import Account from './Components/Contents/Account/Account';
 import Blogdetails from './Components/Contents/Blog/Blogdetails';
+import CreateBlog from './Components/Contents/Blog/CreateBlog';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
@@ -41,7 +42,7 @@ root.render(
           <Route path="/productcheckout" element={<Productcheckout />} />
           <Route path="/product-details/:id" element={<Productdetails />} />
           <Route path="/wishlist" element={<Wishlist />} />
-          <Route path='/createblog'/>
+          <Route path='/createblog' element={<CreateBlog/>}/>
         </Routes>
       </App>
     </Router>

@@ -7275,3 +7275,6 @@ hr {
   font-size: 14px;
   padding: 18px 24px 18px;
 }
+.ck-editor__editable_inline{
+  min-height: 200px;
+}

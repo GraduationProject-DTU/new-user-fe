@@ -1,107 +1,34 @@
 import axios from "axios"
 import { Link } from "react-router-dom"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
+import { UserContext } from "../../UserContext"
 function Scroll(){
   const [getItem, setItem] = useState("")
-  const getCart = JSON.parse(localStorage.getItem("CartItem"))
-  const getDataUser = JSON.parse(localStorage.getItem("User"))  
-  var gettong1 = 0
+  const [getdataCart,setdataCart] = useState("")
+  const {getCart,setCart} = useContext(UserContext)
+  const {getid,setid} = useContext(UserContext)
+  const {getdataCart1,setdataCart1} = useContext(UserContext)
   useEffect(() => {
-      // if(getDataUser){
-      //   let accessToken = getDataUser.token
-      //   console.log(accessToken)
-      //   let config = {
-      //     headers: {
-      //         'token':'Bearer'+accessToken
-      //     }
-      //   }
-      // axios.get("http://localhost:8000/users/detail-user/",config)
-      //     .then(response => {
-      //         console.log(response)
-      //     })
-      //     .catch(function (error) {
-      //         console.log(error)
-      //     })
-      // }
-    // axios.get("http://localhost:8000/products")
-    //     .then(response => {
-    //         setItem(response.data.mess)
-    //         // console.log(response.data.mess)
-    //     })
-    //     .catch(function (error) {
-    //         console.log(error)
-    //     })
-      }, [])
-      // const onClickdelete = (e) =>{
-      //   if (Object.keys(getCart).length>0){
-      //     return Object.keys(getCart).map((value,key)=>{
-      //       if(e.target.id == value){
-      //         delete getCart[value]
-      //         localStorage.setItem("CartItem",JSON.stringify(getCart))
-      //         // window.location.reload();
-      //         fetchData()
-      //       }
-      //     })
-      //   }
-      // }
-      // function fetchDataCart(){
-      //   if(Object.keys(getCart).length>0){
-      //     return Object.keys(getCart).map((key,index)=>{
-      //         // console.log(getCart[key])
-      //       if (getItem.length>0){
-      //         return getItem.map((value1,key1)=>{
-      //           if(key == value1._id){
-      //             const gettong = parseInt(getCart[key] * value1.price)
-      //             gettong1 += gettong
-      //             // console.log(value1)
-      //             return(
-      //               <li className="aside-product-list-item">
-      //                <a href="#" className="remove" id={""+value1._id} onClick={onClickdelete}>×</a>
-      //                <a href={"product-details/"+value1._id}>
-      //                  <img src={""+value1.image} style={{width:"68px",height:"84px"}} width={68} height={84} alt="Image" />
-      //                  <span className="product-title">{value1.title}</span>
-      //                </a>
-      //                <span className="product-price">{getCart[key]} × {value1.price}</span>
-      //               </li>
-      //             )
-      //           }
-      //         })
-      //       }
-      //     })
-      //   }
-      // }
-      // function fetchData(){
-      //   if(getItem.length>0){
-      //     return getItem.map((value,key)=>{
-      //       return(
-      //         <div className="modal-dialog modal-dialog-centered">
-      //         <div className="modal-content">
-      //         <div className="modal-body">
-      //           <div className="product-action-view-content">
-      //             <button type="button" className="btn-close" data-bs-dismiss="modal">
-      //               <i className="fa fa-times" />
-      //             </button>
-      //             <div className="modal-action-messages">
-      //               <i className="fa fa-check-square-o" /> Added to cart successfully!
-      //             </div>
-      //             <div className="modal-action-product">
-      //               <div className="thumb">
-      //                 <img src={""+value.image} style={{width:"466px", height: "322px"}} alt="Organic Food Juice" width={466} height={320} />
-      //               </div>
-      //               <h4 className="product-name"><a href="product-details.html">{value.title}</a></h4>
-      //             </div>
-      //           </div>
-      //         </div>
-      //       </div>
-      //     </div>
-      //     )
-      //     })
-      //   }
-      // }
+    axios.get("http://localhost:8000/products")
+        .then(response => {
+            setItem(response.data.mess)
+            // console.log(response.data.mess)
+        })
+        .catch(function (error) {
+            console.log(error)
+        })
+  }, [])
+      function fetchaddTocart(){
+        if(getItem.length>0){
+          return getItem.map((value,key)=>{
+            if(value._id == getid){
+              setdataCart(value)
+            }
+          })
+        }
+      }
     return(
-        <>
-{/*== Scroll Top Button ==*/}
-  <div id="scroll-to-top" className="scroll-to-top"><span className="fa fa-angle-up" /></div>
+      <div>
         {/*== Start Product Quick Wishlist Modal ==*/}
         <aside className="product-action-modal modal fade" id="action-WishlistModal" tabIndex={-1} aria-hidden="true">
           <div className="modal-dialog modal-dialog-centered">
@@ -128,7 +55,26 @@ function Scroll(){
         {/*== End Product Quick Wishlist Modal ==*/}
         {/*== Start Product Quick Add Cart Modal ==*/}
         <aside className="product-action-modal modal fade" id="action-CartAddModal" tabIndex={-1} aria-hidden="true">
-          {/* {fetchData()} */}
+        <div className="modal-dialog modal-dialog-centered">
+                <div className="modal-content">
+              <div className="modal-body">
+                <div className="product-action-view-content">
+                  <button type="button" className="btn-close" data-bs-dismiss="modal">
+                    <i className="fa fa-times" />
+                  </button>
+                  <div className="modal-action-messages">
+                    <i className="fa fa-check-square-o" /> Added to cart successfully!
+                  </div>
+                  <div className="modal-action-product">
+                    <div className="thumb">
+                      <img src="assets/images/shop/modal1.webp" alt="Organic Food Juice" width={466} height={320} />
+                    </div>
+                    <h4 className="product-name"><a href="product-details.html">Readable content DX22</a></h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </aside>
         {/*== End Product Quick Add Cart Modal ==*/}
         {/*== Start Aside Search Form ==*/}
@@ -219,10 +165,25 @@ function Scroll(){
           </div>
           <div className="offcanvas-body">
             <ul className="aside-cart-product-list">
-              {/* {fetchDataCart()} */}
+              <li className="aside-product-list-item">
+                <a href="#/" className="remove">×</a>
+                <a href="product-details.html">
+                  <img src="assets/images/shop/cart1.webp" width={68} height={84} alt="Image" />
+                  <span className="product-title">Leather Mens Slipper</span>
+                </a>
+                <span className="product-price">1 × £69.99</span>
+              </li>
+              <li className="aside-product-list-item">
+                <a href="#/" className="remove">×</a>
+                <a href="product-details.html">
+                  <img src="assets/images/shop/cart2.webp" width={68} height={84} alt="Image" />
+                  <span className="product-title">Quickiin Mens shoes</span>
+                </a>
+                <span className="product-price">1 × £20.00</span>
+              </li>
             </ul>
-            <p className="cart-total"><span>Subtotal:</span><span className="amount">{gettong1}</span></p>
-            <a className="btn-total" href="productcart">View cart</a>
+            <p className="cart-total"><span>Subtotal:</span><span className="amount">£89.99</span></p>
+            <a className="btn-total" href="product-cart.html">View cart</a>
             <a className="btn-total" href="product-checkout.html">Checkout</a>
           </div>
         </aside>
@@ -296,7 +257,7 @@ function Scroll(){
           </div>
         </aside>
         {/*== End Aside Menu ==*/}
-        </>
+      </div>
     )
 }
 export default Scroll
