@@ -24,7 +24,7 @@ function CreateBlog(){
         setInputs(state => ({ ...state, [nameInput]: value }))
     }
     useEffect(() => {
-        axios.get("http://localhost:8000/category-products")
+        axios.get("http://localhost:8000/category-blogs")
             .then(response => {
                 // console.log(response.data.category)
                 setItem(response.data.category)
@@ -71,29 +71,29 @@ function CreateBlog(){
         if(!flag){
             setErrors(errorSubmit)
         }
-        if (getFile == "") {
-            errorSubmit.files = "Chon hinh anh"
-            flag = false
-        } else {
-            Object.keys(getFile).map((item,i)=>{
-                let checkImg = ["png", "jpg", "jpeg", "PNG", "JPG"]
-                let getsize = getFile[item].size
-                let getname = getFile[item].name
-                let test = getname.split(".")
-                let test1 = checkImg.includes(test[1])
-                if (getsize > 1024 * 1024) {
-                    errorSubmit.files = "File qua lon"
-                } else if (!checkImg.includes(test[1])) {
-                    errorSubmit.files = "Sai dinh dang"
-                }
-            })
-        }
+        // if (getFile == "") {
+        //     errorSubmit.files = "Chon hinh anh"
+        //     flag = false
+        // } else {
+        //     Object.keys(getFile).map((item,i)=>{
+        //         let checkImg = ["png", "jpg", "jpeg", "PNG", "JPG"]
+        //         let getsize = getFile[item].size
+        //         let getname = getFile[item].name
+        //         let test = getname.split(".")
+        //         let test1 = checkImg.includes(test[1])
+        //         if (getsize > 1024 * 1024) {
+        //             errorSubmit.files = "File qua lon"
+        //         } else if (!checkImg.includes(test[1])) {
+        //             errorSubmit.files = "Sai dinh dang"
+        //         }
+        //     })
+        // }
         if (flag){
             let url = "http://localhost:8000/blogs/create-blog"
             let accessToken = getDataUser.token
             let config = {
                 headers: {
-                    'Bearer': 'Bearer ' + accessToken,
+                    'token': 'Bearer ' + accessToken,
                     'Content-Type': 'multipart/form-data',
                     'Accept': 'application/json'
                 }
@@ -106,10 +106,14 @@ function CreateBlog(){
             formData.append("category", getselectcategory)
             Object.keys(getFile).map((item,i)=>{
                 formData.append("file[]",getFile[item])
+                console.log(getFile[item])
             })
             axios.post(url,formData,config)
             .then(response => {
                 console.log(response)
+            })
+            .catch(error =>{
+                console.log(error)
             })
         }
     }

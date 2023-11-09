@@ -7,7 +7,10 @@ function Scroll(){
   const [getdataCart,setdataCart] = useState("")
   const {getCart,setCart} = useContext(UserContext)
   const {getid,setid} = useContext(UserContext)
-  const {getdataCart1,setdataCart1} = useContext(UserContext)
+  const getdataCartItem = JSON.parse(localStorage.getItem("CartItem"))
+  const {getidlarge,setidlarge} = useContext(UserContext)
+  const {getidwishlist,setidwishlist} = useContext(UserContext)
+  var gettong1 = 0
   useEffect(() => {
     axios.get("http://localhost:8000/products")
         .then(response => {
@@ -18,16 +21,50 @@ function Scroll(){
             console.log(error)
         })
   }, [])
+  const handleClick = (id) => {
+    let main = {}
+    let nameInput = id
+    let value = 1
+    let test1 = localStorage.getItem("CartItem")
+      setid(nameInput)
+      if(test1){
+        main = JSON.parse(test1)
+        for(var key in main){
+            const getqty = main[key]
+            if(nameInput == key){
+                value = main[nameInput] +1
+                localStorage.setItem("CartItem",JSON.stringify(main))
+            }
+        }
+    }
+      main[nameInput] = value
+      localStorage.setItem("CartItem",JSON.stringify(main))
+      setCart(main)
+  }
+    const deleteItem = (e) => {
+      e.preventDefault()
+      if(Object.keys(getdataCartItem).length>0){
+        return Object.keys(getdataCartItem).map((key2,index2)=>{
+          if(e.target.id == key2){
+            delete getdataCartItem[key2]
+            localStorage.setItem("CartItem",JSON.stringify(getdataCartItem))
+            setCart(getdataCartItem)
+          }
+        })
+      }
+    }
     function FetchCart(){
       if(getItem.length>0){
         return getItem.map((value,key)=>{
           if(Object.keys(getCart).length>0){
             return Object.keys(getCart).map((key1,index)=>{
               if (key1 == value._id ){
+                const gettong = parseInt(getCart[key1] * value.price)
+                gettong1+= gettong
                 return(
-                  <li className="aside-product-list-item">
-                  <a href="#/" className="remove">×</a>
-                  <a href="product-details.html">
+                  <li className="aside-product-list-item" key={key}>
+                  <a href="" id={value._id} onClick={deleteItem} className="remove">×</a>
+                  <a href={"product-details/" + value._id}>
                     <img src={""+value.image} style={{width:"68px",height:"84px"}} width={68} height={84} alt="Image" />
                     <span className="product-title">{value.title}</span>
                   </a>
@@ -36,43 +73,33 @@ function Scroll(){
                 )
               }
             })
+          }else if (getdataCartItem != null){
+            return Object.keys(getdataCartItem).map((key2,index2)=>{
+              if (key2 == value._id ){
+                const gettong = parseInt(getdataCartItem[key2] * value.price)
+                gettong1+= gettong
+                return(
+                  <li className="aside-product-list-item" key={key}>
+                  <a href="" id={value._id} onClick={deleteItem} className="remove">×</a>
+                  <a href={"product-details/" + value._id}>
+                    <img src={""+value.image} style={{width:"68px",height:"84px"}} width={68} height={84} alt="Image" />
+                    <span className="product-title">{value.title}</span>
+                  </a>
+                  <span className="product-price">{getdataCartItem[key2]} × {value.price}</span>
+                </li>
+                )
+              }
+            })
           }
         })
       }
     }
-    //FetchLocalStorage
-    // function fetchCart(){
-    //   const getdataCartItem = JSON.parse(localStorage.getItem("CartItem"))
-    //     if(getItem.length>0){
-    //         if(Object.keys(getdataCartItem).length>1){
-    //           return Object.keys(getdataCartItem).map((key,index)=>{
-    //             console.log(getdataCartItem[key])
-    //             return getItem.map((value,key1)=>{
-    //               console.log(value)
-    //               if(key == value._id){
-    //                 return(
-    //                   <li className="aside-product-list-item">
-    //                     <a href="#/" className="remove">×</a>
-    //                     <a href="product-details.html">
-    //                       <img src={""+value.image} style={{width:"68px",height:"84px"}} width={68} height={84} alt="Image" />
-    //                       <span className="product-title">{value.title}</span>
-    //                     </a>
-    //                     <span className="product-price">{getdataCartItem[key]} × {value.price}</span>
-    //                   </li>
-    //                 )
-    //               }
-    //             })
-    //           })
-    //         }
-    //       }
-    //   }
     function fetchProduct(){
         if(getItem.length>0){
           return getItem.map((value,key)=>{
             if(getid == value._id ){
-              console.log(value)
               return(
-              <div className="modal-action-product">
+              <div className="modal-action-product" key={key}>
                 <div className="thumb">
                   <img src={""+value.image} style={{width:"466px" ,height:"320px"}} alt="Organic Food Juice" width={466} height={320} />
                 </div>
@@ -82,6 +109,72 @@ function Scroll(){
             }
           })
         }
+    }
+    function fetchlarge(){
+      if(getItem.length>0){
+        return getItem.map((value3,key3)=>{
+          if(getidlarge == value3._id){
+            console.log(value3)
+            return(
+              <div className="row">
+              <div className="col-lg-6">
+                {/*== Start Product Thumbnail Area ==*/}
+                <div className="product-single-thumb">
+                  <img src={""+value3.image} style={{width:"544px" ,height:"560px"}} width={544} height={560} alt="Image-HasTech" />
+                </div>
+                {/*== End Product Thumbnail Area ==*/}
+              </div>
+              <div className="col-lg-6">
+                {/*== Start Product Info Area ==*/}
+                <div className="product-details-content">
+                  <h5 className="product-details-collection">{value3.brand}</h5>
+                  <h3 className="product-details-title">{value3.title}</h3>
+                  <div className="product-details-review mb-5">
+                    <div className="product-review-icon">
+                      <i className="fa fa-star-o" />
+                      <i className="fa fa-star-o" />
+                      <i className="fa fa-star-o" />
+                      <i className="fa fa-star-o" />
+                      <i className="fa fa-star-half-o" />
+                    </div>
+                    <button type="button" className="product-review-show">150 reviews</button>
+                  </div>
+                  <p className="mb-6">{value3.description}</p>
+                  <div className="product-details-pro-qty">
+                    <div className="pro-qty">
+                      <input type="text" title="Quantity" defaultValue={1} />
+                    </div>
+                  </div>
+                  <div className="product-details-action">
+                    <h4 className="price">{value3.price}</h4>
+                    <div className="product-details-cart-wishlist">
+                      <button id={value3._id} onClick={()=>handleClick(value3._id)} type="button" className="btn" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">Add to cart</button>
+                    </div>
+                  </div>
+                </div>
+                {/*== End Product Info Area ==*/}
+              </div>
+            </div>
+            )
+          }
+        })
+      }
+    }
+    function fetchwishlist(){
+      if(getItem.length>0){
+        return getItem.map((value4,key4)=>{
+          if(getidwishlist == value4._id){
+            return(
+              <div className="modal-action-product">
+                <div className="thumb">
+                  <img src={""+value4.image} style={{width:"466" ,height:"320"}} alt="Organic Food Juice" width={466} height={320} />
+                </div>
+                <h4 className="product-name"><a href={"product-details/" + value4._id}>{value4.title}</a></h4>
+              </div>
+            )
+          }
+        })
+      }
     }
     return(
       <div>
@@ -97,12 +190,7 @@ function Scroll(){
                   <div className="modal-action-messages">
                     <i className="fa fa-check-square-o" /> Added to wishlist successfully!
                   </div>
-                  <div className="modal-action-product">
-                    <div className="thumb">
-                      <img src="assets/images/shop/modal1.webp" alt="Organic Food Juice" width={466} height={320} />
-                    </div>
-                    <h4 className="product-name"><a href="product-details.html">Readable content DX22</a></h4>
-                  </div>
+                    {fetchwishlist()}
                 </div>
               </div>
             </div>
@@ -162,45 +250,7 @@ function Scroll(){
                     <span className="fa fa-close" />
                   </button>
                   <div className="container">
-                    <div className="row">
-                      <div className="col-lg-6">
-                        {/*== Start Product Thumbnail Area ==*/}
-                        <div className="product-single-thumb">
-                          <img src="assets/images/shop/quick-view1.webp" width={544} height={560} alt="Image-HasTech" />
-                        </div>
-                        {/*== End Product Thumbnail Area ==*/}
-                      </div>
-                      <div className="col-lg-6">
-                        {/*== Start Product Info Area ==*/}
-                        <div className="product-details-content">
-                          <h5 className="product-details-collection">Premioum collection</h5>
-                          <h3 className="product-details-title">Offbline Instant Age Rewind Eraser.</h3>
-                          <div className="product-details-review mb-5">
-                            <div className="product-review-icon">
-                              <i className="fa fa-star-o" />
-                              <i className="fa fa-star-o" />
-                              <i className="fa fa-star-o" />
-                              <i className="fa fa-star-o" />
-                              <i className="fa fa-star-half-o" />
-                            </div>
-                            <button type="button" className="product-review-show">150 reviews</button>
-                          </div>
-                          <p className="mb-6">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Delectus, repellendus. Nam voluptate illo ut quia non sapiente provident alias quos laborum incidunt, earum accusamus, natus. Vero pariatur ut veniam sequi amet consectetur.</p>
-                          <div className="product-details-pro-qty">
-                            <div className="pro-qty">
-                              <input type="text" title="Quantity" defaultValue={1} />
-                            </div>
-                          </div>
-                          <div className="product-details-action">
-                            <h4 className="price">$254.22</h4>
-                            <div className="product-details-cart-wishlist">
-                              <button type="button" className="btn" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">Add to cart</button>
-                            </div>
-                          </div>
-                        </div>
-                        {/*== End Product Info Area ==*/}
-                      </div>
-                    </div>
+                      {fetchlarge()}
                   </div>
                 </div>
               </div>
@@ -218,8 +268,8 @@ function Scroll(){
             <ul className="aside-cart-product-list">
                 {FetchCart()}
             </ul>
-            <p className="cart-total"><span>Subtotal:</span><span className="amount">£89.99</span></p>
-            <a className="btn-total" href="product-cart.html">View cart</a>
+            <p className="cart-total"><span>Subtotal:</span><span className="amount">{gettong1}</span></p>
+            <a className="btn-total" href="/productcart">View cart</a>
             <a className="btn-total" href="product-checkout.html">Checkout</a>
           </div>
         </aside>

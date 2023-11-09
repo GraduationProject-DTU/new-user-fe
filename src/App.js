@@ -10,9 +10,11 @@ import { useState } from 'react';
 function App(props) {
   const [getCart,setCart] = useState("")
   const [getid,setid] = useState("")
+  const [getidlarge,setidlarge] = useState("")
+  const [getidwishlist,setidwishlist] = useState("")
   return (
     <div>
-      <UserContext.Provider value={{getCart,setCart,getid,setid}}>
+      <UserContext.Provider value={{getCart,setCart,getid,setid,getidlarge,setidlarge,getidwishlist,setidwishlist}}>
           <Header/>
             <main class="main-content">
               {props.children}

@@ -6,7 +6,9 @@ function Homepage() {
   const [getItem, setItem] = useState("")
   const {getCart,setCart} = useContext(UserContext)
   const {getid,setid} = useContext(UserContext)
+  const {getidlarge,setidlarge} = useContext(UserContext)
   const {getdataCart1,setdataCart1} = useContext(UserContext)
+  const {getidwishlist,setidwishlist} = useContext(UserContext)
   useEffect(() => {
     axios.get("http://localhost:8000/products")
         .then(response => {
@@ -44,11 +46,30 @@ function Homepage() {
       localStorage.setItem("CartItem",JSON.stringify(main))
       setCart(main)
   }
+  const handleClicklarge = (id) =>{
+    setidlarge(id)
+  }
+  const handleclickwishlist = (id)=>{
+    setidwishlist(id)
+    let idwishlist = id
+    let main = []
+        let test1 = localStorage.getItem("Wishlist")
+        if(test1){
+            main = JSON.parse(test1)
+            for(var key in main){
+                if(idwishlist == main[key]){
+                  main.splice(key,1)
+                }
+            }
+        }
+        main.push(idwishlist)
+        localStorage.setItem("Wishlist",JSON.stringify(main))
+  }
   function fetchDataproduct(){
     if(getItem.length>0){
       return(getItem.map((value,key)=>{
         return(
-          <div className="col-6 col-lg-4 mb-4 mb-sm-9">
+          <div className="col-6 col-lg-4 mb-4 mb-sm-9" key={key}>
           <div className="product-item">
             <div className="product-thumb">
               <a className="d-block" href={"product-details/" + value._id}>
@@ -56,13 +77,13 @@ function Homepage() {
               </a>
               <span className="flag-new">new</span>
               <div className="product-action">
-                <button type="button" className="product-action-btn action-btn-quick-view" data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
+                <button id={value._id} onClick={()=>handleClicklarge(value._id)}type="button" className="product-action-btn action-btn-quick-view" data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
                   <i className="fa fa-expand" />
                 </button>
                 <button id={value._id} onClick={()=>handleClick(value._id)} type="button" className="product-action-btn action-btn-cart" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">
                   <span>Add to cart</span>
                 </button>
-                <button type="button" className="product-action-btn action-btn-wishlist" data-bs-toggle="modal" data-bs-target="#action-WishlistModal">
+                <button id={value._id} onClick={()=>handleclickwishlist(value._id)} type="button" className="product-action-btn action-btn-wishlist" data-bs-toggle="modal" data-bs-target="#action-WishlistModal">
                   <i className="fa fa-heart-o" />
                 </button>
               </div>
@@ -91,7 +112,7 @@ function Homepage() {
               <button type="button" className="product-action-btn action-btn-wishlist" data-bs-toggle="modal" data-bs-target="#action-WishlistModal">
                 <i className="fa fa-heart-o" />
               </button>
-              <button id={value._id} onClick={handleClick} type="button" className="product-action-btn action-btn-cart" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">
+              <button type="button" className="product-action-btn action-btn-cart" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">
                 <span>Add to cart</span>
               </button>
             </div>

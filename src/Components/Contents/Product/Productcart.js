@@ -1,9 +1,11 @@
 import axios from "axios"
 import { Link } from "react-router-dom"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
+import { UserContext } from "../../../UserContext"
 function Productcart(){
   const [getItem, setItem] = useState("")
-  const getCart = JSON.parse(localStorage.getItem("CartItem"))
+  const getdataCartItem = JSON.parse(localStorage.getItem("CartItem"))
+  const {getCart,setCart} = useContext(UserContext)
   var gettong1 = 0
   useEffect(() => {
     axios.get("http://localhost:8000/products")
@@ -15,6 +17,61 @@ function Productcart(){
             console.log(error)
         })
       }, [])
+      const increaseqty = (e) =>{
+        if (Object.keys(getdataCartItem).length>0){
+          return Object.keys(getdataCartItem).map((value,key)=>{
+            if(e.target.id == value){   
+              console.log(e.target.id)         
+              getdataCartItem[value]++
+              localStorage.setItem("CartItem",JSON.stringify(getdataCartItem))
+            }
+          })
+        }
+      }
+      function fetchData(){
+          if(getItem.length>0){
+            return getItem.map((value,key)=>{
+              if (getdataCartItem != null){
+                return Object.keys(getdataCartItem).map((key1,index)=>{
+                  if(value._id == key1){
+                    const gettong = parseInt(getdataCartItem[key1] * value.price)
+                    gettong1 += gettong
+                      return(
+                              <tr className="tbody-item" key={key}>
+                                          <td className="product-remove">
+                                            <a className="remove" href="javascript:void(0)">×</a>
+                                          </td>
+                                          <td className="product-thumbnail">
+                                            <div className="thumb">
+                                              <a href="single-product.html">
+                                                <img src={""+value.image} style={{width:"68px",height:"84px"}} width={68} height={84} alt="Image-HasTech" />
+                                              </a>
+                                            </div>
+                                          </td>
+                                          <td className="product-name">
+                                            <a className="title" href="single-product.html">{value.title}</a>
+                                          </td>
+                                          <td className="product-price">
+                                            <span className="price">{value.price}</span>
+                                          </td>
+                                          <td className="product-quantity">
+                                            <div className="pro-qty">
+                                              <a className="cart_quantity_up" href> - </a>
+                                              <input style={{width:"50%"}} type="text" className="quantity" title="Quantity" value={getdataCartItem[key1]}/>
+                                              <a onClick={increaseqty} id={value._id} className="cart_quantity_up" href> + </a>
+                                            </div>
+                                          </td>
+                                          <td className="product-subtotal">
+                                            <span className="price">{gettong}</span>
+                                          </td>
+                                </tr>
+                        )
+                  }
+                })
+              }
+            })
+          }
+      }
     return(
         <>
         {/*== Start Page Header Area Wrapper ==*/}
@@ -44,89 +101,7 @@ function Productcart(){
                     </tr>
                   </thead>
                   <tbody>
-                    <tr className="tbody-item">
-                      <td className="product-remove">
-                        <a className="remove" href="javascript:void(0)">×</a>
-                      </td>
-                      <td className="product-thumbnail">
-                        <div className="thumb">
-                          <a href="single-product.html">
-                            <img src="assets/images/shop/cart1.webp" width={68} height={84} alt="Image-HasTech" />
-                          </a>
-                        </div>
-                      </td>
-                      <td className="product-name">
-                        <a className="title" href="single-product.html">Condimentum posuere consectetur urna</a>
-                      </td>
-                      <td className="product-price">
-                        <span className="price">$115.00</span>
-                      </td>
-                      <td className="product-quantity">
-                        <div className="pro-qty">
-                          <input type="text" className="quantity" title="Quantity" defaultValue={1} />
-                        </div>
-                      </td>
-                      <td className="product-subtotal">
-                        <span className="price">$115.00</span>
-                      </td>
-                    </tr>
-                    <tr className="tbody-item">
-                      <td className="product-remove">
-                        <a className="remove" href="javascript:void(0)">×</a>
-                      </td>
-                      <td className="product-thumbnail">
-                        <div className="thumb">
-                          <a href="single-product.html">
-                            <img src="assets/images/shop/cart2.webp" width={68} height={84} alt="Image-HasTech" />
-                          </a>
-                        </div>
-                      </td>
-                      <td className="product-name">
-                        <a className="title" href="single-product.html">Kaoreet lobortis sagittis laoreet</a>
-                      </td>
-                      <td className="product-price">
-                        <span className="price">$95.00</span>
-                      </td>
-                      <td className="product-quantity">
-                        <div className="pro-qty">
-                          <input type="text" className="quantity" title="Quantity" defaultValue={1} />
-                        </div>
-                      </td>
-                      <td className="product-subtotal">
-                        <span className="price">$95.00</span>
-                      </td>
-                    </tr>
-                    <tr className="tbody-item">
-                      <td className="product-remove">
-                        <a className="remove" href="javascript:void(0)">×</a>
-                      </td>
-                      <td className="product-thumbnail">
-                        <div className="thumb">
-                          <a href="single-product.html">
-                            <img src="assets/images/shop/cart3.webp" width={68} height={84} alt="Image-HasTech" />
-                          </a>
-                        </div>
-                      </td>
-                      <td className="product-name">
-                        <a className="title" href="single-product.html">Nostrum exercitationem itae ipsum</a>
-                      </td>
-                      <td className="product-price">
-                        <span className="price">$79.00</span>
-                      </td>
-                      <td className="product-quantity">
-                        <div className="pro-qty">
-                          <input type="text" className="quantity" title="Quantity" defaultValue={1} />
-                        </div>
-                      </td>
-                      <td className="product-subtotal">
-                        <span className="price">$79.00</span>
-                      </td>
-                    </tr>
-                    <tr className="tbody-item-actions">
-                      <td colSpan={6}>
-                        <button type="submit" className="btn-update-cart disabled" disabled>Update cart</button>
-                      </td>
-                    </tr>
+                    {fetchData()}
                   </tbody>
                 </table>
               </form>
@@ -148,7 +123,7 @@ function Productcart(){
                       <tr className="cart-subtotal">
                         <th>Subtotal</th>
                         <td>
-                          <span className="amount">$499.00</span>
+                          <span className="amount">{gettong1}</span>
                         </td>
                       </tr>
                       <tr className="shipping-totals">
@@ -175,13 +150,13 @@ function Productcart(){
                       <tr className="order-total">
                         <th>Total</th>
                         <td>
-                          <span className="amount">$504.00</span>
+                          <span className="amount">{gettong1}</span>
                         </td>
                       </tr>
                     </tbody>
                   </table>
                   <div className="text-end">
-                    <a href="shop-checkout.html" className="checkout-button">Proceed to checkout</a>
+                    <a href="/productcheckout" className="checkout-button">Proceed to checkout</a>
                   </div>
                 </div>
               </div>
