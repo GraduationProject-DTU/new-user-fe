@@ -25,13 +25,10 @@ function Homepage() {
         // })
   }, [])
   const handleClick = (id) => {
-    console.log(id)
     let main = {}
     let nameInput = id
     let value = 1
     let test1 = localStorage.getItem("CartItem")
-    console.log(nameInput)
-    if(nameInput != ""){
       setid(nameInput)
       if(test1){
         main = JSON.parse(test1)
@@ -46,7 +43,6 @@ function Homepage() {
       main[nameInput] = value
       localStorage.setItem("CartItem",JSON.stringify(main))
       setCart(main)
-      }
   }
   function fetchDataproduct(){
     if(getItem.length>0){
@@ -82,7 +78,7 @@ function Homepage() {
                 </div>
                 <div className="reviews">150 reviews</div>
               </div>
-              <h4 className="title"><a href="product-details.html">{value.title}</a></h4>
+              <h4 className="title"><a href={"product-details/" + value._id}>{value.title}</a></h4>
               <div className="prices">
                 <span className="price">{value.price}</span>
                 <span className="price-old">300.00</span>

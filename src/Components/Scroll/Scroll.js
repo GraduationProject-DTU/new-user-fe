@@ -18,15 +18,71 @@ function Scroll(){
             console.log(error)
         })
   }, [])
-      function fetchaddTocart(){
+    function FetchCart(){
+      if(getItem.length>0){
+        return getItem.map((value,key)=>{
+          if(Object.keys(getCart).length>0){
+            return Object.keys(getCart).map((key1,index)=>{
+              if (key1 == value._id ){
+                return(
+                  <li className="aside-product-list-item">
+                  <a href="#/" className="remove">×</a>
+                  <a href="product-details.html">
+                    <img src={""+value.image} style={{width:"68px",height:"84px"}} width={68} height={84} alt="Image" />
+                    <span className="product-title">{value.title}</span>
+                  </a>
+                  <span className="product-price">{getCart[key1]} × {value.price}</span>
+                </li>
+                )
+              }
+            })
+          }
+        })
+      }
+    }
+    //FetchLocalStorage
+    // function fetchCart(){
+    //   const getdataCartItem = JSON.parse(localStorage.getItem("CartItem"))
+    //     if(getItem.length>0){
+    //         if(Object.keys(getdataCartItem).length>1){
+    //           return Object.keys(getdataCartItem).map((key,index)=>{
+    //             console.log(getdataCartItem[key])
+    //             return getItem.map((value,key1)=>{
+    //               console.log(value)
+    //               if(key == value._id){
+    //                 return(
+    //                   <li className="aside-product-list-item">
+    //                     <a href="#/" className="remove">×</a>
+    //                     <a href="product-details.html">
+    //                       <img src={""+value.image} style={{width:"68px",height:"84px"}} width={68} height={84} alt="Image" />
+    //                       <span className="product-title">{value.title}</span>
+    //                     </a>
+    //                     <span className="product-price">{getdataCartItem[key]} × {value.price}</span>
+    //                   </li>
+    //                 )
+    //               }
+    //             })
+    //           })
+    //         }
+    //       }
+    //   }
+    function fetchProduct(){
         if(getItem.length>0){
           return getItem.map((value,key)=>{
-            if(value._id == getid){
-              setdataCart(value)
+            if(getid == value._id ){
+              console.log(value)
+              return(
+              <div className="modal-action-product">
+                <div className="thumb">
+                  <img src={""+value.image} style={{width:"466px" ,height:"320px"}} alt="Organic Food Juice" width={466} height={320} />
+                </div>
+                <h4 className="product-name"><a href={"product-details/" + value._id}>{value.title}</a></h4>
+              </div>
+              )
             }
           })
         }
-      }
+    }
     return(
       <div>
         {/*== Start Product Quick Wishlist Modal ==*/}
@@ -65,12 +121,7 @@ function Scroll(){
                   <div className="modal-action-messages">
                     <i className="fa fa-check-square-o" /> Added to cart successfully!
                   </div>
-                  <div className="modal-action-product">
-                    <div className="thumb">
-                      <img src="assets/images/shop/modal1.webp" alt="Organic Food Juice" width={466} height={320} />
-                    </div>
-                    <h4 className="product-name"><a href="product-details.html">Readable content DX22</a></h4>
-                  </div>
+                    {fetchProduct()}
                 </div>
               </div>
             </div>
@@ -165,22 +216,7 @@ function Scroll(){
           </div>
           <div className="offcanvas-body">
             <ul className="aside-cart-product-list">
-              <li className="aside-product-list-item">
-                <a href="#/" className="remove">×</a>
-                <a href="product-details.html">
-                  <img src="assets/images/shop/cart1.webp" width={68} height={84} alt="Image" />
-                  <span className="product-title">Leather Mens Slipper</span>
-                </a>
-                <span className="product-price">1 × £69.99</span>
-              </li>
-              <li className="aside-product-list-item">
-                <a href="#/" className="remove">×</a>
-                <a href="product-details.html">
-                  <img src="assets/images/shop/cart2.webp" width={68} height={84} alt="Image" />
-                  <span className="product-title">Quickiin Mens shoes</span>
-                </a>
-                <span className="product-price">1 × £20.00</span>
-              </li>
+                {FetchCart()}
             </ul>
             <p className="cart-total"><span>Subtotal:</span><span className="amount">£89.99</span></p>
             <a className="btn-total" href="product-cart.html">View cart</a>
