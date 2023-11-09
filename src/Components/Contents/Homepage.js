@@ -9,6 +9,7 @@ function Homepage() {
   const {getidlarge,setidlarge} = useContext(UserContext)
   const {getdataCart1,setdataCart1} = useContext(UserContext)
   const {getidwishlist,setidwishlist} = useContext(UserContext)
+  const [valueao,setvalueao] = useState("valueao")
   useEffect(() => {
     axios.get("http://localhost:8000/products")
         .then(response => {

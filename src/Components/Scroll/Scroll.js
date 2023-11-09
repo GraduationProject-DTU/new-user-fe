@@ -15,32 +15,32 @@ function Scroll(){
     axios.get("http://localhost:8000/products")
         .then(response => {
             setItem(response.data.mess)
-            // console.log(response.data.mess)
+            console.log(response.data.mess)
         })
         .catch(function (error) {
             console.log(error)
         })
   }, [])
-  const handleClick = (id) => {
-    let main = {}
-    let nameInput = id
-    let value = 1
-    let test1 = localStorage.getItem("CartItem")
-      setid(nameInput)
-      if(test1){
-        main = JSON.parse(test1)
-        for(var key in main){
-            const getqty = main[key]
-            if(nameInput == key){
-                value = main[nameInput] +1
-                localStorage.setItem("CartItem",JSON.stringify(main))
-            }
-        }
+    const handleClick = (id) => {
+      let main = {}
+      let nameInput = id
+      let value = 1
+      let test1 = localStorage.getItem("CartItem")
+        setid(nameInput)
+        if(test1){
+          main = JSON.parse(test1)
+          for(var key in main){
+              const getqty = main[key]
+              if(nameInput == key){
+                  value = main[nameInput] +1
+                  localStorage.setItem("CartItem",JSON.stringify(main))
+              }
+          }
+      }
+        main[nameInput] = value
+        localStorage.setItem("CartItem",JSON.stringify(main))
+        setCart(main)
     }
-      main[nameInput] = value
-      localStorage.setItem("CartItem",JSON.stringify(main))
-      setCart(main)
-  }
     const deleteItem = (e) => {
       e.preventDefault()
       if(Object.keys(getdataCartItem).length>0){

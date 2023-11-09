@@ -5,9 +5,10 @@ import { UserContext } from "../../../UserContext"
 function Productcart(){
   const [getItem, setItem] = useState("")
   const getdataCartItem = JSON.parse(localStorage.getItem("CartItem"))
+  const [valueao,setvalueao] = useState("valueao")
   const {getCart,setCart} = useContext(UserContext)
   var gettong1 = 0
-  useEffect(() => {
+      useEffect(() => {
     axios.get("http://localhost:8000/products")
         .then(response => {
             setItem(response.data.mess)
@@ -16,7 +17,7 @@ function Productcart(){
         .catch(function (error) {
             console.log(error)
         })
-      }, [])
+      }, [valueao])
       const increaseqty = (e) =>{
         if (Object.keys(getdataCartItem).length>0){
           return Object.keys(getdataCartItem).map((value,key)=>{
@@ -24,6 +25,7 @@ function Productcart(){
               console.log(e.target.id)         
               getdataCartItem[value]++
               localStorage.setItem("CartItem",JSON.stringify(getdataCartItem))
+              setvalueao(getdataCartItem)
             }
           })
         }

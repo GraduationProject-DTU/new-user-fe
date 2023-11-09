@@ -105,8 +105,7 @@ function CreateBlog(){
             console.log(getdata)
             formData.append("category", getselectcategory)
             Object.keys(getFile).map((item,i)=>{
-                formData.append("file[]",getFile[item])
-                console.log(getFile[item])
+                formData.append("images",getFile[item])
             })
             axios.post(url,formData,config)
             .then(response => {
