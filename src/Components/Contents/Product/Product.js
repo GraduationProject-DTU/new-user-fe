@@ -4,6 +4,7 @@ import './product.css'
 
 function Product() {
   const [products, setProducts] = useState([])
+  const [category, setCategory] = useState([])
   const [value, setValue] = useState(0)
 
 
@@ -13,6 +14,11 @@ function Product() {
       axios.get('http://localhost:8000/products')
         .then(res => {
           setProducts(res.data.mess)
+        })
+
+      axios.get('http://localhost:8000/category-products')
+        .then(res => {
+          setCategory(res.data.category)
         })
     } catch (error) {
       console.log('err', error)
@@ -148,9 +154,9 @@ function Product() {
           <div className="row g-3 g-sm-6">
             <div className="col-6 col-lg-4 col-lg-2 col-xl-2">
               {/*== Start Product Category Item ==*/}
-              <a href="product.html" className="product-category-item">
+              <a href="/product" className="product-category-item">
                 <img className="icon" src="assets/images/shop/category/1.webp" width={70} height={80} alt="Image-HasTech" />
-                <h3 className="title">Hare care</h3>
+                <h3 className="title">Hare Care</h3>
                 <span className="flag-new">new</span>
               </a>
               {/*== End Product Category Item ==*/}
