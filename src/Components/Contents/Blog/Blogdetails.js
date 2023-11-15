@@ -56,23 +56,14 @@ function Blogdetails(props){
         )
       }
       function fetchData() {
-        const getdata2 = getdata1.images
-          if(getdata2 >0){
-            getdata2.splice(getdata2,0)
-          }
-        if (Object.keys(getdata1).length > 0) {
-          if(getdata2.length){
-            return getdata2.map((value,key)=>{
-              return (
-              <div className="blog-detail">
-                <img className="blog-detail-img mb-7 mb-lg-10" src={""+value} style={{width:"1170px" , height:"1012px"}} alt="Image" />
-                <p className="desc mt-4 mt-lg-7">{getdata1.description}</p>
-                <p className="desc mb-6 mb-lg-10">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Gravida quis turpis feugiat sapien venenatis. Iaculis nunc nisl risus mattis elit id lobortis. Proin erat fermentum tempor elementum bibendum. Proin sed in nunc purus. Non duis eu pretium dictumst sed habitant sit vitae eget. Nisi sit lacus, fusce diam. Massa odio sit velit sed purus quis dolor.</p>
+            return (
+              <div className="row justify-content-center">
+                <div className="col-lg-10">
+                  <div className="blog-detail" dangerouslySetInnerHTML={{__html:getdata1.description}}>
+                  </div>
+                </div>
               </div>
-              )
-            })
-          }
-        }
+            ) 
       }
     return(
         <>

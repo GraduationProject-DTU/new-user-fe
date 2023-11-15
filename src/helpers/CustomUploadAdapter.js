@@ -2,13 +2,17 @@ import axios from 'axios'
 
 let getDataUser = JSON.parse(localStorage.getItem("User"))
 let url = "http://localhost:8000/blogs/upload-cke"
-let accessToken = getDataUser.token
 let config = {
+}
+if (getDataUser){
+    let accessToken = getDataUser.token
+    config = {
     headers: {
         'token': 'Bearer ' + accessToken,
         'Content-Type': 'multipart/form-data',
         'Accept': 'application/json'
     }
+}
 }
 
 export default class CustomUploadAdapter {
@@ -17,18 +21,18 @@ export default class CustomUploadAdapter {
     }
 
     upload = () => {
-        return this.loader.file.then(file => new Promise((resolve, reject) => {
-            const formData = new FormData()
-            formData.append('image', file)
-            axios.post(url, formData, config)
-                .then(res => {
-                    resolve({
-                        default: res.data.path
+            return this.loader.file.then(file => new Promise((resolve, reject) => {
+                const formData = new FormData()
+                formData.append('image', file)
+                axios.post(url, formData, config)
+                    .then(res => {
+                        resolve({
+                            default: res.data.path
+                        })
                     })
-                })
-                .catch(err => {
-                    reject(err)
-                })
-        }))
+                    .catch(err => {
+                        reject(err)
+                    })
+            }))   
     }
 }

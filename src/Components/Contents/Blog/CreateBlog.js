@@ -80,23 +80,23 @@ function CreateBlog() {
         if (!flag) {
             setErrors(errorSubmit)
         }
-        // if (getFile == "") {
-        //     errorSubmit.files = "Chon hinh anh"
-        //     flag = false
-        // } else {
-        //     Object.keys(getFile).map((item,i)=>{
-        //         let checkImg = ["png", "jpg", "jpeg", "PNG", "JPG"]
-        //         let getsize = getFile[item].size
-        //         let getname = getFile[item].name
-        //         let test = getname.split(".")
-        //         let test1 = checkImg.includes(test[1])
-        //         if (getsize > 1024 * 1024) {
-        //             errorSubmit.files = "File qua lon"
-        //         } else if (!checkImg.includes(test[1])) {
-        //             errorSubmit.files = "Sai dinh dang"
-        //         }
-        //     })
-        // }
+        if (getFile == "") {
+            errorSubmit.files = "Chon hinh anh"
+            flag = false
+        } else {
+            Object.keys(getFile).map((item,i)=>{
+                let checkImg = ["png", "jpg", "jpeg", "PNG", "JPG"]
+                let getsize = getFile[item].size
+                let getname = getFile[item].name
+                let test = getname.split(".")
+                let test1 = checkImg.includes(test[1])
+                if (getsize > 1024 * 1024) {
+                    errorSubmit.files = "File qua lon"
+                } else if (!checkImg.includes(test[1])) {
+                    errorSubmit.files = "Sai dinh dang"
+                }
+            })
+        }
         if (flag) {
             let url = "http://localhost:8000/blogs/create-blog"
             let accessToken = getDataUser.token
@@ -109,9 +109,9 @@ function CreateBlog() {
             }
             const formData = new FormData()
             formData.append("title", inputs.title)
-            console.log(inputs.title)
+            // console.log(inputs.title)
             formData.append("description", getdata)
-            console.log(getdata)
+            // console.log(getdata)
             formData.append("category", getselectcategory)
             Object.keys(getFile).map((item, i) => {
                 formData.append("images", getFile[item])
@@ -119,6 +119,7 @@ function CreateBlog() {
             axios.post(url, formData, config)
                 .then(response => {
                     console.log(response)
+                    alert("post ok")
                 })
                 .catch(error => {
                     console.log(error)

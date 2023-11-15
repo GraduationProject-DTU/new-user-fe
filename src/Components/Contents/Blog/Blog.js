@@ -1,6 +1,7 @@
 import axios from "axios"
 import { Link } from "react-router-dom"
 import { useEffect, useState } from "react"
+import ReactPaginate from 'react-paginate';
 import Category from "./Category"
 function Blog(){
   const [getItem, setItem] = useState("")
@@ -8,24 +9,29 @@ function Blog(){
             axios.get("http://localhost:8000/blogs/")
                 .then(response => {
                     setItem(response.data.blog)
+                    console.log(response)
                 })
                 .catch(function (error) {
                     console.log(error)
                 })
         }, [])
+        const handlePageClick = (event) => {
+
+        }
         function fetchData(){
           if(Object.keys(getItem).length>0){
             if(getItem.length>0){
               return getItem.map((value,key)=>{
                 const setimage = value.images["0"]
+                console.log(value)
               return(
                 <div className="col-sm-6 col-lg-4 col-xl-6 mb-8">
                 <div className="post-item">
                   <a href={"/blog-details/"+ value._id} className="thumb">
-                    <img src={"" +setimage} style={{width : "370px" , height: "320px"}} alt="Image-HasTech" />
+                    <img src={"" +setimage} style={{width : "370px" , height: "320px" }} alt="Image-HasTech" />
                   </a>
                   <div className="content">
-                    <a className="post-category" href="blog.html">beauty</a>
+                    <a className="post-category" href="blog.html">{value.category}</a>
                     <h4 className="title"><a href={"/blog-details/"+ value._id}>{value.title}</a></h4>
                     <ul className="meta">
                       <li className="author-info"><span>By:</span> <a href={"/blog-details/"+ value._id}>{value.author}</a></li>
@@ -34,6 +40,7 @@ function Blog(){
                   </div>
                 </div>
                 </div>
+                
               )
               })
             }
@@ -57,8 +64,25 @@ function Blog(){
               <div className="col-xl-8">
                 <div className="row">
                       {fetchData()}
-                </div>           
-              <a href="/createblog"><button>Create new blog</button></a>
+                </div>
+                <div className="col-12">
+              <ul className="pagination justify-content-center me-auto ms-auto mt-5 mb-0 mb-sm-10">
+                <ReactPaginate
+                      breakLabel="..."
+                      onPageChange={handlePageClick}
+                      pageRangeDisplayed={5}
+                      pageCount={6}
+                      previousClassName="page-item"
+                      nextClassName="page-item"
+                      pageClassName="page-item"
+                      pageLinkClassName="page-link"
+                      breakClassName="page-item"
+                      breakLinkClassName="page-link"
+                      containerClassName="pagination"
+                      activeClassName="active"
+                    />
+              </ul>
+            </div>    
               </div>
               <div className="col-xl-4">
                 <div className="blog-sidebar-widget">

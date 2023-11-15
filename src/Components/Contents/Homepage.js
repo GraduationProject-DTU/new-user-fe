@@ -69,57 +69,59 @@ function Homepage() {
   function fetchDataproduct(){
     if(getItem.length>0){
       return(getItem.map((value,key)=>{
-        return(
-          <div className="col-6 col-lg-4 mb-4 mb-sm-9" key={key}>
-          <div className="product-item">
-            <div className="product-thumb">
-              <a className="d-block" href={"product-details/" + value._id}>
-                <img src={""+value.image} style={{width: "370px", height: "450px"}} width={370} height={450} alt="Image-HasTech" />
-              </a>
-              <span className="flag-new">new</span>
-              <div className="product-action">
-                <button id={value._id} onClick={()=>handleClicklarge(value._id)}type="button" className="product-action-btn action-btn-quick-view" data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
+        if(key<=2){
+          return(
+            <div className="col-6 col-lg-4 mb-4 mb-sm-9" key={key}>
+            <div className="product-item">
+              <div className="product-thumb">
+                <a className="d-block" href={"product-details/" + value._id}>
+                  <img src={""+value.image} style={{width: "370px", height: "450px"}} width={370} height={450} alt="Image-HasTech" />
+                </a>
+                <span className="flag-new">new</span>
+                <div className="product-action">
+                  <button id={value._id} onClick={()=>handleClicklarge(value._id)}type="button" className="product-action-btn action-btn-quick-view" data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
+                    <i className="fa fa-expand" />
+                  </button>
+                  <button id={value._id} onClick={()=>handleClick(value._id)} type="button" className="product-action-btn action-btn-cart" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">
+                    <span>Add to cart</span>
+                  </button>
+                  <button id={value._id} onClick={()=>handleclickwishlist(value._id)} type="button" className="product-action-btn action-btn-wishlist" data-bs-toggle="modal" data-bs-target="#action-WishlistModal">
+                    <i className="fa fa-heart-o" />
+                  </button>
+                </div>
+              </div>
+              <div className="product-info">
+                <div className="product-rating">
+                  <div className="rating">
+                    <i className="fa fa-star-o" />
+                    <i className="fa fa-star-o" />
+                    <i className="fa fa-star-o" />
+                    <i className="fa fa-star-o" />
+                    <i className="fa fa-star-half-o" />
+                  </div>
+                  <div className="reviews">150 reviews</div>
+                </div>
+                <h4 className="title"><a href={"product-details/" + value._id}>{value.title}</a></h4>
+                <div className="prices">
+                  <span className="price">{value.price}</span>
+                  <span className="price-old">300.00</span>
+                </div>
+              </div>
+              <div className="product-action-bottom">
+                <button type="button" className="product-action-btn action-btn-quick-view" data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
                   <i className="fa fa-expand" />
                 </button>
-                <button id={value._id} onClick={()=>handleClick(value._id)} type="button" className="product-action-btn action-btn-cart" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">
-                  <span>Add to cart</span>
-                </button>
-                <button id={value._id} onClick={()=>handleclickwishlist(value._id)} type="button" className="product-action-btn action-btn-wishlist" data-bs-toggle="modal" data-bs-target="#action-WishlistModal">
+                <button type="button" className="product-action-btn action-btn-wishlist" data-bs-toggle="modal" data-bs-target="#action-WishlistModal">
                   <i className="fa fa-heart-o" />
                 </button>
+                <button type="button" className="product-action-btn action-btn-cart" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">
+                  <span>Add to cart</span>
+                </button>
               </div>
             </div>
-            <div className="product-info">
-              <div className="product-rating">
-                <div className="rating">
-                  <i className="fa fa-star-o" />
-                  <i className="fa fa-star-o" />
-                  <i className="fa fa-star-o" />
-                  <i className="fa fa-star-o" />
-                  <i className="fa fa-star-half-o" />
-                </div>
-                <div className="reviews">150 reviews</div>
-              </div>
-              <h4 className="title"><a href={"product-details/" + value._id}>{value.title}</a></h4>
-              <div className="prices">
-                <span className="price">{value.price}</span>
-                <span className="price-old">300.00</span>
-              </div>
             </div>
-            <div className="product-action-bottom">
-              <button type="button" className="product-action-btn action-btn-quick-view" data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
-                <i className="fa fa-expand" />
-              </button>
-              <button type="button" className="product-action-btn action-btn-wishlist" data-bs-toggle="modal" data-bs-target="#action-WishlistModal">
-                <i className="fa fa-heart-o" />
-              </button>
-              <button type="button" className="product-action-btn action-btn-cart" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">
-                <span>Add to cart</span>
-              </button>
-            </div>
-          </div>
-          </div>
-        )
+          )
+        }
       }))
     }
   }
