@@ -74,9 +74,12 @@ function Homepage() {
             <div className="col-6 col-lg-4 mb-4 mb-sm-9" key={key}>
             <div className="product-item">
               <div className="product-thumb">
-                <a className="d-block" href={"product-details/" + value._id}>
+                <Link to={`/product-details/${value._id}`}>
                   <img src={""+value.image} style={{width: "370px", height: "450px"}} width={370} height={450} alt="Image-HasTech" />
-                </a>
+                </Link>
+                {/* <a className="d-block" href={"product-details/" + value._id}>
+                  <img src={""+value.image} style={{width: "370px", height: "450px"}} width={370} height={450} alt="Image-HasTech" />
+                </a> */}
                 <span className="flag-new">new</span>
                 <div className="product-action">
                   <button id={value._id} onClick={()=>handleClicklarge(value._id)}type="button" className="product-action-btn action-btn-quick-view" data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
@@ -101,7 +104,9 @@ function Homepage() {
                   </div>
                   <div className="reviews">150 reviews</div>
                 </div>
-                <h4 className="title"><a href={"product-details/" + value._id}>{value.title}</a></h4>
+                <Link to={`/product-details/${value._id}`}>
+                  <h4 className="title">{value.title}</h4>
+                </Link>
                 <div className="prices">
                   <span className="price">{value.price}</span>
                   <span className="price-old">300.00</span>

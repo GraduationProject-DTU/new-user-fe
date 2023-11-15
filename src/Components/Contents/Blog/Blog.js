@@ -16,20 +16,20 @@ function Blog(){
                 })
         }, [])
         const handlePageClick = (event) => {
-
+          console.log(event)
         }
         function fetchData(){
           if(Object.keys(getItem).length>0){
             if(getItem.length>0){
               return getItem.map((value,key)=>{
                 const setimage = value.images["0"]
-                console.log(value)
+                // console.log(value)
               return(
                 <div className="col-sm-6 col-lg-4 col-xl-6 mb-8">
                 <div className="post-item">
-                  <a href={"/blog-details/"+ value._id} className="thumb">
-                    <img src={"" +setimage} style={{width : "370px" , height: "320px" }} alt="Image-HasTech" />
-                  </a>
+                <Link to={`/blog-details/${value._id}`}>
+                <img src={"" +setimage} style={{width : "370px" , height: "320px" }} alt="Image-HasTech" />
+                </Link>
                   <div className="content">
                     <a className="post-category" href="blog.html">{value.category}</a>
                     <h4 className="title"><a href={"/blog-details/"+ value._id}>{value.title}</a></h4>
@@ -39,8 +39,7 @@ function Blog(){
                     </ul>
                   </div>
                 </div>
-                </div>
-                
+                </div>                
               )
               })
             }
@@ -82,7 +81,8 @@ function Blog(){
                       activeClassName="active"
                     />
               </ul>
-            </div>    
+                </div> 
+                <button><Link to={"/createblog"}>Create New Blog</Link></button>   
               </div>
               <div className="col-xl-4">
                 <div className="blog-sidebar-widget">

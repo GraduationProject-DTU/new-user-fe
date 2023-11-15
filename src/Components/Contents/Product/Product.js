@@ -1,7 +1,7 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import './product.css'
-
+import { Link } from "react-router-dom"
 function Product() {
   const [products, setProducts] = useState([])
   const [category, setCategory] = useState([])
@@ -245,9 +245,10 @@ function Product() {
                         <div className="reviews">{e.brand}</div>
                       </div>
                       <h4 className="title">
-                        <a href={"product-details/" + e._id} >
+                        <Link to={`/product-details/${e._id}`}>{e.title}</Link>
+                        {/* <a href={"product-details/" + e._id} >
                           {e.title}
-                        </a>
+                        </a> */}
                       </h4>
                       <div className="product-rating">
                         <div className="reviews">Đã bán {e.sold}</div>

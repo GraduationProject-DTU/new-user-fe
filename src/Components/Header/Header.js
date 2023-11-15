@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 function Header() {
   const getDataUser = JSON.parse(localStorage.getItem("User"))
   function Account(){
@@ -41,69 +42,19 @@ function Header() {
         <div className="row align-items-center">
           <div className="col-5 col-sm-6 col-lg-3">
             <div className="header-logo">
-              <a href="/">
-                <img className="logo-main" src="assets/images/logo.webp" width={115} height={88} alt="Logo" />
-              </a>
+              <Link to={"/"}>
+              <img className="logo-main" src="assets/images/logo.webp" width={115} height={88} alt="Logo" />
+              </Link>
             </div>
           </div>
           <div className="col-lg-6 d-none d-lg-block">
             <div className="header-navigation">
               <ul className="main-nav justify-content-start">
-                <li className="has-submenu"><a href="/">home</a>
-                  {/* <ul className="submenu-nav">
-                    <li><a href="index.html">Home One</a></li>
-                    <li><a href="index-two.html">Home Two</a></li>
-                  </ul> */}
-                </li>
-                <li><a href="about">about</a></li>
-                <li className="has-submenu position-static"><a href="product">shop</a>
-                  {/* <ul className="submenu-nav-mega">
-                    <li><a href="#/" className="mega-title">Shop Layout</a>
-                      <ul>
-                        <li><a href="product.html">Shop 3 Column</a></li>
-                        <li><a href="product-four-columns.html">Shop 4 Column</a></li>
-                        <li><a href="product-left-sidebar.html">Shop Left Sidebar</a></li>
-                        <li><a href="product-right-sidebar.html">Shop Right Sidebar</a></li>
-                      </ul>
-                    </li>
-                    <li><a href="#/" className="mega-title">Single Product</a>
-                      <ul>
-                        <li><a href="product-details-normal.html">Single Product Normal</a></li>
-                        <li><a href="product-details.html">Single Product Variable</a></li>
-                        <li><a href="product-details-group.html">Single Product Group</a></li>
-                        <li><a href="product-details-affiliate.html">Single Product Affiliate</a></li>
-                      </ul>
-                    </li>
-                    <li><a href="#/" className="mega-title">Others Pages</a>
-                      <ul>
-                        <li><a href="product-cart.html">Shopping Cart</a></li>
-                        <li><a href="product-checkout.html">Checkout</a></li>
-                        <li><a href="product-wishlist.html">Wishlist</a></li>
-                        <li><a href="product-compare.html">Compare</a></li>
-                      </ul>
-                    </li>
-                  </ul> */}
-                </li>
-                <li className="has-submenu"><a href="blog">Blog</a>
-                  {/* <ul className="submenu-nav">
-                    <li className="has-submenu"><a href="#/">Blog Layout</a>
-                      <ul className="submenu-nav">
-                        <li><a href="blog.html">Blog Grid</a></li>
-                        <li><a href="blog-left-sidebar.html">Blog Left Sidebar</a></li>
-                        <li><a href="blog-right-sidebar.html">Blog Right Sidebar</a></li>
-                      </ul>
-                    </li>
-                    <li><a href="blog-details.html">Blog Details</a></li>
-                  </ul> */}
-                </li>
-                {/* <li className="has-submenu"><a href="account-login.html">Pages</a>
-                  <ul className="submenu-nav">
-                    <li><a href="account-login.html">My Account</a></li>
-                    <li><a href="faq.html">Frequently Questions</a></li>
-                    <li><a href="page-not-found.html">Page Not Found</a></li>
-                  </ul>
-                </li> */}
-                <li><a href="contact">Contact</a></li>
+                <li><Link to="/">Home</Link></li>
+                <li><Link to="/about">Contact</Link></li>
+                <li><Link to="/product">Shop</Link></li>
+                <li><Link to="/blog">Blog</Link></li>
+                <li><Link to="/contact">Contact</Link></li>
               </ul>
             </div>
           </div>

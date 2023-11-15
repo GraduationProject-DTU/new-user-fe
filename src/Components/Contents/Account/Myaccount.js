@@ -1,8 +1,11 @@
+import { useNavigate } from "react-router-dom"
 function Myaccount(){
+  const navigate = useNavigate()
   const getDataUser = JSON.parse(localStorage.getItem("User"))
     const logout =(e) =>{
       localStorage.removeItem("User")
       alert("Logout successfully")
+      hook: navigate("/")
     }
     return(
         <>
@@ -35,7 +38,7 @@ function Myaccount(){
                   <button className="nav-link" id="payment-method-tab" data-bs-toggle="tab" data-bs-target="#payment-method" type="button" role="tab" aria-controls="payment-method" aria-selected="false">Payment Method</button>
                   <button className="nav-link" id="address-edit-tab" data-bs-toggle="tab" data-bs-target="#address-edit" type="button" role="tab" aria-controls="address-edit" aria-selected="false">address</button>
                   <button className="nav-link" id="account-info-tab" data-bs-toggle="tab" data-bs-target="#account-info" type="button" role="tab" aria-controls="account-info" aria-selected="false">Account Details</button>
-                  <button className="nav-link" onclick="window.location.href='account-login.html'" type="button">Logout</button>
+                  <button className="nav-link" href ="/" onClick={logout} type="button">Logout</button>
                 </div>
               </div>
               <div className="col-lg-9 col-md-8">
