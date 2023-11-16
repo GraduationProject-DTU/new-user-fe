@@ -29,7 +29,7 @@ function Homepage() {
       })
     axios.get('http://localhost:8000/blogs?page=1')
       .then(res => {
-        setBlog(res.data.blog.slice(0, 3))
+        setBlog(res.data.blogs.slice(0, 3))
       })
       .catch(function (error) {
         console.log(error)
@@ -363,12 +363,12 @@ function Homepage() {
               blog?.map((e, i) => (
                 <div className="col-sm-6 col-lg-4 mb-8">
                   <div className="post-item">
-                    <a href="blog-details.html" className="thumb">
+                    <a href={`/blog-details/${e?._id}`} className="thumb">
                       <img src={e?.images} style={{ height: '320px' }} width={370} height={320} alt="Image-HasTech" />
                     </a>
                     <div className="content">
-                      <a className="post-category" href="blog.html">{e?.category}</a>
-                      <h4 className="title"><a href="blog-details.html">{e?.title}</a></h4>
+                      <a className="post-category" >{e?.category}</a>
+                      <h4 className="title"><a href={`/blog-details/${e?._id}`}>{e?.title}</a></h4>
                       <ul className="meta">
                         <li className="author-info"><span>By:</span> <a href="blog.html">{e?.author}</a></li>
                         <li className="post-date">{e?.createdAt}</li>
