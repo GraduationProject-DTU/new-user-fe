@@ -50,18 +50,12 @@ function Comment(props) {
     }
     return (
         <>
-            <div className="comment_wrapper">
-                <div className="container">
-                    <h2 className="head_text">Recent Comment</h2>
-                </div>
-            </div>
             <div class="leave_comment">
-                <h3>leave a comment</h3>
+                <h3>Comment</h3>
                 <form onSubmit={handleSubmit}>
                     <textarea name="" value={comment} id="area_comment" cols="30" rows="11" onChange={handleContent}></textarea>
                     <button type="submit" className="btn">Post comment</button>
                 </form>
-                <ToastContainer />
             </div>
         </>
     )

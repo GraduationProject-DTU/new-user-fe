@@ -4,7 +4,8 @@ function Header() {
   function Account(){
     if(getDataUser){
       return(
-        <a className="header-action-btn" href="myaccount">
+        <Link to={"/myaccount"}>
+        <a className="header-action-btn">
       <span className="icon">
         <svg width={30} height={30} viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
           <rect className="icon-rect" width={30} height={30} fill="url(#pattern3)" />
@@ -17,10 +18,12 @@ function Header() {
         </svg>
       </span>
     </a>
+    </Link>
       )
     }else{
       return(
-        <a className="header-action-btn" href="account">
+        <Link to={"/account"}>
+        <a className="header-action-btn">
       <span className="icon">
         <svg width={30} height={30} viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
           <rect className="icon-rect" width={30} height={30} fill="url(#pattern3)" />
@@ -33,6 +36,7 @@ function Header() {
         </svg>
       </span>
     </a>
+    </Link>
       )
     }
   }

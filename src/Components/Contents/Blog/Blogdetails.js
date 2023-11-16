@@ -9,6 +9,7 @@ function Blogdetails(props){
   const [getdata1, setdata1] = useState("")
   const [getComment, setcomment] = useState("")
   const [getcheck,setcheck] = useState("")
+  const [blog, setBlog] = useState([])
     let params = useParams()
     useEffect(() => {
       axios.get("http://localhost:8000/blogs/get-view/" + params.id)
@@ -19,6 +20,13 @@ function Blogdetails(props){
           .catch(function (error) {
               console.log(error)
           })
+      axios.get('http://localhost:8000/blogs?page=1')
+      .then(res => {
+        setBlog(res.data.blogs.slice(0, 3))
+      })
+      .catch(function (error) {
+        console.log(error)
+      })    
     },[getcheck])
       //Hàm nhận giá trị trả về từ comment
         function getcmt(novalue) {
@@ -117,7 +125,6 @@ function Blogdetails(props){
               </div>
               <Listcomment getComment={getComment}/>
               <Comment idBlog={params.id} getcmt={getcmt}/>
-              {/* {Comment()} */}
           </div>
         </section>
         {/*== End Blog Detail Area Wrapper ==*/}
@@ -133,58 +140,26 @@ function Blogdetails(props){
               </div>
             </div>
             <div className="row mb-n9">
-              <div className="col-sm-6 col-lg-4 mb-8">
-                {/*== Start Blog Item ==*/}
-                <div className="post-item">
-                  <a href="blog-details.html" className="thumb">
-                    <img src="assets/images/blog/1.webp" width={370} height={320} alt="Image-HasTech" />
-                  </a>
-                  <div className="content">
-                    <a className="post-category" href="blog.html">beauty</a>
-                    <h4 className="title"><a href="blog-details.html">Lorem ipsum dolor sit amet consectetur adipiscing.</a></h4>
-                    <ul className="meta">
-                      <li className="author-info"><span>By:</span> <a href="blog.html">Tomas De Momen</a></li>
-                      <li className="post-date">February 13, 2022</li>
-                    </ul>
+            {
+              blog?.map((e, i) => (
+                <div className="col-sm-6 col-lg-4 mb-8">
+                  <div className="post-item">
+                    <a href={`/blog-details/${e?._id}`} className="thumb">
+                      <img src={e?.images} style={{ height: '320px' }} width={370} height={320} alt="Image-HasTech" />
+                    </a>
+                    <div className="content">
+                      <a className="post-category" >{e?.category}</a>
+                      <h4 className="title"><a href={`/blog-details/${e?._id}`}>{e?.title}</a></h4>
+                      <ul className="meta">
+                        <li className="author-info"><span>By:</span> <a href="blog.html">{e?.author}</a></li>
+                        <li className="post-date">{e?.createdAt}</li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
-                {/*== End Blog Item ==*/}
-              </div>
-              <div className="col-sm-6 col-lg-4 mb-8">
-                {/*== Start Blog Item ==*/}
-                <div className="post-item">
-                  <a href="blog-details.html" className="thumb">
-                    <img src="assets/images/blog/2.webp" width={370} height={320} alt="Image-HasTech" />
-                  </a>
-                  <div className="content">
-                    <a className="post-category post-category-two" data-bg-color="#A49CFF" href="blog.html">beauty</a>
-                    <h4 className="title"><a href="blog-details.html">Lorem ipsum dolor sit amet consectetur adipiscing.</a></h4>
-                    <ul className="meta">
-                      <li className="author-info"><span>By:</span> <a href="blog.html">Tomas De Momen</a></li>
-                      <li className="post-date">February 13, 2022</li>
-                    </ul>
-                  </div>
-                </div>
-                {/*== End Blog Item ==*/}
-              </div>
-              <div className="col-sm-6 col-lg-4 mb-8">
-                {/*== Start Blog Item ==*/}
-                <div className="post-item">
-                  <a href="blog-details.html" className="thumb">
-                    <img src="assets/images/blog/3.webp" width={370} height={320} alt="Image-HasTech" />
-                  </a>
-                  <div className="content">
-                    <a className="post-category post-category-three" data-bg-color="#9CDBFF" href="blog.html">beauty</a>
-                    <h4 className="title"><a href="blog-details.html">Lorem ipsum dolor sit amet consectetur adipiscing.</a></h4>
-                    <ul className="meta">
-                      <li className="author-info"><span>By:</span> <a href="blog.html">Tomas De Momen</a></li>
-                      <li className="post-date">February 13, 2022</li>
-                    </ul>
-                  </div>
-                </div>
-                {/*== End Blog Item ==*/}
-              </div>
-            </div>
+              ))
+            }
+          </div>
           </div>
         </section>
         {/*== End Blog Area Wrapper ==*/}

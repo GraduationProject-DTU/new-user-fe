@@ -15,7 +15,7 @@ function Scroll(){
     axios.get("http://localhost:8000/products")
         .then(response => {
             setItem(response.data.mess)
-            console.log(response.data.mess)
+            // console.log(response.data.mess)
         })
         .catch(function (error) {
             console.log(error)

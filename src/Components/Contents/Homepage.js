@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import { useContext, useEffect, useState } from "react"
 import { UserContext } from "../../UserContext"
 function Homepage() {
+  const {getvalueaorefresh,setvalueaorefresh} = useContext(UserContext)
   const [getItem, setItem] = useState("")
   const [sold, setSold] = useState([])
   const [blog, setBlog] = useState([])
@@ -41,7 +42,7 @@ function Homepage() {
     // .catch(function (error) {
     //     console.log(error)
     // })
-  }, [])
+  }, [getvalueaorefresh])
   const handleClick = (id) => {
     let main = {}
     let nameInput = id
@@ -363,12 +364,18 @@ function Homepage() {
               blog?.map((e, i) => (
                 <div className="col-sm-6 col-lg-4 mb-8">
                   <div className="post-item">
-                    <a href={`/blog-details/${e?._id}`} className="thumb">
-                      <img src={e?.images} style={{ height: '320px' }} width={370} height={320} alt="Image-HasTech" />
-                    </a>
+                    <Link to={`/blog-details/${e?._id}`}>
+                      <a className="thumb">
+                        <img src={e?.images} style={{ height: '320px' }} width={370} height={320} alt="Image-HasTech" />
+                      </a>
+                    </Link>
                     <div className="content">
                       <a className="post-category" >{e?.category}</a>
-                      <h4 className="title"><a href={`/blog-details/${e?._id}`}>{e?.title}</a></h4>
+                      <h4 className="title">
+                        <Link to={`/blog-details/${e?._id}`}>
+                          <a>{e?.title}</a>
+                        </Link>
+                      </h4>
                       <ul className="meta">
                         <li className="author-info"><span>By:</span> <a href="blog.html">{e?.author}</a></li>
                         <li className="post-date">{e?.createdAt}</li>

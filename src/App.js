@@ -7,14 +7,18 @@ import Homepage from './Components/Contents/Homepage';
 import Scroll from './Components/Scroll/Scroll';
 import { UserContext } from './UserContext';
 import { useState } from 'react';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function App(props) {
   const [getCart,setCart] = useState("")
   const [getid,setid] = useState("")
   const [getidlarge,setidlarge] = useState("")
   const [getidwishlist,setidwishlist] = useState("")
+  const [getvalueaorefresh,setvalueaorefresh] = useState("")
   return (
     <div>
-      <UserContext.Provider value={{getCart,setCart,getid,setid,getidlarge,setidlarge,getidwishlist,setidwishlist}}>
+      <ToastContainer />
+      <UserContext.Provider value={{getCart,setCart,getid,setid,getidlarge,setidlarge,getidwishlist,setidwishlist,getvalueaorefresh,setvalueaorefresh}}>
           <Header/>
             <main class="main-content">
               {props.children}

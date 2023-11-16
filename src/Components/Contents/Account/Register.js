@@ -1,8 +1,10 @@
 import axios from "axios"
-import { useState } from "react"
+import { useState,useContext, useEffect, } from "react"
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { UserContext } from "../../../UserContext";
 function Register(){
+        const {getvalueaorefresh,setvalueaorefresh} = useContext(UserContext)
         const [inputs, setInputs] = useState({
             email: "",
             firstname: "",
@@ -100,6 +102,7 @@ function Register(){
               position: toast.POSITION.TOP_RIGHT,
             });
             // window.location.reload();
+            setvalueaorefresh("ok")
           })
           .catch((error)=>{
             if(error.response){
@@ -148,7 +151,6 @@ function Register(){
         <button type="submit" className="btn">Register</button>
       </div>
     </form>
-    <ToastContainer />
       </div>
     </div>
     )

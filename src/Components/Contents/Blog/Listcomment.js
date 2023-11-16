@@ -24,6 +24,11 @@ function Listcomment(props){
     }
     return(
         <>
+        <div className="comment_wrapper">
+                <div className="container">
+                    <h2 className="head_text">Recent Comment</h2>
+                </div>
+        </div>
         {fetchData()}
         </>
     )

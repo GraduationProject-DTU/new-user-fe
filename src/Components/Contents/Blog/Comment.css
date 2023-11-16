@@ -52,4 +52,8 @@ a{
 }
 #area_comment{
     width: 100%;
+	margin-top: 20px;
+}
+.leave_comment h3{
+	margin-top: 20px;
 }

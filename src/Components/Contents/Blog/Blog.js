@@ -6,11 +6,13 @@ import Category from "./Category"
 function Blog(){
   const [getItem, setItem] = useState("")
   const [getselected,setselected] = useState(1)
+  const [gettotalpage,settotalpage] = useState(1)
         useEffect(() => {
             axios.get(`http://localhost:8000/blogs?page=${getselected}`)
                 .then(response => {
-                    setItem(response.data.blog)
-                    // console.log(response)
+                    setItem(response.data.blogs)
+                    settotalpage(response.data.pageTotal)
+                    console.log(response.data.blogs)
                     // console.log(`http://localhost:8000/blogs?page=${getselected}`)
                 })
                 .catch(function (error) {
@@ -22,9 +24,8 @@ function Blog(){
           setselected(+event.selected+1)
         }
         function fetchData(){
-          if(Object.keys(getItem).length>0){
-            if(getItem.length>0){
-              return getItem.map((value,key)=>{
+            if(getItem?.length>0){
+              return getItem?.map((value,key)=>{
                 const setimage = value.images["0"]
                 // console.log(value)
               return(
@@ -46,7 +47,6 @@ function Blog(){
               )
               })
             }
-          }
         }
     return(
         <>
@@ -64,7 +64,8 @@ function Blog(){
           <div className="container">
             <div className="row justify-content-between flex-xl-row-reverse">
               <div className="col-xl-8">
-                <div className="row">
+              <button><Link to={"/createblog"}>Create New Blog</Link></button>   
+                <div className="row" style={{padding:"10px 0 0 0 "}}>
                       {fetchData()}
                 </div>
                 <div className="col-12">
@@ -73,7 +74,7 @@ function Blog(){
                       breakLabel="..."
                       onPageChange={handlePageClick}
                       pageRangeDisplayed={5}
-                      pageCount={6}
+                      pageCount={gettotalpage}
                       previousClassName="page-item"
                       nextClassName="page-item"
                       pageClassName="page-item"
@@ -85,7 +86,6 @@ function Blog(){
                     />
               </ul>
                 </div> 
-                <button><Link to={"/createblog"}>Create New Blog</Link></button>   
               </div>
               <div className="col-xl-4">
                 <div className="blog-sidebar-widget">
@@ -121,18 +121,6 @@ function Blog(){
                         <span className="date">Sep 26,2022</span>
                       </div>
                     </div>
-                  </div>
-                  <div className="blog-widget mb-0">
-                    <h4 className="blog-widget-title">Popular Tags</h4>
-                    <ul className="blog-widget-tags">
-                      <li><a href="blog.html">Beauty</a></li>
-                      <li><a href="blog.html">MakeupArtist</a></li>
-                      <li><a href="blog.html">Makeup</a></li>
-                      <li><a href="blog.html">Hair</a></li>
-                      <li><a href="blog.html">Nails</a></li>
-                      <li><a href="blog.html">Hairstyle</a></li>
-                      <li><a href="blog.html">Skincare</a></li>
-                    </ul>
                   </div>
                 </div>
               </div>

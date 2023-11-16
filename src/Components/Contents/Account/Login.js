@@ -1,9 +1,11 @@
-import { useState } from "react"
+import { useState,useContext, useEffect, } from "react"
 import { useNavigate } from "react-router-dom"
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios"
+import { UserContext } from "../../../UserContext";
 function Login(){
+    const {getvalueaorefresh,setvalueaorefresh} = useContext(UserContext)
     const navigate = useNavigate()
     const [inputs, setInputs] = useState({
         email: "",
@@ -58,7 +60,8 @@ function Login(){
                     position: toast.POSITION.TOP_RIGHT,
                   });
                   navigate("/")
-                  window.location.reload()
+                  setvalueaorefresh("ok2")
+                  // window.location.reload()
                 })
                 .catch((res)=>{   
                     alert(res.response.data.mess)
@@ -87,7 +90,6 @@ function Login(){
           </div>
           <a className="lost-password" href="my-account.html">Lost your Password?</a>
         </form>
-        <ToastContainer />
       </div>
     )
 }

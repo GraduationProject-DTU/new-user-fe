@@ -1,15 +1,26 @@
 import { useNavigate } from "react-router-dom"
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { UserContext } from "../../../UserContext";
+import { useState,useContext, useEffect, } from "react"
 function Myaccount(){
+  const {getvalueaorefresh,setvalueaorefresh} = useContext(UserContext)
   const navigate = useNavigate()
   const getDataUser = JSON.parse(localStorage.getItem("User"))
     const logout =(e) =>{
-      localStorage.removeItem("User")
-      alert("Logout successfully")
-      hook: navigate("/")
-      window.location.reload()
+      if(getDataUser != null){
+        localStorage.removeItem("User")
+        toast.success("Logout thành công")
+        navigate("/")
+        // window.location.reload()
+        setvalueaorefresh("ok1")
+      }else{
+        toast.error("Bạn phải đăng nhập trước");
+      }
     }
     return(
         <>
+        <ToastContainer />
         {/*== Start Page Header Area Wrapper ==*/}
         <section className="page-header-area pt-10 pb-9" data-bg-color="#FFF3DA">
           <div className="container">
@@ -39,7 +50,7 @@ function Myaccount(){
                   <button className="nav-link" id="payment-method-tab" data-bs-toggle="tab" data-bs-target="#payment-method" type="button" role="tab" aria-controls="payment-method" aria-selected="false">Payment Method</button>
                   <button className="nav-link" id="address-edit-tab" data-bs-toggle="tab" data-bs-target="#address-edit" type="button" role="tab" aria-controls="address-edit" aria-selected="false">address</button>
                   <button className="nav-link" id="account-info-tab" data-bs-toggle="tab" data-bs-target="#account-info" type="button" role="tab" aria-controls="account-info" aria-selected="false">Account Details</button>
-                  <button className="nav-link" href ="/" onClick={logout} type="button">Logout</button>
+                  <button className="nav-link" onClick={logout} type="button">Logout</button>
                 </div>
               </div>
               <div className="col-lg-9 col-md-8">
@@ -48,7 +59,7 @@ function Myaccount(){
                     <div className="myaccount-content">
                       <h3>Dashboard</h3>
                       <div className="welcome">
-                        <p>Hello, <strong>{getDataUser.user.firstname} {getDataUser.user.lastname}</strong> (If Not <strong>{getDataUser.user.firstname} {getDataUser.user.lastname} !</strong><a href="/" onClick={logout} className="logout"> Logout</a>)</p>
+                        <p>Hello, <strong>{getDataUser?.user.firstname} {getDataUser?.user?.lastname}</strong> (If Not <strong>{getDataUser?.user.firstname} {getDataUser?.user.lastname} !</strong><a onClick={logout} className="logout"> Logout</a>)</p>
                       </div>
                       <p>From your account dashboard. you can easily check &amp; view your recent orders, manage your shipping and billing addresses and edit your password and account details.</p>
                     </div>

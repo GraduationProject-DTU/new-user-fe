@@ -132,8 +132,7 @@ function CreateBlog() {
                     .then(response => {
                         toast.success("Đăng bài thành công", {
                             position: toast.POSITION.TOP_RIGHT,
-                          });
-                          e.target.reset()
+                        });
                     })
                     .catch(error => {
                         console.log(error)
@@ -189,7 +188,6 @@ function CreateBlog() {
                                     <div className="d-grid"><button type="submit" className="btn btn-primary btn-block">Create Blog</button></div>
                                 </div>
                             </form>
-                            <ToastContainer />
                         </div>
                     </div>
                 </div>
