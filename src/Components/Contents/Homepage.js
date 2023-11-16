@@ -5,6 +5,7 @@ import { UserContext } from "../../UserContext"
 function Homepage() {
   const [getItem, setItem] = useState("")
   const [sold, setSold] = useState([])
+  const [blog, setBlog] = useState([])
   const { getCart, setCart } = useContext(UserContext)
   const { getid, setid } = useContext(UserContext)
   const { getidlarge, setidlarge } = useContext(UserContext)
@@ -26,7 +27,13 @@ function Homepage() {
       .catch(function (error) {
         console.log(error)
       })
-
+    axios.get('http://localhost:8000/blogs?page=1')
+      .then(res => {
+        setBlog(res.data.blog.slice(0, 3))
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
     // axios.get("http://localhost:8000/blogs/")
     // .then(response1 => {
     //   setItemBlog(response1.data.blog)
@@ -352,61 +359,30 @@ function Homepage() {
             </div>
           </div>
           <div className="row mb-n9">
-            <div className="col-sm-6 col-lg-4 mb-8">
-              {/*== Start Blog Item ==*/}
-              <div className="post-item">
-                <a href="blog-details.html" className="thumb">
-                  <img src="assets/images/blog/1.webp" width={370} height={320} alt="Image-HasTech" />
-                </a>
-                <div className="content">
-                  <a className="post-category" href="blog.html">beauty</a>
-                  <h4 className="title"><a href="blog-details.html">Lorem ipsum dolor sit amet consectetur adipiscing.</a></h4>
-                  <ul className="meta">
-                    <li className="author-info"><span>By:</span> <a href="blog.html">Tomas De Momen</a></li>
-                    <li className="post-date">February 13, 2022</li>
-                  </ul>
+            {
+              blog?.map((e, i) => (
+                <div className="col-sm-6 col-lg-4 mb-8">
+                  <div className="post-item">
+                    <a href="blog-details.html" className="thumb">
+                      <img src={e?.images} style={{ height: '320px' }} width={370} height={320} alt="Image-HasTech" />
+                    </a>
+                    <div className="content">
+                      <a className="post-category" href="blog.html">{e?.category}</a>
+                      <h4 className="title"><a href="blog-details.html">{e?.title}</a></h4>
+                      <ul className="meta">
+                        <li className="author-info"><span>By:</span> <a href="blog.html">{e?.author}</a></li>
+                        <li className="post-date">{e?.createdAt}</li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              {/*== End Blog Item ==*/}
-            </div>
-            <div className="col-sm-6 col-lg-4 mb-8">
-              {/*== Start Blog Item ==*/}
-              <div className="post-item">
-                <a href="blog-details.html" className="thumb">
-                  <img src="assets/images/blog/2.webp" width={370} height={320} alt="Image-HasTech" />
-                </a>
-                <div className="content">
-                  <a className="post-category post-category-two" data-bg-color="#A49CFF" href="blog.html">beauty</a>
-                  <h4 className="title"><a href="blog-details.html">Facial Scrub is natural treatment for face.</a></h4>
-                  <ul className="meta">
-                    <li className="author-info"><span>By:</span> <a href="blog.html">Tomas De Momen</a></li>
-                    <li className="post-date">February 13, 2022</li>
-                  </ul>
-                </div>
-              </div>
-              {/*== End Blog Item ==*/}
-            </div>
-            <div className="col-sm-6 col-lg-4 mb-8">
-              {/*== Start Blog Item ==*/}
-              <div className="post-item">
-                <a href="blog-details.html" className="thumb">
-                  <img src="assets/images/blog/3.webp" width={370} height={320} alt="Image-HasTech" />
-                </a>
-                <div className="content">
-                  <a className="post-category post-category-three" data-bg-color="#9CDBFF" href="blog.html">beauty</a>
-                  <h4 className="title"><a href="blog-details.html">Benefit of Hot Ston Spa for your health &amp; life.</a></h4>
-                  <ul className="meta">
-                    <li className="author-info"><span>By:</span> <a href="blog.html">Tomas De Momen</a></li>
-                    <li className="post-date">February 13, 2022</li>
-                  </ul>
-                </div>
-              </div>
-              {/*== End Blog Item ==*/}
-            </div>
+              ))
+            }
           </div>
         </div>
       </section>
       {/*== End Blog Area Wrapper ==*/}
+
       {/*== Start News Letter Area Wrapper ==*/}
       <section className="section-space pt-0">
         <div className="container">
@@ -426,7 +402,7 @@ function Homepage() {
           </div>
         </div>
       </section>
-      {/*== End News Letter Area Wrapper ==*/}
+      {/*== End News Letter Are a Wrapper ==*/}
     </>
   )
 }

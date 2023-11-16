@@ -1,14 +1,14 @@
 import { useState } from "react"
 import axios from "axios"
 import Listcomment from "./Listcomment"
-function Comment(props){
+function Comment(props) {
     const [comment, setcomment] = useState("")
     const getDataUser = JSON.parse(localStorage.getItem("User"))
     function handleContent(e) {
         setcomment(e.target.value)
     }
     function handleSubmit(e) {
-        e.preventDefault(e)
+        e.preventDefault()
         let errorsubmit = {}
         // console.log(props.idBlog)
         console.log(props)
@@ -19,7 +19,7 @@ function Comment(props){
         } else if (comment == "") {
             alert("Must comment")
             flag = false
-        } else if (comment){
+        } else if (comment) {
             // console.log(getDataUser.token)
             let url = "http://localhost:8000/blogs/comment-blog"
             let accessToken = getDataUser.token
@@ -30,7 +30,7 @@ function Comment(props){
                     'Accept': 'application/json'
                 }
             }
-            const data ={
+            const data = {
                 "bid": props.idBlog,
                 "comment": comment
             }
@@ -38,10 +38,12 @@ function Comment(props){
                 .then(response => {
                     console.log(response.data)
                     props.getcmt("ok")
+                    setcomment('')
                 })
-            }
+
         }
-    return(
+    }
+    return (
         <>
             <div className="comment_wrapper">
                 <div className="container">
@@ -51,7 +53,7 @@ function Comment(props){
             <div class="leave_comment">
                 <h3>leave a comment</h3>
                 <form onSubmit={handleSubmit}>
-                    <textarea name="" id="area_comment" cols="30" rows="11" onChange={handleContent}></textarea>
+                    <textarea name="" value={comment} id="area_comment" cols="30" rows="11" onChange={handleContent}></textarea>
                     <button type="submit" className="btn">Post comment</button>
                 </form>
             </div>
