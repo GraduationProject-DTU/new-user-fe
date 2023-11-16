@@ -1,5 +1,7 @@
 import axios from "axios"
 import { useState } from "react"
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function Register(){
         const [inputs, setInputs] = useState({
             email: "",
@@ -45,6 +47,7 @@ function Register(){
       if (inputs.email == "") {
           errorSubmit.email = "Vui long nhap email"
           flag = false
+          toast.error(""+errorSubmit.email);
       } else {
           if (!regex.test(inputs.email)) {
               errorSubmit.email = "Nhap dung dinh dang"
@@ -53,25 +56,31 @@ function Register(){
       if (inputs.password == "") {
           errorSubmit.password = "Vui long nhap pass"
           flag = false
+          toast.error(""+errorSubmit.password);
       }else if(inputs.password != inputs.rePassword){
         errorSubmit.password = "Pass phai giong nhau"
         flag = false
+        toast.error(""+errorSubmit.password);
       }
       if (inputs.rePassword == "") {
-          errorSubmit.rePassword = "Vui long nhap pass"
+          errorSubmit.rePassword = "Vui long nhap lai pass"
           flag = false
+          toast.error(""+errorSubmit.rePassword);
       }
       if (inputs.phone == "") {
           errorSubmit.phone = "Nhap phone"
           flag = false
+          toast.error(""+errorSubmit.phone);
       }
       if (inputs.firstname == "") {
         errorSubmit.firstname = "Nhap firstname"
         flag = false
+        toast.error(""+errorSubmit.firstname);
       }
       if (inputs.lastname == "") {
         errorSubmit.lastname = "Nhap lastname"
         flag = false
+        toast.error(""+errorSubmit.lastname);
       }
       if (!flag) {
         setErrors(errorSubmit)
@@ -87,8 +96,10 @@ function Register(){
         }
           axios.post("http://localhost:8000/auth/register",data)
           .then((res)=>{
-            alert("Dang ky thanh cong")
-            window.location.reload();
+            toast.success("Dang Ky Thanh Cong", {
+              position: toast.POSITION.TOP_RIGHT,
+            });
+            // window.location.reload();
           })
           .catch((error)=>{
             if(error.response){
@@ -137,6 +148,7 @@ function Register(){
         <button type="submit" className="btn">Register</button>
       </div>
     </form>
+    <ToastContainer />
       </div>
     </div>
     )

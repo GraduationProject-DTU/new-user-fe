@@ -1,6 +1,8 @@
 import { useState } from "react"
 import axios from "axios"
 import Listcomment from "./Listcomment"
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function Comment(props) {
     const [comment, setcomment] = useState("")
     const getDataUser = JSON.parse(localStorage.getItem("User"))
@@ -14,10 +16,10 @@ function Comment(props) {
         console.log(props)
         let flag = true
         if (!getDataUser) {
-            alert("Must login")
+            toast.error("Bạn phải đăng nhập trước")
             flag = false
         } else if (comment == "") {
-            alert("Must comment")
+            toast.error("Vui lòng nhập comment")
             flag = false
         } else if (comment) {
             // console.log(getDataUser.token)
@@ -39,6 +41,9 @@ function Comment(props) {
                     console.log(response.data)
                     props.getcmt("ok")
                     setcomment('')
+                    toast.success("Comment thành công", {
+                        position: toast.POSITION.TOP_RIGHT,
+                    });
                 })
 
         }
@@ -56,6 +61,7 @@ function Comment(props) {
                     <textarea name="" value={comment} id="area_comment" cols="30" rows="11" onChange={handleContent}></textarea>
                     <button type="submit" className="btn">Post comment</button>
                 </form>
+                <ToastContainer />
             </div>
         </>
     )

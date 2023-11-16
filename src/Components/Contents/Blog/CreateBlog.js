@@ -4,6 +4,8 @@ import { useEffect, useState } from "react"
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import CustomUploadAdapter from "../../../helpers/CustomUploadAdapter";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function CreateBlog() {
     let getDataUser = JSON.parse(localStorage.getItem("User"))
     const [getItem, setItem] = useState("")
@@ -51,7 +53,7 @@ function CreateBlog() {
             setAvatar(e.target.result)
         }
         reader.readAsDataURL(file[0])
-        console.log(reader)
+        // console.log(reader)
     }
 
     function MyCustomUploadAdapterPlugin(editor) {
@@ -65,65 +67,78 @@ function CreateBlog() {
         e.preventDefault()
         let flag = true
         let errorSubmit = {}
-        if (inputs.author == "") {
-            errorSubmit.author = "Nhap author"
+        if (!getDataUser) {
             flag = false
-        }
-        if (inputs.title == "") {
-            errorSubmit.title = "Nhap title"
-            flag = false
-        }
-        if (getselectcategory == "") {
-            errorSubmit.category = "Nhap category"
-            flag = false
-        }
-        if (!flag) {
-            setErrors(errorSubmit)
-        }
-        if (getFile == "") {
-            errorSubmit.files = "Chon hinh anh"
-            flag = false
-        } else {
-            Object.keys(getFile).map((item,i)=>{
-                let checkImg = ["png", "jpg", "jpeg", "PNG", "JPG"]
-                let getsize = getFile[item].size
-                let getname = getFile[item].name
-                let test = getname.split(".")
-                let test1 = checkImg.includes(test[1])
-                if (getsize > 1024 * 1024) {
-                    errorSubmit.files = "File qua lon"
-                } else if (!checkImg.includes(test[1])) {
-                    errorSubmit.files = "Sai dinh dang"
-                }
-            })
-        }
-        if (flag) {
-            let url = "http://localhost:8000/blogs/create-blog"
-            let accessToken = getDataUser.token
-            let config = {
-                headers: {
-                    'token': 'Bearer ' + accessToken,
-                    'Content-Type': 'multipart/form-data',
-                    'Accept': 'application/json'
-                }
+            toast.error("Ban phai dang nhap truoc");            
+        }else{
+            if (inputs.author == "") {
+                errorSubmit.author = "Nhap author"
+                flag = false
+                toast.error(""+errorSubmit.author);
             }
-            const formData = new FormData()
-            formData.append("title", inputs.title)
-            // console.log(inputs.title)
-            formData.append("description", getdata)
-            // console.log(getdata)
-            formData.append("category", getselectcategory)
-            Object.keys(getFile).map((item, i) => {
-                formData.append("images", getFile[item])
-            })
-            axios.post(url, formData, config)
-                .then(response => {
-                    console.log(response)
-                    alert("post ok")
+            if (inputs.title == "") {
+                errorSubmit.title = "Nhap title"
+                flag = false
+                toast.error(""+errorSubmit.title);
+            }
+            if (getselectcategory == "") {
+                errorSubmit.category = "Nhap category"
+                flag = false
+                toast.error(""+errorSubmit.category);
+            }
+            if (!flag) {
+                setErrors(errorSubmit)
+            }
+            if (getFile == "") {
+                errorSubmit.files = "Chon hinh anh"
+                flag = false
+                toast.error(""+errorSubmit.files);
+            } else {
+                Object.keys(getFile).map((item,i)=>{
+                    let checkImg = ["png", "jpg", "jpeg", "PNG", "JPG"]
+                    let getsize = getFile[item].size
+                    let getname = getFile[item].name
+                    let test = getname.split(".")
+                    let test1 = checkImg.includes(test[1])
+                    if (getsize > 1024 * 1024) {
+                        errorSubmit.files = "File qua lon"
+                        toast.error("File qua lon");
+                    } else if (!checkImg.includes(test[1])) {
+                        errorSubmit.files = "Sai dinh dang"
+                        toast.error("Sai dinh dang");
+                    }
                 })
-                .catch(error => {
-                    console.log(error)
+            }
+            if (flag) {
+                let url = "http://localhost:8000/blogs/create-blog"
+                let accessToken = getDataUser.token
+                let config = {
+                    headers: {
+                        'token': 'Bearer ' + accessToken,
+                        'Content-Type': 'multipart/form-data',
+                        'Accept': 'application/json'
+                    }
+                }
+                const formData = new FormData()
+                formData.append("title", inputs.title)
+                // console.log(inputs.title)
+                formData.append("description", getdata)
+                // console.log(getdata)
+                formData.append("category", getselectcategory)
+                Object.keys(getFile).map((item, i) => {
+                    formData.append("images", getFile[item])
                 })
+                axios.post(url, formData, config)
+                    .then(response => {
+                        toast.success("Đăng bài thành công", {
+                            position: toast.POSITION.TOP_RIGHT,
+                          });
+                          e.target.reset()
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
+            }
         }
     }
     return (
@@ -174,6 +189,7 @@ function CreateBlog() {
                                     <div className="d-grid"><button type="submit" className="btn btn-primary btn-block">Create Blog</button></div>
                                 </div>
                             </form>
+                            <ToastContainer />
                         </div>
                     </div>
                 </div>

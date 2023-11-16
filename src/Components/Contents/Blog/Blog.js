@@ -5,18 +5,21 @@ import ReactPaginate from 'react-paginate';
 import Category from "./Category"
 function Blog(){
   const [getItem, setItem] = useState("")
+  const [getselected,setselected] = useState(1)
         useEffect(() => {
-            axios.get("http://localhost:8000/blogs/")
+            axios.get(`http://localhost:8000/blogs?page=${getselected}`)
                 .then(response => {
                     setItem(response.data.blog)
-                    console.log(response)
+                    // console.log(response)
+                    // console.log(`http://localhost:8000/blogs?page=${getselected}`)
                 })
                 .catch(function (error) {
                     console.log(error)
                 })
-        }, [])
+        }, [getselected])
         const handlePageClick = (event) => {
-          console.log(event)
+          // console.log(event)
+          setselected(+event.selected+1)
         }
         function fetchData(){
           if(Object.keys(getItem).length>0){

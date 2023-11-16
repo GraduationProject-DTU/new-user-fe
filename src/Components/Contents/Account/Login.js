@@ -1,5 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import axios from "axios"
 function Login(){
     const navigate = useNavigate()
@@ -30,10 +32,12 @@ function Login(){
         if (inputs.email == "") {
             errorSubmit.email = "Vui long nhap email"
             flag = false
+            toast.error(""+errorSubmit.email);
         }
         if (inputs.password == "") {
             errorSubmit.pass = "Vui long nhap pass"
             flag = false
+            toast.error(""+errorSubmit.pass);
         }
         if (!flag) {
             setErrors(errorSubmit)
@@ -50,7 +54,11 @@ function Login(){
                     token: res.data.access_token
                   }
                   localStorage.setItem("User", JSON.stringify(user))
-                  hook: navigate("/")
+                  toast.success("Dang Nhap Thanh Cong", {
+                    position: toast.POSITION.TOP_RIGHT,
+                  });
+                  navigate("/")
+                  window.location.reload()
                 })
                 .catch((res)=>{   
                     alert(res.response.data.mess)
@@ -79,6 +87,7 @@ function Login(){
           </div>
           <a className="lost-password" href="my-account.html">Lost your Password?</a>
         </form>
+        <ToastContainer />
       </div>
     )
 }

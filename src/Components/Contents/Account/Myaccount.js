@@ -6,6 +6,7 @@ function Myaccount(){
       localStorage.removeItem("User")
       alert("Logout successfully")
       hook: navigate("/")
+      window.location.reload()
     }
     return(
         <>
