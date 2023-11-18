@@ -47,7 +47,7 @@ function Header() {
           <div className="col-5 col-sm-6 col-lg-3">
             <div className="header-logo">
               <Link to={"/"}>
-              <img className="logo-main" src="assets/images/logo.webp" width={115} height={88} alt="Logo" />
+              <img className="logo-main" src="http://localhost:3000/assets/images/logo.webp" width={115} height={88} alt="Logo" />
               </Link>
             </div>
           </div>

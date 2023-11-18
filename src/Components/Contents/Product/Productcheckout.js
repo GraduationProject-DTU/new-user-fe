@@ -68,36 +68,8 @@ function Productcheckout(){
                         </div>
                         <div className="col-md-12">
                           <div className="form-group">
-                            <label htmlFor="com_name">Company name (optional)</label>
-                            <input id="com_name" type="text" className="form-control" />
-                          </div>
-                        </div>
-                        <div className="col-md-12 mb-4">
-                          <div className="form-group">
-                            <label htmlFor="country">Country <abbr className="required" title="required">*</abbr></label>
-                            <select id="country" className="form-control wide">
-                              <option>Bangladesh</option>
-                              <option>Afghanistan</option>
-                              <option>Albania</option>
-                              <option>Algeria</option>
-                              <option>Armenia</option>
-                              <option>India</option>
-                              <option>Pakistan</option>
-                              <option>England</option>
-                              <option>London</option>
-                              <option>London</option>
-                              <option>China</option>
-                            </select>
-                          </div>
-                        </div>
-                        <div className="col-md-12">
-                          <div className="form-group">
                             <label htmlFor="street-address">Street address <abbr className="required" title="required">*</abbr></label>
                             <input id="street-address" type="text" className="form-control" placeholder="House number and street name" />
-                          </div>
-                          <div className="form-group">
-                            <label htmlFor="street-address2" className="visually-hidden">Street address 2 <abbr className="required" title="required">*</abbr></label>
-                            <input id="street-address2" type="text" className="form-control" placeholder="Apartment, suite, unit etc. (optional)" />
                           </div>
                         </div>
                         <div className="col-md-12">
@@ -106,32 +78,9 @@ function Productcheckout(){
                             <input id="town" type="text" className="form-control" />
                           </div>
                         </div>
-                        <div className="col-md-12 mb-4">
-                          <div className="form-group">
-                            <label htmlFor="district">District <abbr className="required" title="required">*</abbr></label>
-                            <select id="district" className="form-control wide">
-                              <option>Afghanistan</option>
-                              <option>Albania</option>
-                              <option>Algeria</option>
-                              <option>Armenia</option>
-                              <option>India</option>
-                              <option>Pakistan</option>
-                              <option>England</option>
-                              <option>London</option>
-                              <option>London</option>
-                              <option>China</option>
-                            </select>
-                          </div>
-                        </div>
                         <div className="col-md-12">
                           <div className="form-group">
-                            <label htmlFor="pz-code">Postcode / ZIP (optional)</label>
-                            <input id="pz-code" type="text" className="form-control" />
-                          </div>
-                        </div>
-                        <div className="col-md-12">
-                          <div className="form-group">
-                            <label htmlFor="phone">Phone (optional)</label>
+                            <label htmlFor="phone">Phone <abbr className="required" title="required">*</abbr></label>
                             <input id="phone" type="text" className="form-control" />
                           </div>
                         </div>
@@ -139,93 +88,6 @@ function Productcheckout(){
                           <div className="form-group">
                             <label htmlFor="email">Email address <abbr className="required" title="required">*</abbr></label>
                             <input id="email" type="text" className="form-control" />
-                          </div>
-                        </div>
-                        <div id="CheckoutBillingAccordion2" className="col-md-12">
-                          <div className="checkout-box" data-bs-toggle="collapse" data-bs-target="#CheckoutTwo" aria-expanded="false" role="toolbar">
-                            <div className="custom-control custom-checkbox">
-                              <input type="checkbox" className="custom-control-input visually-hidden" id="ship-to-different-address" />
-                              <label className="custom-control-label" htmlFor="ship-to-different-address">Ship to a different address?</label>
-                            </div>
-                          </div>
-                          <div id="CheckoutTwo" className="collapse" data-bs-parent="#CheckoutBillingAccordion2">
-                            <div className="row">
-                              <div className="col-md-6">
-                                <div className="form-group">
-                                  <label htmlFor="f_name2">First name <abbr className="required" title="required">*</abbr></label>
-                                  <input id="f_name2" type="text" className="form-control" />
-                                </div>
-                              </div>
-                              <div className="col-md-6">
-                                <div className="form-group">
-                                  <label htmlFor="l_name2">Last name <abbr className="required" title="required">*</abbr></label>
-                                  <input id="l_name2" type="text" className="form-control" />
-                                </div>
-                              </div>
-                              <div className="col-md-12">
-                                <div className="form-group">
-                                  <label htmlFor="com_name2">Company name (optional)</label>
-                                  <input id="com_name2" type="text" className="form-control" />
-                                </div>
-                              </div>
-                              <div className="col-md-12 mb-4">
-                                <div className="form-group">
-                                  <label htmlFor="country2">Country <abbr className="required" title="required">*</abbr></label>
-                                  <select id="country2" className="form-control wide">
-                                    <option>Bangladesh</option>
-                                    <option>Afghanistan</option>
-                                    <option>Albania</option>
-                                    <option>Algeria</option>
-                                    <option>Armenia</option>
-                                    <option>India</option>
-                                    <option>Pakistan</option>
-                                    <option>England</option>
-                                    <option>London</option>
-                                    <option>London</option>
-                                    <option>China</option>
-                                  </select>
-                                </div>
-                              </div>
-                              <div className="col-md-12">
-                                <div className="form-group">
-                                  <label htmlFor="street-address2-3">Street address <abbr className="required" title="required">*</abbr></label>
-                                  <input id="street-address2-3" type="text" className="form-control" placeholder="House number and street name" />
-                                </div>
-                                <div className="form-group">
-                                  <label htmlFor="street-address2-2" className="visually-hidden">Street address 2 <abbr className="required" title="required">*</abbr></label>
-                                  <input id="street-address2-2" type="text" className="form-control" placeholder="Apartment, suite, unit etc. (optional)" />
-                                </div>
-                              </div>
-                              <div className="col-md-12">
-                                <div className="form-group">
-                                  <label htmlFor="town3">Town / City <abbr className="required" title="required">*</abbr></label>
-                                  <input id="town3" type="text" className="form-control" />
-                                </div>
-                              </div>
-                              <div className="col-md-12 mb-4">
-                                <div className="form-group">
-                                  <label htmlFor="district2">District <abbr className="required" title="required">*</abbr></label>
-                                  <select id="district2" className="form-control wide">
-                                    <option>Afghanistan</option>
-                                    <option>Albania</option>
-                                    <option>Algeria</option>
-                                    <option>Armenia</option>
-                                    <option>India</option>
-                                    <option>Pakistan</option>
-                                    <option>England</option>
-                                    <option>London</option>
-                                    <option>London</option>
-                                    <option>China</option>
-                                  </select>
-                                </div>
-                              </div>
-                              <div className="col-md-12">
-                                <div className="form-group">
-                                  <label htmlFor="pz-code2">Postcode / ZIP (optional)</label>
-                                  <input id="pz-code2" type="text" className="form-control" />
-                                </div>
-                              </div>
-                            </div>
                           </div>
                         </div>
                         <div className="col-md-12">
@@ -289,7 +151,7 @@ function Productcheckout(){
                             </div>
                           </div>
                         </div>
-                        <div className="card">
+                        {/* <div className="card">
                           <div className="card-header" id="check_payments2">
                             <h5 className="title" data-bs-toggle="collapse" data-bs-target="#itemTwo" aria-controls="itemTwo" aria-expanded="false">Check payments</h5>
                           </div>
@@ -298,8 +160,8 @@ function Productcheckout(){
                               <p>Please send a check to Store Name, Store Street, Store Town, Store State / County, Store Postcode.</p>
                             </div>
                           </div>
-                        </div>
-                        <div className="card">
+                        </div> */}
+                        {/* <div className="card">
                           <div className="card-header" id="check_payments3">
                             <h5 className="title" data-bs-toggle="collapse" data-bs-target="#itemThree" aria-controls="itemTwo" aria-expanded="false">Cash on delivery</h5>
                           </div>
@@ -308,10 +170,10 @@ function Productcheckout(){
                               <p>Pay with cash upon delivery.</p>
                             </div>
                           </div>
-                        </div>
+                        </div> */}
                         <div className="card">
                           <div className="card-header" id="check_payments4">
-                            <h5 className="title" data-bs-toggle="collapse" data-bs-target="#itemFour" aria-controls="itemTwo" aria-expanded="false">PayPal Express Checkout</h5>
+                            <h5 className="title" data-bs-toggle="collapse" data-bs-target="#itemFour" aria-controls="itemTwo" aria-expanded="false">COD</h5>
                           </div>
                           <div id="itemFour" className="collapse" aria-labelledby="check_payments4" data-bs-parent="#PaymentMethodAccordion">
                             <div className="card-body">

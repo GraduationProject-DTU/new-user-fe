@@ -21,11 +21,26 @@ function Productcart(){
       const increaseqty = (e) =>{
         if (Object.keys(getdataCartItem).length>0){
           return Object.keys(getdataCartItem).map((value,key)=>{
-            if(e.target.id == value){   
-              console.log(e.target.id)         
+            if(e.target.id == value){          
               getdataCartItem[value]++
               localStorage.setItem("CartItem",JSON.stringify(getdataCartItem))
               setvalueao(getdataCartItem)
+            }
+          })
+        }
+      }
+      const decreaseqty = (e) =>{
+        if (Object.keys(getdataCartItem).length>0){
+          return Object.keys(getdataCartItem).map((value,key)=>{
+            if(e.target.id == value){     
+              getdataCartItem[value]--
+              localStorage.setItem("CartItem",JSON.stringify(getdataCartItem))
+              setvalueao(getdataCartItem)
+              if(getdataCartItem[value] == 0){
+                delete getdataCartItem[value]
+                localStorage.setItem("CartItem",JSON.stringify(getdataCartItem))
+                setvalueao(getdataCartItem)
+              }
             }
           })
         }
@@ -58,13 +73,13 @@ function Productcart(){
                                           </td>
                                           <td className="product-quantity">
                                             <div className="pro-qty">
-                                              <a className="cart_quantity_up" href> - </a>
+                                              <a onClick={decreaseqty} id={value._id} className="cart_quantity_up" href> - </a>
                                               <input style={{width:"50%"}} type="text" className="quantity" title="Quantity" value={getdataCartItem[key1]}/>
                                               <a onClick={increaseqty} id={value._id} className="cart_quantity_up" href> + </a>
                                             </div>
                                           </td>
                                           <td className="product-subtotal">
-                                            <span className="price">{gettong}</span>
+                                            <span className="price">{gettong} VNĐ</span>
                                           </td>
                                 </tr>
                         )
@@ -125,10 +140,10 @@ function Productcart(){
                       <tr className="cart-subtotal">
                         <th>Subtotal</th>
                         <td>
-                          <span className="amount">{gettong1}</span>
+                          <span className="amount">{gettong1} VNĐ</span>
                         </td>
                       </tr>
-                      <tr className="shipping-totals">
+                      {/* <tr className="shipping-totals">
                         <th>Shipping</th>
                         <td>
                           <ul className="shipping-list">
@@ -148,11 +163,11 @@ function Productcart(){
                           <p className="destination">Shipping to <strong>USA</strong>.</p>
                           <a href="javascript:void(0)" className="btn-shipping-address">Change address</a>
                         </td>
-                      </tr>
+                      </tr> */}
                       <tr className="order-total">
                         <th>Total</th>
                         <td>
-                          <span className="amount">{gettong1}</span>
+                          <span className="amount">{gettong1} VNĐ</span>
                         </td>
                       </tr>
                     </tbody>

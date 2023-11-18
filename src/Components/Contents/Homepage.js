@@ -311,7 +311,6 @@ function Homepage() {
                     </div>
                     <div className="product-info">
                       <div className="product-rating">
-
                         <div className="rating">
                           {Array.from({ length: e.totalRatings }, (_, index) => (
                             <i key={index} className="fa fa-star-o" />

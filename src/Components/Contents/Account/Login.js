@@ -56,7 +56,7 @@ function Login(){
                     token: res.data.access_token
                   }
                   localStorage.setItem("User", JSON.stringify(user))
-                  toast.success("Dang Nhap Thanh Cong", {
+                  toast.success("Đăng Nhập Thành Công", {
                     position: toast.POSITION.TOP_RIGHT,
                   });
                   navigate("/")
@@ -83,10 +83,6 @@ function Login(){
           </div>
           <div className="form-group d-flex align-items-center mb-14">
             <button className="btn">Login</button>
-            <div className="form-check ms-3">
-              <input type="checkbox" className="form-check-input" id="remember_pwsd" />
-              <label className="form-check-label" htmlFor="remember_pwsd">Remember Me</label>
-            </div>
           </div>
           <a className="lost-password" href="my-account.html">Lost your Password?</a>
         </form>

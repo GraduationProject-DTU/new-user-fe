@@ -269,8 +269,10 @@ function Scroll(){
                 {FetchCart()}
             </ul>
             <p className="cart-total"><span>Subtotal:</span><span className="amount">{gettong1}</span></p>
-            <a className="btn-total" href="/productcart">View cart</a>
-            <a className="btn-total" href="product-checkout.html">Checkout</a>
+            <Link to={"/productcart"}><a className="btn-total">View cart</a></Link>
+            {/* <a className="btn-total">
+            <Link to={"/productcheckout"}>Checkout</Link>
+            </a> */}
           </div>
         </aside>
         {/*== End Aside Cart ==*/}

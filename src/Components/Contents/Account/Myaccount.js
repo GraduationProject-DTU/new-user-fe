@@ -4,9 +4,30 @@ import "react-toastify/dist/ReactToastify.css";
 import { UserContext } from "../../../UserContext";
 import { useState,useContext, useEffect, } from "react"
 function Myaccount(){
+useEffect(() =>{
+  let getDataUser = JSON.parse(localStorage.getItem("User"))
+      setInputs({
+      email: getDataUser.user.email,
+      firstname: getDataUser.user.firstname,
+      lastname: getDataUser.user.lastname,
+      phone: getDataUser.user.phone
+  })
+},[])
   const {getvalueaorefresh,setvalueaorefresh} = useContext(UserContext)
   const navigate = useNavigate()
-  const getDataUser = JSON.parse(localStorage.getItem("User"))
+  let getDataUser = JSON.parse(localStorage.getItem("User"))
+  const [inputs, setInputs] = useState({
+    email: "",
+    password: "",
+    phone: "",
+    firstname:"",
+    lastname: ""
+  })
+  const handleInput = (e) => {
+    const nameInput = e.target.name
+    const value = e.target.value
+    setInputs(state => ({ ...state, [nameInput]: value }))
+}
     const logout =(e) =>{
       if(getDataUser != null){
         localStorage.removeItem("User")
@@ -46,9 +67,7 @@ function Myaccount(){
                 <div className="my-account-tab-menu nav nav-tabs" id="nav-tab" role="tablist">
                   <button className="nav-link active" id="dashboad-tab" data-bs-toggle="tab" data-bs-target="#dashboad" type="button" role="tab" aria-controls="dashboad" aria-selected="true">Dashboard</button>
                   <button className="nav-link" id="orders-tab" data-bs-toggle="tab" data-bs-target="#orders" type="button" role="tab" aria-controls="orders" aria-selected="false"> Orders</button>
-                  <button className="nav-link" id="download-tab" data-bs-toggle="tab" data-bs-target="#download" type="button" role="tab" aria-controls="download" aria-selected="false">Download</button>
-                  <button className="nav-link" id="payment-method-tab" data-bs-toggle="tab" data-bs-target="#payment-method" type="button" role="tab" aria-controls="payment-method" aria-selected="false">Payment Method</button>
-                  <button className="nav-link" id="address-edit-tab" data-bs-toggle="tab" data-bs-target="#address-edit" type="button" role="tab" aria-controls="address-edit" aria-selected="false">address</button>
+                  <button className="nav-link" id="address-edit-tab" data-bs-toggle="tab" data-bs-target="#address-edit" type="button" role="tab" aria-controls="address-edit" aria-selected="false">Password Change</button>
                   <button className="nav-link" id="account-info-tab" data-bs-toggle="tab" data-bs-target="#account-info" type="button" role="tab" aria-controls="account-info" aria-selected="false">Account Details</button>
                   <button className="nav-link" onClick={logout} type="button">Logout</button>
                 </div>
@@ -143,15 +162,33 @@ function Myaccount(){
                     </div>
                   </div>
                   <div className="tab-pane fade" id="address-edit" role="tabpanel" aria-labelledby="address-edit-tab">
-                    <div className="myaccount-content">
-                      <h3>Billing Address</h3>
-                      <address>
-                        <p><strong>Alex Tuntuni</strong></p>
-                        <p>1355 Market St, Suite 900 <br />
-                          San Francisco, CA 94103</p>
-                        <p>Mobile: (123) 456-7890</p>
-                      </address>
-                      <a href="#/" className="check-btn sqr-btn"><i className="fa fa-edit" /> Edit Address</a>
+                  <div className="myaccount-content">
+                      <h3>Account Details</h3>
+                      <div className="account-details-form">
+                        <form action="#">
+                          <div className="row">
+                            <div className="col-lg-6">
+                            <div className="single-input-item">
+                                <label htmlFor="first-name" className="required">Remain password</label>
+                                <input type="password" id="password" onChange={handleInput} />
+                              </div>
+                              <div className="single-input-item">
+                                <label htmlFor="first-name" className="required">New password</label>
+                                <input type="password" id="password" onChange={handleInput} />
+                              </div>
+                            </div>
+                            <div className="col-lg-6">
+                              <div className="single-input-item">
+                                <label htmlFor="last-name" className="required">Confirm password</label>
+                                <input type="password" id="confirm-password" onChange={handleInput}  />
+                              </div>
+                            </div>
+                          </div>
+                          <div className="single-input-item">
+                            <button className="check-btn sqr-btn">Save Changes</button>
+                          </div>
+                        </form>
+                      </div>
                     </div>
                   </div>
                   <div className="tab-pane fade" id="account-info" role="tabpanel" aria-labelledby="account-info-tab">
@@ -163,45 +200,28 @@ function Myaccount(){
                             <div className="col-lg-6">
                               <div className="single-input-item">
                                 <label htmlFor="first-name" className="required">First Name</label>
-                                <input type="text" id="first-name" />
+                                <input type="text" id="first-name" defaultValue={inputs.firstname} onChange={handleInput} />
                               </div>
                             </div>
                             <div className="col-lg-6">
                               <div className="single-input-item">
                                 <label htmlFor="last-name" className="required">Last Name</label>
-                                <input type="text" id="last-name"  />
+                                <input type="text" id="last-name" defaultValue={inputs.lastname} onChange={handleInput}  />
                               </div>
                             </div>
                           </div>
                           <div className="single-input-item">
                             <label htmlFor="display-name" className="required">Display Name</label>
-                            <input type="text" id="display-name" />
+                            <input type="text" id="display-name" defaultValue= {getDataUser?.user.firstname + " " + getDataUser?.user.lastname}></input>
                           </div>
                           <div className="single-input-item">
                             <label htmlFor="email" className="required">Email Addres</label>
-                            <input type="email" id="email" />
+                            <input type="email" id="email" value={inputs.email} />
                           </div>
-                          <fieldset>
-                            <legend>Password change</legend>
-                            <div className="single-input-item">
-                              <label htmlFor="current-pwd" className="required">Current Password</label>
-                              <input type="password" id="current-pwd" />
-                            </div>
-                            <div className="row">
-                              <div className="col-lg-6">
-                                <div className="single-input-item">
-                                  <label htmlFor="new-pwd" className="required">New Password</label>
-                                  <input type="password" id="new-pwd" />
-                                </div>
-                              </div>
-                              <div className="col-lg-6">
-                                <div className="single-input-item">
-                                  <label htmlFor="confirm-pwd" className="required">Confirm Password</label>
-                                  <input type="password" id="confirm-pwd" />
-                                </div>
-                              </div>
-                            </div>
-                          </fieldset>
+                          <div className="single-input-item">
+                            <label htmlFor="email" className="required">Phone</label>
+                            <input type="number" id="phone" value={inputs.phone} />
+                          </div>
                           <div className="single-input-item">
                             <button className="check-btn sqr-btn">Save Changes</button>
                           </div>
