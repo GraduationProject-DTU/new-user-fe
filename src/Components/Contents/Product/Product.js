@@ -91,6 +91,103 @@ function Product() {
       })
   }
 
+  const handleClickCategory = (e) => {
+    e.preventDefault()
+    var categoryTitle = e.currentTarget.querySelector('.title').textContent
+    var categories = []
+    switch (categoryTitle) {
+      case 'Hare Care':
+        axios.get('http://localhost:8000/products')
+          .then(res => {
+            res.data.mess?.forEach((value) =>
+              value?.category?.title === 'Hare Care'
+                ? categories.push(value)
+                : '')
+            setProducts(categories)
+          })
+          .catch(err => {
+            console.log('err', err)
+          })
+        break
+      case 'Skin Care':
+        axios.get('http://localhost:8000/products')
+          .then(res => {
+            res.data.mess?.forEach((value) =>
+              value?.category?.title === 'Skin Care'
+                ? categories.push(value)
+                : '')
+            setProducts(categories)
+          })
+          .catch(err => {
+            console.log('err', err)
+          })
+        break
+      case 'Lip Stick':
+        axios.get('http://localhost:8000/products')
+          .then(res => {
+            res.data.mess?.forEach((value) =>
+              value?.category?.title === 'Lip Stick'
+                ? categories.push(value)
+                : '')
+            setProducts(categories)
+          })
+          .catch(err => {
+            console.log('err', err)
+          })
+        break
+      case 'Face Skin':
+        axios.get('http://localhost:8000/products')
+          .then(res => {
+            res.data.mess?.forEach((value) =>
+              value?.category?.title === 'Face Skin'
+                ? categories.push(value)
+                : '')
+            setProducts(categories)
+          })
+          .catch(err => {
+            console.log('err', err)
+          })
+        break
+      case 'Blusher':
+        axios.get('http://localhost:8000/products')
+          .then(res => {
+            res.data.mess?.forEach((value) =>
+              value?.category?.title === 'Blusher'
+                ? categories.push(value)
+                : '')
+            setProducts(categories)
+          })
+          .catch(err => {
+            console.log('err', err)
+          })
+        break
+      default:
+        axios.get('http://localhost:8000/products')
+          .then(res => {
+            res.data.mess?.forEach((value) =>
+              value?.category?.title === ''
+                ? categories.push(value)
+                : '')
+            setProducts(categories)
+          })
+          .catch(err => {
+            console.log('err', err)
+          })
+        break;
+    }
+
+  }
+
+  const handleClear = () => {
+    axios.get('http://localhost:8000/products')
+      .then(res => {
+        setProducts(res.data.mess)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
 
   return (
     <>
@@ -138,73 +235,37 @@ function Product() {
             </div>
 
             <div className="select-on-sale d-none d-md-flex">
-              <span>On Sale :</span>
-              <select style={{ border: 'none' }}>
+              <button onClick={handleClear} className="btnClear">Clear Filter <i class="fa fa-filter"></i></button>
+              {/* <select style={{ border: 'none' }}>
                 <option selected>Yes</option>
                 <option value={1}>No</option>
-              </select>
+              </select> */}
             </div>
           </div>
         </div>
       </div >
       {/*== End Shop Top Bar Area Wrapper ==*/}
+
       {/*== Start Product Category Area Wrapper ==*/}
       <section className="section-space pb-0">
         <div className="container">
           <div className="row g-3 g-sm-6">
-            <div className="col-6 col-lg-4 col-lg-2 col-xl-2">
-              {/*== Start Product Category Item ==*/}
-              <a href="/product" className="product-category-item">
-                <img className="icon" src="assets/images/shop/category/1.webp" width={70} height={80} alt="Image-HasTech" />
-                <h3 className="title">Hare Care</h3>
-                <span className="flag-new">new</span>
-              </a>
-              {/*== End Product Category Item ==*/}
-            </div>
-            <div className="col-6 col-lg-4 col-lg-2 col-xl-2">
-              {/*== Start Product Category Item ==*/}
-              <a href="product.html" className="product-category-item" data-bg-color="#FFEDB4">
-                <img className="icon" src="assets/images/shop/category/2.webp" width={80} height={80} alt="Image-HasTech" />
-                <h3 className="title">Skin care</h3>
-              </a>
-              {/*== End Product Category Item ==*/}
-            </div>
-            <div className="col-6 col-lg-4 col-lg-2 col-xl-2 mt-lg-0 mt-sm-6 mt-4">
-              {/*== Start Product Category Item ==*/}
-              <a href="product.html" className="product-category-item" data-bg-color="#DFE4FF">
-                <img className="icon" src="assets/images/shop/category/3.webp" width={80} height={80} alt="Image-HasTech" />
-                <h3 className="title">Lip stick</h3>
-              </a>
-              {/*== End Product Category Item ==*/}
-            </div>
-            <div className="col-6 col-lg-4 col-lg-2 col-xl-2 mt-xl-0 mt-sm-6 mt-4">
-              {/*== Start Product Category Item ==*/}
-              <a href="product.html" className="product-category-item" data-bg-color="#FFEACC">
-                <img className="icon" src="assets/images/shop/category/4.webp" width={80} height={80} alt="Image-HasTech" />
-                <h3 className="title">Face skin</h3>
-                <span data-bg-color="#835BF4" className="flag-new">sale</span>
-              </a>
-              {/*== End Product Category Item ==*/}
-            </div>
-            <div className="col-6 col-lg-4 col-lg-2 col-xl-2 mt-xl-0 mt-sm-6 mt-4">
-              {/*== Start Product Category Item ==*/}
-              <a href="product.html" className="product-category-item" data-bg-color="#FFDAE0">
-                <img className="icon" src="assets/images/shop/category/5.webp" width={80} height={80} alt="Image-HasTech" />
-                <h3 className="title">Blusher</h3>
-              </a>
-              {/*== End Product Category Item ==*/}
-            </div>
-            <div className="col-6 col-lg-4 col-lg-2 col-xl-2 mt-xl-0 mt-sm-6 mt-4">
-              {/*== Start Product Category Item ==*/}
-              <a href="product.html" className="product-category-item" data-bg-color="#FFF3DA">
-                <img className="icon" src="assets/images/shop/category/6.webp" width={80} height={80} alt="Image-HasTech" />
-                <h3 className="title">Natural</h3>
-              </a>
-              {/*== End Product Category Item ==*/}
-            </div>
+            {/*== Start Product Category Item ==*/}
+            {
+              category?.map((e, i) => (
+                <div className="col-6 col-lg-4 col-lg-2 col-xl-2">
+                  <a href="/product" onClick={e => handleClickCategory(e)} className="product-category-item">
+                    <img className="icon" src={`assets/images/shop/category/${i + 1}.webp`} width={70} height={80} alt="Image-HasTech" />
+                    <h3 className="title">{e.title}</h3>
+                    {/* <span className="flag-new"></span> */}
+                  </a>
+                </div>
+              ))
+            }
+            {/*== End Product Category Item ==*/}
           </div>
         </div>
-      </section>
+      </section >
       {/*== End Product Category Area Wrapper ==*/}
       {/*== Start Product Area Wrapper ==*/}
       <section className="section-space">
@@ -212,16 +273,15 @@ function Product() {
           <div className="row mb-n4 mb-sm-n10 g-3 g-sm-6">
             {/* START MAP PRODUCT */}
             {
-              products.map((e, i) => (
+              products?.map((e, i) => (
                 <div key={i} className="col-6 col-lg-4 mb-4 mb-sm-8">
-                  {console.log(e)}
                   {/*== Start Product Item ==*/}
                   <div style={{ objectFit: 'cover' }} className="product-item">
                     <div className="product-thumb">
                       <a className="d-block" href={"product-details/" + e._id}>
                         <img src={e.image} style={{ height: '400px' }} width={370} height={450} alt="Image-HasTech" />
                       </a>
-                      <span className="flag-new">new</span>
+                      <span className="flag-new">{e?.category?.title}</span>
                       <div className="product-action">
                         <button type="button" className="product-action-btn action-btn-quick-view" data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
                           <i className="fa fa-expand" />
