@@ -165,7 +165,7 @@ function Product() {
         axios.get('http://localhost:8000/products')
           .then(res => {
             res.data.mess?.forEach((value) =>
-              value?.category?.title === ''
+              value?.category?.title === 'Natural'
                 ? categories.push(value)
                 : '')
             setProducts(categories)
