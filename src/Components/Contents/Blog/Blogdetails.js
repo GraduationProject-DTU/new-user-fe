@@ -1,10 +1,14 @@
 import axios from "axios"
-import { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
+import { useContext, useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import Comment from "./Comment"
 import './Comment.css'
 import Listcomment from "./Listcomment"
+import { UserContext } from "../../../UserContext"
 function Blogdetails(props){
+  const [gettotalblog,settotalblog] = useState("")
+  const {getpageKey,setpageKey} = useContext(UserContext)
   const [novalue,setnovalue] = useState("valueao")
   const [getdata1, setdata1] = useState("")
   const [getComment, setcomment] = useState("")
@@ -12,6 +16,13 @@ function Blogdetails(props){
   const [blog, setBlog] = useState([])
     let params = useParams()
     useEffect(() => {
+      axios.get(`http://localhost:8000/blogs`)
+      .then(response => {
+        settotalblog(response.data.blogs)
+      })
+      .catch(function (error) {
+          console.log(error)
+      })
       axios.get("http://localhost:8000/blogs/get-view/" + params.id)
           .then(response => {
               setdata1(response.data.blog)
@@ -29,9 +40,38 @@ function Blogdetails(props){
       })    
     },[getcheck])
       //Hàm nhận giá trị trả về từ comment
-        function getcmt(novalue) {
+      function getcmt(novalue) {
           const concatter = getcheck.concat(novalue)
           setcheck(concatter)
+      }
+      const handlesetKey = (e)=> {
+        // console.log(e.target.id)
+        setpageKey(e.target.id)
+      }
+      function fetchDataNext(){
+        if(gettotalblog?.length>0){
+          return gettotalblog.map((value,key)=>{
+            const setimage = value.images["0"]  
+            if (getpageKey == value._id){
+              console.log(value)
+              return (
+                    <div className="col-sm-6" key={key}>
+                          <Link to={`/blog-details/${value?._id}`} id = {key} onClick={handlesetKey}>
+                            <a className="blog-next-previous blog-next">
+                                <div className="thumb">
+                                    <img src={"" +setimage} style={{width : "93px" , height: "80px" }} id = {key} />
+                                </div>
+                                <div className="content">
+                                  <h4 className="title">{value.title}</h4>
+                                  <h5 className="post-date">{value.updatedAt}</h5>
+                                </div>
+                              </a>
+                          </Link>
+                    </div>
+                  )
+            }
+          })
+        }
       }
       function fetchDataicon(){
         return(
@@ -90,13 +130,11 @@ function Blogdetails(props){
           <div className="container">
               {fetchDataicon()}
               {fetchData()}              
-              <div className="section-space pb-0">
-                {/*== Start Product Category Item ==*/}
+              {/* <div className="section-space pb-0">
                 <a href="product.html" className="product-banner-item">
                   <img src="assets/images/shop/banner/9.webp" width={1170} height={200} alt="Image-HasTech" />
                 </a>
-                {/*== End Product Category Item ==*/}
-              </div>
+              </div> */}
               <div className="row justify-content-between align-items-center pt-10 mt-4 section-space">
                 <div className="col-sm-6">
                   <a href="blog-details.html" className="blog-next-previous">
@@ -110,18 +148,7 @@ function Blogdetails(props){
                     </div>
                   </a>
                 </div>
-                <div className="col-sm-6">
-                  <a href="blog-details.html" className="blog-next-previous blog-next">
-                    <div className="thumb">
-                      <span className="arrow">NEXT</span>
-                      <img src="assets/images/blog/next-previous2.webp" width={93} height={80} alt="Image" />
-                    </div>
-                    <div className="content">
-                      <h4 className="title">Lorem ipsum dolor amet, consectetur adipiscing.</h4>
-                      <h5 className="post-date">February 13, 2022</h5>
-                    </div>
-                  </a>
-                </div>
+                  {fetchDataNext()}
               </div>
               <Listcomment getComment={getComment}/>
               <Comment idBlog={params.id} getcmt={getcmt}/>

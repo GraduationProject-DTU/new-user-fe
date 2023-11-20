@@ -1,44 +1,62 @@
 import axios from "axios"
 import { Link } from "react-router-dom"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import ReactPaginate from 'react-paginate';
 import Category from "./Category"
+import { UserContext } from "../../../UserContext";
 function Blog(){
+  const [gettotalblog,settotalblog] = useState("")
+  const {getpageKey,setpageKey} = useContext(UserContext)
   const [getItem, setItem] = useState("")
   const [getselected,setselected] = useState(1)
   const [gettotalpage,settotalpage] = useState(1)
         useEffect(() => {
+          axios.get(`http://localhost:8000/blogs`)
+                .then(response => {
+                  console.log(response.data.blogs)
+                  settotalblog(response.data.blogs)
+                })
+                .catch(function (error) {
+                    console.log(error)
+                })
             axios.get(`http://localhost:8000/blogs?page=${getselected}`)
                 .then(response => {
                     setItem(response.data.blogs)
                     settotalpage(response.data.pageTotal)
-                    console.log(response.data.blogs)
-                    // console.log(`http://localhost:8000/blogs?page=${getselected}`)
                 })
                 .catch(function (error) {
                     console.log(error)
                 })
         }, [getselected])
         const handlePageClick = (event) => {
-          // console.log(event)
           setselected(+event.selected+1)
+        }
+        const handlesetKey = (e)=> {
+          console.log(e.target.id)
+          setpageKey(e.target.id)
         }
         function fetchData(){
             if(getItem?.length>0){
               return getItem?.map((value,key)=>{
                 const setimage = value.images["0"]
-                // console.log(value)
+                console.log(value._id)               
               return(
                 <div className="col-sm-6 col-lg-4 col-xl-6 mb-8">
                 <div className="post-item">
-                <Link to={`/blog-details/${value?._id}`}>
-                <img src={"" +setimage} style={{width : "370px" , height: "320px" }} alt="Image-HasTech" />
+                <Link to={`/blog-details/${value?._id}`} id = {value._id} onClick={handlesetKey}>
+                <img src={"" +setimage} style={{width : "370px" , height: "320px" }} id = {value._id} alt="Image-HasTech" />
                 </Link>
                   <div className="content">
-                    <a className="post-category" href="blog.html">{value?.category}</a>
-                    <h4 className="title"><a href={"/blog-details/"+ value?._id}>{value?.title}</a></h4>
+                    <Link to={`/blog-details/${value?._id}`} id = {value._id}>
+                      <a className="post-category">{value?.category}</a>
+                      <h4 className="title"><a>{value?.title}</a></h4>
+                </Link>
                     <ul className="meta">
-                      <li className="author-info"><span>By:</span> <a href={"/blog-details/"+ value?._id}>{value?.author}</a></li>
+                      <li className="author-info"><span>By:</span>
+                      <Link to  = {`/blog-details/${value?._id}`} id = {value._id} >
+                        <a>{value?.author}</a>
+                      </Link>
+                      </li>
                       <li className="post-date">{value?.updatedAt}</li>
                     </ul>
                   </div>
@@ -47,6 +65,28 @@ function Blog(){
               )
               })
             }
+        }
+        function fetchRecentPost(){
+          if(gettotalblog?.length>0){
+            return gettotalblog?.map((value,key)=>{
+              // console.log(key)
+              const setimage = value.images["0"]
+              if(gettotalblog?.length-3 <= key){
+                console.log(value)
+                return(
+                      <div className="blog-widget-single-post">
+                        <Link to={`/blog-details/${value?._id}`}>
+                        <a>
+                            <img src={"" +setimage} style={{width : "75px" , height: "78px" }} alt="Image-HasTech" />
+                            <span className="title">{value?.title}</span>
+                        </a>
+                        </Link>
+                            <span className="date">{value?.updatedAt}</span>
+                      </div>
+                  )
+              }
+            })
+          }
         }
     return(
         <>
@@ -99,27 +139,7 @@ function Blog(){
                   <div className="blog-widget">
                     <h4 className="blog-widget-title">Recent Posts</h4>
                     <div className="blog-widget-post">
-                      <div className="blog-widget-single-post">
-                        <a href="blog-details.html">
-                          <img src="assets/images/blog/s1.webp" width={75} height={78} alt="Images" />
-                          <span className="title">Lorem ipsum dolor sit amet conse adipis.</span>
-                        </a>
-                        <span className="date">Sep 24,2022</span>
-                      </div>
-                      <div className="blog-widget-single-post">
-                        <a href="blog-details.html">
-                          <img src="assets/images/blog/s2.webp" width={75} height={78} alt="Images" />
-                          <span className="title">Lorem ipsum dolor sit amet conse adipis.</span>
-                        </a>
-                        <span className="date">Sep 25,2022</span>
-                      </div>
-                      <div className="blog-widget-single-post">
-                        <a href="blog-details.html">
-                          <img src="assets/images/blog/s3.webp" width={75} height={78} alt="Images" />
-                          <span className="title">Lorem ipsum dolor sit amet conse adipis.</span>
-                        </a>
-                        <span className="date">Sep 26,2022</span>
-                      </div>
+                        {fetchRecentPost()}
                     </div>
                   </div>
                 </div>

@@ -15,10 +15,11 @@ function App(props) {
   const [getidlarge,setidlarge] = useState("")
   const [getidwishlist,setidwishlist] = useState("")
   const [getvalueaorefresh,setvalueaorefresh] = useState("")
+  const [getpageKey,setpageKey] = useState("")
   return (
     <div>
       <ToastContainer />
-      <UserContext.Provider value={{getCart,setCart,getid,setid,getidlarge,setidlarge,getidwishlist,setidwishlist,getvalueaorefresh,setvalueaorefresh}}>
+      <UserContext.Provider value={{getCart,setCart,getid,setid,getidlarge,setidlarge,getidwishlist,setidwishlist,getvalueaorefresh,setvalueaorefresh,getpageKey,setpageKey}}>
           <Header/>
             <main class="main-content">
               {props.children}

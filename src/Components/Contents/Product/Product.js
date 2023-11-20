@@ -6,19 +6,18 @@ function Product() {
   const [products, setProducts] = useState([])
   const [category, setCategory] = useState([])
   const [value, setValue] = useState(0)
-
-
-
   useEffect(() => {
     try {
       axios.get('http://localhost:8000/products')
         .then(res => {
           setProducts(res.data.mess)
+          console.log(res.data.mess)
         })
 
       axios.get('http://localhost:8000/category-products')
         .then(res => {
           setCategory(res.data.category)
+          console.log(res.data.category)
         })
     } catch (error) {
       console.log('err', error)

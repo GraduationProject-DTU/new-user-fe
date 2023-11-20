@@ -8,7 +8,7 @@ function Category(){
             axios.get("http://localhost:8000/category-blogs")
                 .then(response => {
                     setItem(response.data.category)
-                    console.log(response)
+                    // console.log(response)
                 })
                 .catch(function (error) {
                     console.log(error)
