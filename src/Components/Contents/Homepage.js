@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import { useContext, useEffect, useState } from "react"
 import { UserContext } from "../../UserContext"
 function Homepage() {
-  const {getvalueaorefresh,setvalueaorefresh} = useContext(UserContext)
+  const { getvalueaorefresh, setvalueaorefresh } = useContext(UserContext)
   const [getItem, setItem] = useState("")
   const [sold, setSold] = useState([])
   const [blog, setBlog] = useState([])
@@ -35,13 +35,7 @@ function Homepage() {
       .catch(function (error) {
         console.log(error)
       })
-    // axios.get("http://localhost:8000/blogs/")
-    // .then(response1 => {
-    //   setItemBlog(response1.data.blog)
-    // })
-    // .catch(function (error) {
-    //     console.log(error)
-    // })
+
   }, [getvalueaorefresh])
   const handleClick = (id) => {
     let main = {}
@@ -93,9 +87,7 @@ function Homepage() {
                   <Link to={`/product-details/${value._id}`}>
                     <img src={"" + value.image} style={{ width: "370px", height: "450px" }} width={370} height={450} alt="Image-HasTech" />
                   </Link>
-                  {/* <a className="d-block" href={"product-details/" + value._id}>
-                  <img src={""+value.image} style={{width: "370px", height: "450px"}} width={370} height={450} alt="Image-HasTech" />
-                </a> */}
+
                   <span className="flag-new">new</span>
                   <div className="product-action">
                     <button id={value._id} onClick={() => handleClicklarge(value._id)} type="button" className="product-action-btn action-btn-quick-view" data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
@@ -121,16 +113,12 @@ function Homepage() {
                   </div>
                   <h4 className="title">
                     <Link to={`/product-details/${value._id}`}>{value.title}</Link>
-                    {/* <a href={"product-details/" + e._id} >
-                          {e.title}
-                        </a> */}
                   </h4>
                   <div className="product-rating">
                     <div className="reviews">Đã bán {value.sold}</div>
                   </div>
                   <div className="prices">
                     <span style={{ color: 'rgb(239,84,53)' }} className="price">₫{value.price}</span>
-                    {/* <span className="price-old">300.00</span> */}
                   </div>
                 </div>
                 <div className="product-action-bottom">
@@ -369,7 +357,7 @@ function Homepage() {
                       </a>
                     </Link>
                     <div className="content">
-                      <a className="post-category" >{e?.category}</a>
+                      <a className="post-category" >{e?.category?.title}</a>
                       <h4 className="title">
                         <Link to={`/blog-details/${e?._id}`}>
                           <a>{e?.title}</a>
