@@ -3,6 +3,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { UserContext } from "../../../UserContext";
 import { useState,useContext, useEffect, } from "react"
+import axios from "axios";
 function Myaccount(){
 useEffect(() =>{
   let getDataUser = JSON.parse(localStorage.getItem("User"))
@@ -23,6 +24,33 @@ useEffect(() =>{
     firstname:"",
     lastname: ""
   })
+  const handleSaveChange = (e) =>{
+    e.preventDefault()
+    console.log(inputs.firstname)
+    let url = "http://localhost:8000/users/update-user"
+    let accessToken = getDataUser?.token
+    let config = {
+        headers: {
+            'token': 'baerer ' + accessToken,
+        }
+    }
+    const data = {
+      email: inputs.email,
+      firstname: inputs.firstname,
+      lastname: inputs.lastname,
+      phone:inputs.phone
+    }
+    axios.put(url, data, config)
+        .then(response => {
+            console.log(response)
+            toast.success("Update thông tin thành công", {
+                position: toast.POSITION.TOP_RIGHT,
+            });
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+  }
   const handleInput = (e) => {
     const nameInput = e.target.name
     const value = e.target.value
@@ -170,7 +198,7 @@ useEffect(() =>{
                             <div className="col-lg-6">
                             <div className="single-input-item">
                                 <label htmlFor="first-name" className="required">Remain password</label>
-                                <input type="password" id="password" onChange={handleInput} />
+                                <input type="password" id="remain-password" onChange={handleInput} />
                               </div>
                               <div className="single-input-item">
                                 <label htmlFor="first-name" className="required">New password</label>
@@ -200,30 +228,30 @@ useEffect(() =>{
                             <div className="col-lg-6">
                               <div className="single-input-item">
                                 <label htmlFor="first-name" className="required">First Name</label>
-                                <input type="text" id="first-name" defaultValue={inputs.firstname} onChange={handleInput} />
+                                <input type="text" name="firstname" id="first-name" defaultValue={inputs.firstname} onChange={handleInput} />
                               </div>
                             </div>
                             <div className="col-lg-6">
                               <div className="single-input-item">
                                 <label htmlFor="last-name" className="required">Last Name</label>
-                                <input type="text" id="last-name" defaultValue={inputs.lastname} onChange={handleInput}  />
+                                <input type="text" name="lastname" id="last-name" defaultValue={inputs.lastname} onChange={handleInput}  />
                               </div>
                             </div>
                           </div>
                           <div className="single-input-item">
                             <label htmlFor="display-name" className="required">Display Name</label>
-                            <input type="text" id="display-name" defaultValue= {getDataUser?.user.firstname + " " + getDataUser?.user.lastname}></input>
+                            <input type="text" id="display-name" defaultValue= {getDataUser?.user.firstname + " " + getDataUser?.user.lastname} readOnly></input>
                           </div>
                           <div className="single-input-item">
                             <label htmlFor="email" className="required">Email Addres</label>
-                            <input type="email" id="email" value={inputs.email} />
+                            <input type="email" id="email" value={inputs.email} readOnly />
                           </div>
                           <div className="single-input-item">
                             <label htmlFor="email" className="required">Phone</label>
-                            <input type="number" id="phone" value={inputs.phone} />
+                            <input type="number" name="phone" id="phone" value={inputs.phone} onChange={handleInput} />
                           </div>
                           <div className="single-input-item">
-                            <button className="check-btn sqr-btn">Save Changes</button>
+                            <button className="check-btn sqr-btn"  onClick={handleSaveChange}>Save Changes</button>
                           </div>
                         </form>
                       </div>

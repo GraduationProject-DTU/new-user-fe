@@ -19,7 +19,12 @@ function App(props) {
   return (
     <div>
       <ToastContainer />
-      <UserContext.Provider value={{getCart,setCart,getid,setid,getidlarge,setidlarge,getidwishlist,setidwishlist,getvalueaorefresh,setvalueaorefresh,getpageKey,setpageKey}}>
+      <UserContext.Provider value={{getCart,setCart
+        ,getid,setid,
+        getidlarge,setidlarge,
+        getidwishlist,setidwishlist,
+        getvalueaorefresh,setvalueaorefresh,
+        getpageKey,setpageKey}}>
           <Header/>
             <main class="main-content">
               {props.children}

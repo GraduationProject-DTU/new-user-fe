@@ -361,7 +361,7 @@ function Homepage() {
           <div className="row mb-n9">
             {
               blog?.map((e, i) => (
-                <div className="col-sm-6 col-lg-4 mb-8">
+                <div className="col-sm-6 col-lg-4 mb-8" key={i}>
                   <div className="post-item">
                     <Link to={`/blog-details/${e?._id}`}>
                       <a className="thumb">

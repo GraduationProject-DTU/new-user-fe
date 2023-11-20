@@ -60,13 +60,17 @@ function Productcart(){
                                           </td>
                                           <td className="product-thumbnail">
                                             <div className="thumb">
-                                              <a href="single-product.html">
+                                              <Link to={"/product-details/" + value._id}>
+                                              <a>
                                                 <img src={""+value.image} style={{width:"68px",height:"84px"}} width={68} height={84} alt="Image-HasTech" />
                                               </a>
+                                              </Link>                                              
                                             </div>
                                           </td>
                                           <td className="product-name">
-                                            <a className="title" href="single-product.html">{value.title}</a>
+                                            <Link to={"/product-details/" + value._id}>
+                                            <a className="title">{value.title}</a>
+                                            </Link>
                                           </td>
                                           <td className="product-price">
                                             <span className="price">{value.price}</span>

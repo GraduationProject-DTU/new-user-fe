@@ -135,7 +135,7 @@ function Blogdetails(props){
                   <img src="assets/images/shop/banner/9.webp" width={1170} height={200} alt="Image-HasTech" />
                 </a>
               </div> */}
-              <div className="row justify-content-between align-items-center pt-10 mt-4 section-space">
+              {/* <div className="row justify-content-between align-items-center pt-10 mt-4 section-space">
                 <div className="col-sm-6">
                   <a href="blog-details.html" className="blog-next-previous">
                     <div className="thumb">
@@ -149,7 +149,7 @@ function Blogdetails(props){
                   </a>
                 </div>
                   {fetchDataNext()}
-              </div>
+              </div> */}
               <Listcomment getComment={getComment}/>
               <Comment idBlog={params.id} getcmt={getcmt}/>
           </div>
