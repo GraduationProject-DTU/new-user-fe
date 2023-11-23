@@ -16,7 +16,7 @@ function Homepage() {
   useEffect(() => {
     axios.get("http://localhost:8000/products")
       .then(response => {
-        setItem(response.data.mess)
+        setItem(response.data.mess.slice(-3))
       })
       .catch(function (error) {
         console.log(error)
@@ -28,9 +28,9 @@ function Homepage() {
       .catch(function (error) {
         console.log(error)
       })
-    axios.get('http://localhost:8000/blogs?page=1')
+    axios.get('http://localhost:8000/blogs')
       .then(res => {
-        setBlog(res.data.blogs.slice(0, 3))
+        setBlog(res.data.blogs.slice(-3))
       })
       .catch(function (error) {
         console.log(error)
@@ -154,12 +154,12 @@ function Homepage() {
                       <div className="hero-slide-text-img"><img src="assets/images/slider/text-theme.webp" width={427} height={232} alt="Image" /></div>
                       <h2 className="hero-slide-title">CLEAN FRESH</h2>
                       <p className="hero-slide-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus venenatis.</p>
-                      <a className="btn btn-border-dark" href={"product-details/" + getItem[2]?._id}>BUY NOW</a>
+                      <a className="btn btn-border-dark" href={"product-details/" + sold[0]?._id}>BUY NOW</a>
                     </div>
                   </div>
                   <div className="col-12 col-md-6">
                     <div className="hero-slide-thumb">
-                      <img src={getItem[2]?.image} width={841} height={832} alt="Image" />
+                      <img src={sold[0]?.image} width={841} height={832} alt="Image" />
                     </div>
                   </div>
                 </div>
@@ -175,12 +175,12 @@ function Homepage() {
                       <div className="hero-slide-text-img"><img src="assets/images/slider/text-theme.webp" width={427} height={232} alt="Image" /></div>
                       <h2 className="hero-slide-title">Facial Cream</h2>
                       <p className="hero-slide-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus venenatis.</p>
-                      <a className="btn btn-border-dark" href={"product-details/" + getItem[1]?._id}>BUY NOW</a>
+                      <a className="btn btn-border-dark" href={"product-details/" + sold[1]?._id}>BUY NOW</a>
                     </div>
                   </div>
                   <div className="col-12 col-md-6">
                     <div className="hero-slide-thumb">
-                      <img src={getItem[1]?.image} width={841} height={832} alt="Image" />
+                      <img src={sold[1]?.image} width={841} height={832} alt="Image" />
                     </div>
                   </div>
                 </div>
@@ -199,71 +199,14 @@ function Homepage() {
         </div>
       </section>
       {/*== End Hero Area Wrapper ==*/}
-      {/*== Start Product Category Area Wrapper ==*/}
-      <section className="section-space pb-0">
-        <div className="container">
-          <div className="row g-3 g-sm-6">
-            <div className="col-6 col-lg-4 col-lg-2 col-xl-2">
-              {/*== Start Product Category Item ==*/}
-              <a href="product.html" className="product-category-item">
-                <img className="icon" src="assets/images/shop/category/1.webp" width={70} height={80} alt="Image-HasTech" />
-                <h3 className="title">Hare care</h3>
-                <span className="flag-new">new</span>
-              </a>
-              {/*== End Product Category Item ==*/}
-            </div>
-            <div className="col-6 col-lg-4 col-lg-2 col-xl-2">
-              {/*== Start Product Category Item ==*/}
-              <a href="product.html" className="product-category-item" data-bg-color="#FFEDB4">
-                <img className="icon" src="assets/images/shop/category/2.webp" width={80} height={80} alt="Image-HasTech" />
-                <h3 className="title">Skin care</h3>
-              </a>
-              {/*== End Product Category Item ==*/}
-            </div>
-            <div className="col-6 col-lg-4 col-lg-2 col-xl-2 mt-lg-0 mt-sm-6 mt-4">
-              {/*== Start Product Category Item ==*/}
-              <a href="product.html" className="product-category-item" data-bg-color="#DFE4FF">
-                <img className="icon" src="assets/images/shop/category/3.webp" width={80} height={80} alt="Image-HasTech" />
-                <h3 className="title">Lip stick</h3>
-              </a>
-              {/*== End Product Category Item ==*/}
-            </div>
-            <div className="col-6 col-lg-4 col-lg-2 col-xl-2 mt-xl-0 mt-sm-6 mt-4">
-              {/*== Start Product Category Item ==*/}
-              <a href="product.html" className="product-category-item" data-bg-color="#FFEACC">
-                <img className="icon" src="assets/images/shop/category/4.webp" width={80} height={80} alt="Image-HasTech" />
-                <h3 className="title">Face skin</h3>
-                <span data-bg-color="#835BF4" className="flag-new">sale</span>
-              </a>
-              {/*== End Product Category Item ==*/}
-            </div>
-            <div className="col-6 col-lg-4 col-lg-2 col-xl-2 mt-xl-0 mt-sm-6 mt-4">
-              {/*== Start Product Category Item ==*/}
-              <a href="product.html" className="product-category-item" data-bg-color="#FFDAE0">
-                <img className="icon" src="assets/images/shop/category/5.webp" width={80} height={80} alt="Image-HasTech" />
-                <h3 className="title">Blusher</h3>
-              </a>
-              {/*== End Product Category Item ==*/}
-            </div>
-            <div className="col-6 col-lg-4 col-lg-2 col-xl-2 mt-xl-0 mt-sm-6 mt-4">
-              {/*== Start Product Category Item ==*/}
-              <a href="product.html" className="product-category-item" data-bg-color="#FFF3DA">
-                <img className="icon" src="assets/images/shop/category/6.webp" width={80} height={80} alt="Image-HasTech" />
-                <h3 className="title">Natural</h3>
-              </a>
-              {/*== End Product Category Item ==*/}
-            </div>
-          </div>
-        </div>
-      </section>
-      {/*== End Product Category Area Wrapper ==*/}
+
       {/*== Start Product Area Wrapper ==*/}
       <section className="section-space">
         <div className="container">
           <div className="row">
             <div className="col-12">
               <div className="section-title text-center">
-                <h2 className="title">Top sale</h2>
+                <h2 className="title">Top Products</h2>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus venenatis</p>
               </div>
             </div>
