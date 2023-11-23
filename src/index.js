@@ -24,6 +24,8 @@ import Account from './Components/Contents/Account/Account';
 import Blogdetails from './Components/Contents/Blog/Blogdetails';
 import CreateBlog from './Components/Contents/Blog/CreateBlog';
 import PageNotFound from './Components/Contents/PageNotFound';
+import ResetPassword from './Components/Contents/Account/ResetPassword';
+import ForgotPassword from './Components/Contents/Account/ForgotPassword';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
@@ -35,6 +37,8 @@ root.render(
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog-details/:id" element={<Blogdetails />} />
           <Route path="/account" element={<Account />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/auth/reset-password/:token" element={<ResetPassword />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/faq" element={<Faq />} />
           <Route path="/myaccount" element={<Myaccount />} />
@@ -43,8 +47,8 @@ root.render(
           <Route path="/productcheckout" element={<Productcheckout />} />
           <Route path="/product-details/:id" element={<Productdetails />} />
           <Route path="/wishlist" element={<Wishlist />} />
-          <Route path='/createblog' element={<CreateBlog/>}/>
-          <Route path='*' element={<PageNotFound/>}/>
+          <Route path='/createblog' element={<CreateBlog />} />
+          <Route path='*' element={<PageNotFound />} />
         </Routes>
       </App>
     </Router>
