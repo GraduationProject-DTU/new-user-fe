@@ -1,26 +1,52 @@
 import axios from "axios"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import './product.css'
+import { UserContext } from "../../../UserContext"
 
 function Productdetails() {
   const [product, setProduct] = useState([])
   const [products, setProducts] = useState([])
   const [star, setStar] = useState(0)
   const [comment, setComment] = useState('')
+  const { getCart, setCart } = useContext(UserContext)
+  const { getid, setid } = useContext(UserContext)
   let params = useParams()
-
+  const { getidwishlist, setidwishlist } = useContext(UserContext)
+  const [getquantity,setquantity] = useState(1)
   const body = {
     'postId': params.id,
     'star': star,
     'comment': comment
   }
-
+  const onChancequantity= (e) =>{
+    setquantity(e.target.value)
+  }
+  const handleClick = (id) => {
+    let main = {}
+    let nameInput = id
+    let value = +getquantity
+    let test1 = localStorage.getItem("CartItem")
+    setid(nameInput)
+    if (test1) {
+      main = JSON.parse(test1)
+      for (var key in main) {
+        if (nameInput == key) {
+          value = main[nameInput] + +value
+          localStorage.setItem("CartItem", JSON.stringify(main))
+        }
+      }
+    }
+    main[nameInput] = value
+    localStorage.setItem("CartItem", JSON.stringify(main))
+    setCart(main)
+  }
   useEffect(() => {
     try {
       axios.get('http://localhost:8000/products/' + params.id)
         .then(res => {
           setProduct(res.data.product)
+          console.log(res.data.product)
         })
         .catch(err => {
           console.log('catch log', err)
@@ -42,6 +68,22 @@ function Productdetails() {
       console.log('error', error)
     }
   }, [])
+  const handleclickwishlist = (id) => {
+    setidwishlist(id)
+    let idwishlist = id
+    let main = []
+    let test1 = localStorage.getItem("Wishlist")
+    if (test1) {
+      main = JSON.parse(test1)
+      for (var key in main) {
+        if (idwishlist == main[key]) {
+          main.splice(key, 1)
+        }
+      }
+    }
+    main.push(idwishlist)
+    localStorage.setItem("Wishlist", JSON.stringify(main))
+  }
   return (
     <>
       {/*== Start Page Header Area Wrapper ==*/}
@@ -92,7 +134,7 @@ function Productdetails() {
                 </div>
                 <div className="product-details-pro-qty">
                   <div className="pro-qty">
-                    <input type="text" title="Quantity" defaultValue={1} />
+                    <input type="number" title="Quantity" defaultValue={1} onChange={onChancequantity} />
                   </div>
                 </div>
                 <div className="product-details-shipping-cost">
@@ -104,8 +146,8 @@ function Productdetails() {
                 <div className="product-details-action">
                   <h4 style={{ color: 'rgb(239,84,53)' }} className="price">₫{product.price}</h4>
                   <div className="product-details-cart-wishlist">
-                    <button type="button" className="btn-wishlist" data-bs-toggle="modal" data-bs-target="#action-WishlistModal"><i className="fa fa-heart-o" /></button>
-                    <button type="button" className="btn" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">Add to cart</button>
+                    <button id={product._id} onClick={() => handleclickwishlist(product._id)}  type="button" className="btn-wishlist" data-bs-toggle="modal" data-bs-target="#action-WishlistModal"><i className="fa fa-heart-o" /></button>
+                    <button id={product._id} onClick={() => handleClick(product._id)} type="button" className="btn" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">Add to cart</button>
                   </div>
                 </div>
               </div>

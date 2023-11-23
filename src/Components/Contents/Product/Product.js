@@ -1,11 +1,55 @@
 import axios from "axios"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import './product.css'
 import { Link } from "react-router-dom"
+import { UserContext } from "../../../UserContext"
 function Product() {
   const [products, setProducts] = useState([])
   const [category, setCategory] = useState([])
   const [value, setValue] = useState(0)
+  const { getCart, setCart } = useContext(UserContext)
+  const { getid, setid } = useContext(UserContext)
+  const { getidwishlist, setidwishlist } = useContext(UserContext)
+  const { getidlarge, setidlarge } = useContext(UserContext)
+  const handleClicklarge = (id) => {
+    setidlarge(id)
+  }
+  const handleclickwishlist = (id) => {
+    setidwishlist(id)
+    let idwishlist = id
+    let main = []
+    let test1 = localStorage.getItem("Wishlist")
+    if (test1) {
+      main = JSON.parse(test1)
+      for (var key in main) {
+        if (idwishlist == main[key]) {
+          main.splice(key, 1)
+        }
+      }
+    }
+    main.push(idwishlist)
+    localStorage.setItem("Wishlist", JSON.stringify(main))
+  }
+  const handleClick = (id) => {
+    let main = {}
+    let nameInput = id
+    let value = 1
+    let test1 = localStorage.getItem("CartItem")
+    setid(nameInput)
+    if (test1) {
+      main = JSON.parse(test1)
+      for (var key in main) {
+        const getqty = main[key]
+        if (nameInput == key) {
+          value = main[nameInput] + 1
+          localStorage.setItem("CartItem", JSON.stringify(main))
+        }
+      }
+    }
+    main[nameInput] = value
+    localStorage.setItem("CartItem", JSON.stringify(main))
+    setCart(main)
+  }
   useEffect(() => {
     try {
       axios.get('http://localhost:8000/products')
@@ -282,13 +326,13 @@ function Product() {
                       </a>
                       <span className="flag-new">{e?.category?.title}</span>
                       <div className="product-action">
-                        <button type="button" className="product-action-btn action-btn-quick-view" data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
+                        <button id={e._id} onClick={() => handleClicklarge(e._id)}  type="button" className="product-action-btn action-btn-quick-view" data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
                           <i className="fa fa-expand" />
                         </button>
-                        <button type="button" className="product-action-btn action-btn-cart" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">
+                        <button id={e._id} onClick={() => handleClick(e._id)} type="button" className="product-action-btn action-btn-cart" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">
                           <span>Add to cart</span>
                         </button>
-                        <button type="button" className="product-action-btn action-btn-wishlist" data-bs-toggle="modal" data-bs-target="#action-WishlistModal">
+                        <button id={e._id} onClick={() => handleclickwishlist(e._id)} type="button" className="product-action-btn action-btn-wishlist" data-bs-toggle="modal" data-bs-target="#action-WishlistModal">
                           <i className="fa fa-heart-o" />
                         </button>
                       </div>

@@ -231,41 +231,41 @@ function Homepage() {
           </div>
           <div className="row mb-n4 mb-sm-n10 g-3 g-sm-6">
             {
-              sold?.map((e, i) => (
+              sold?.map((value, i) => (
                 <div key={i} style={{ width: '370px' }} className="swiper mb-10">
                   <div className="product-item product-st2-item">
                     <div className="product-thumb">
-                      <a className="d-block" href={"/product-details/" + e._id}>
-                        <img src={e.image} style={{ height: '400px' }} width={370} height={450} alt="Image-HasTech" />
+                      <a className="d-block" href={"/product-details/" + value._id}>
+                        <img src={value.image} style={{ height: '400px' }} width={370} height={450} alt="Image-HasTech" />
                       </a>
                       <span className="flag-new">new</span>
                     </div>
                     <div className="product-info">
                       <div className="product-rating">
                         <div className="rating">
-                          {Array.from({ length: e.totalRatings }, (_, index) => (
+                          {Array.from({ length: value.totalRatings }, (_, index) => (
                             <i key={index} className="fa fa-star-o" />
                           ))}
                         </div>
 
-                        <div className="reviews">{e.brand}</div>
+                        <div className="reviews">{value.brand}</div>
                       </div>
-                      <h4 className="title"><a href={"/product-details/" + e._id}>{e.title}</a></h4>
+                      <h4 className="title"><a href={"/product-details/" + value._id}>{value.title}</a></h4>
                       <div className="product-rating">
-                        <div className="reviews">Đã bán {e.sold}</div>
+                        <div className="reviews">Đã bán {value.sold}</div>
                       </div>
                       <div className="prices">
-                        <span style={{ color: 'rgb(239,84,53)' }} className="price">₫{e.price}</span>
+                        <span style={{ color: 'rgb(239,84,53)' }} className="price">₫{value.price}</span>
                         {/* <span className="price-old">300.00</span> */}
                       </div>
                       <div className="product-action">
-                        <button type="button" className="product-action-btn action-btn-cart" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">
+                        <button id={value._id} onClick={() => handleClick(value._id)} type="button" className="product-action-btn action-btn-cart" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">
                           <span>Add to cart</span>
                         </button>
-                        <button type="button" className="product-action-btn action-btn-quick-view" data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
+                        <button id={value._id} onClick={() => handleClicklarge(value._id)} type="button" className="product-action-btn action-btn-quick-view" data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
                           <i className="fa fa-expand" />
                         </button>
-                        <button type="button" className="product-action-btn action-btn-wishlist" data-bs-toggle="modal" data-bs-target="#action-WishlistModal">
+                        <button id={value._id} onClick={() => handleclickwishlist(value._id)} type="button" className="product-action-btn action-btn-wishlist" data-bs-toggle="modal" data-bs-target="#action-WishlistModal">
                           <i className="fa fa-heart-o" />
                         </button>
                       </div>
