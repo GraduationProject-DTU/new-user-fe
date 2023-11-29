@@ -68,7 +68,7 @@ function Scroll(){
                     <img src={""+value.image} style={{width:"68px",height:"84px"}} width={68} height={84} alt="Image" />
                     <span className="product-title">{value.title}</span>
                   </a>
-                  <span className="product-price">{getCart[key1]} × {value.price}</span>
+                  <span className="product-price">{Intl.NumberFormat().format(getCart[key1])} × {Intl.NumberFormat().format(value.price)}</span>
                 </li>
                 )
               }
@@ -85,7 +85,7 @@ function Scroll(){
                     <img src={""+value.image} style={{width:"68px",height:"84px"}} width={68} height={84} alt="Image" />
                     <span className="product-title">{value.title}</span>
                   </a>
-                  <span className="product-price">{getdataCartItem[key2]} × {value.price}</span>
+                  <span className="product-price">{Intl.NumberFormat().format(getdataCartItem[key2])} × {Intl.NumberFormat().format(value.price)}</span>
                 </li>
                 )
               }
@@ -268,7 +268,7 @@ function Scroll(){
             <ul className="aside-cart-product-list">
                 {FetchCart()}
             </ul>
-            <p className="cart-total"><span>Subtotal:</span><span className="amount">{gettong1}</span></p>
+            <p className="cart-total"><span>Subtotal:</span><span className="amount">{Intl.NumberFormat().format(gettong1)}</span></p>
             <Link to={"/productcart"}><a className="btn-total">View cart</a></Link>
             {/* <a className="btn-total">
             <Link to={"/productcheckout"}>Checkout</Link>

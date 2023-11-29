@@ -357,7 +357,7 @@ function Product() {
                         <div className="reviews">Đã bán {e.sold}</div>
                       </div>
                       <div className="prices">
-                        <span style={{ color: 'rgb(239,84,53)' }} className="price">₫{e.price}</span>
+                        <span style={{ color: 'rgb(239,84,53)' }} className="price">₫{Intl.NumberFormat().format(e.price)}</span>
                         {/* <span className="price-old">300.00</span> */}
                       </div>
                     </div>

@@ -118,7 +118,7 @@ function Homepage() {
                     <div className="reviews">Đã bán {value.sold}</div>
                   </div>
                   <div className="prices">
-                    <span style={{ color: 'rgb(239,84,53)' }} className="price">₫{value.price}</span>
+                    <span style={{ color: 'rgb(239,84,53)' }} className="price">₫{Intl.NumberFormat().format(value.price)}</span>
                   </div>
                 </div>
                 <div className="product-action-bottom">
@@ -255,7 +255,7 @@ function Homepage() {
                         <div className="reviews">Đã bán {value.sold}</div>
                       </div>
                       <div className="prices">
-                        <span style={{ color: 'rgb(239,84,53)' }} className="price">₫{value.price}</span>
+                        <span style={{ color: 'rgb(239,84,53)' }} className="price">₫{Intl.NumberFormat().format(value.price)}</span>
                         {/* <span className="price-old">300.00</span> */}
                       </div>
                       <div className="product-action">

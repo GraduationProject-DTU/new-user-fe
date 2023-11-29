@@ -33,7 +33,6 @@ function ForgotPassword() {
                     </div>
                 </div>
             </section>
-
             <section className="section-space">
                 <div className="container">
                     <div className="row mb-n8">

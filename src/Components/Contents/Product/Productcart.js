@@ -8,7 +8,38 @@ function Productcart(){
   const [valueao,setvalueao] = useState("valueao")
   const {getCart,setCart} = useContext(UserContext)
   var gettong1 = 0
-      useEffect(() => {
+  const handleChangeInput = (e) =>{
+    let main = {}
+    let nameInput = e.target.id
+    let value = +e.target.value
+    let test1 = localStorage.getItem("CartItem")
+    if (test1) {
+      main = JSON.parse(test1)
+      console.log(nameInput)
+      for (var key in main) {
+        if (nameInput == key) {
+          localStorage.setItem("CartItem", JSON.stringify(main))
+          setvalueao(main)
+        }
+      }
+    }
+    main[nameInput] = value
+    localStorage.setItem("CartItem", JSON.stringify(main))
+    setvalueao(main)
+    }
+    const deleteItem = (e) => {
+      e.preventDefault()
+      if(Object.keys(getdataCartItem).length>0){
+        return Object.keys(getdataCartItem).map((key2,index2)=>{
+          if(e.target.id == key2){
+            delete getdataCartItem[key2]
+            localStorage.setItem("CartItem",JSON.stringify(getdataCartItem))
+            setvalueao(getdataCartItem)
+          }
+        })
+      }
+    }
+    useEffect(() => {
     axios.get("http://localhost:8000/products")
         .then(response => {
             setItem(response.data.mess)
@@ -56,7 +87,7 @@ function Productcart(){
                       return(
                               <tr className="tbody-item" key={key}>
                                           <td className="product-remove">
-                                            <a className="remove" href="javascript:void(0)">×</a>
+                                            <a className="remove" id={value._id} onClick={deleteItem}>×</a>
                                           </td>
                                           <td className="product-thumbnail">
                                             <div className="thumb">
@@ -78,12 +109,12 @@ function Productcart(){
                                           <td className="product-quantity">
                                             <div className="pro-qty">
                                               <a onClick={decreaseqty} id={value._id} className="cart_quantity_up" href> - </a>
-                                              <input style={{width:"50%"}} type="text" className="quantity" title="Quantity" value={getdataCartItem[key1]}/>
+                                              <input id={value._id} style={{width:"50%"}} type="text" className="quantity" title="Quantity" onChange={handleChangeInput} defaultValue={getdataCartItem[key1]}/>
                                               <a onClick={increaseqty} id={value._id} className="cart_quantity_up" href> + </a>
                                             </div>
                                           </td>
                                           <td className="product-subtotal">
-                                            <span className="price">{gettong} VNĐ</span>
+                                            <span className="price">{Intl.NumberFormat().format(gettong)} VNĐ</span>
                                           </td>
                                 </tr>
                         )
@@ -144,7 +175,7 @@ function Productcart(){
                       <tr className="cart-subtotal">
                         <th>Subtotal</th>
                         <td>
-                          <span className="amount">{gettong1} VNĐ</span>
+                          <span className="amount">{Intl.NumberFormat().format(gettong1)} VNĐ</span>
                         </td>
                       </tr>
                       {/* <tr className="shipping-totals">
@@ -171,7 +202,7 @@ function Productcart(){
                       <tr className="order-total">
                         <th>Total</th>
                         <td>
-                          <span className="amount">{gettong1} VNĐ</span>
+                          <span className="amount">{Intl.NumberFormat().format(gettong1)} VNĐ</span>
                         </td>
                       </tr>
                     </tbody>

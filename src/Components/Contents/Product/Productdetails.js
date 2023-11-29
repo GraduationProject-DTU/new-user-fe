@@ -3,7 +3,6 @@ import { useContext, useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import './product.css'
 import { UserContext } from "../../../UserContext"
-
 function Productdetails() {
   const [product, setProduct] = useState([])
   const [products, setProducts] = useState([])
@@ -16,7 +15,7 @@ function Productdetails() {
   const [getquantity,setquantity] = useState(1)
   const body = {
     'postId': params.id,
-    'star': star,
+    'star': star,  
     'comment': comment
   }
   const onChancequantity= (e) =>{
@@ -144,7 +143,7 @@ function Productdetails() {
                   <label className="form-check-label" htmlFor="ShippingCost">FreeShip, Slow delivery</label>
                 </div>
                 <div className="product-details-action">
-                  <h4 style={{ color: 'rgb(239,84,53)' }} className="price">₫{product.price}</h4>
+                  <h4 style={{ color: 'rgb(239,84,53)' }} className="price">₫{Intl.NumberFormat().format(product.price)}</h4>
                   <div className="product-details-cart-wishlist">
                     <button id={product._id} onClick={() => handleclickwishlist(product._id)}  type="button" className="btn-wishlist" data-bs-toggle="modal" data-bs-target="#action-WishlistModal"><i className="fa fa-heart-o" /></button>
                     <button id={product._id} onClick={() => handleClick(product._id)} type="button" className="btn" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">Add to cart</button>
