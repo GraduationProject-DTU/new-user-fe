@@ -6,7 +6,7 @@ function ForgotPassword() {
     const [email, setEmail] = useState('')
 
     function handleSubmit() {
-        axios.post('http://localhost:8000/auth/forgot-password?email=vanquangqt01@gmail.com', { email })
+        axios.post('http://localhost:8000/auth/forgot-password', { email })
             .then(res => {
                 console.log('vui longf kieemr tra gmail')
             })
