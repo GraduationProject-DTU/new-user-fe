@@ -6,9 +6,9 @@ function Productcart() {
   const [getItem, setItem] = useState("")
   const getdataCartItem = JSON.parse(localStorage.getItem("CartItem"))
   const [valueao, setvalueao] = useState("valueao")
-  const { getCart, setCart } = useContext(UserContext)
   const [coupon, setCoupon] = useState('')
   const [couponValue, setCouponValue] = useState('')
+  const [couponPrice, setCouponPrice] = useState()
   const getDataUser = JSON.parse(localStorage.getItem("User"))
   var gettong1 = 0
 
@@ -58,7 +58,6 @@ function Productcart() {
     axios.get("http://localhost:8000/products")
       .then(response => {
         setItem(response.data.mess)
-        // console.log(response.data.mess)
       })
       .catch(function (error) {
         console.log(error)
@@ -96,16 +95,19 @@ function Productcart() {
     let accessToken = getDataUser.token
     let config = {
       headers: {
-          'token': 'bearer ' + accessToken,
+        'token': 'bearer ' + accessToken,
       }
     }
     const body = {
       pid: Object.keys(getdataCartItem).join(''),
       coupon: couponValue
     }
-    axios.post('http://localhost:8000/coupons/apply-coupon', { body: body },config)
+    axios.post('http://localhost:8000/coupons/apply-coupon', body, config)
       .then(res => {
-        console.log(res.data);
+        setCouponPrice(res.data.couponPrice)
+      })
+      .catch(err => {
+        console.log(err)
       })
 
   }
@@ -117,7 +119,12 @@ function Productcart() {
           return Object.keys(getdataCartItem).map((key1, index) => {
             if (value._id == key1) {
               const gettong = parseInt(getdataCartItem[key1] * value.price)
-              gettong1 += gettong
+              {
+                couponPrice
+                  ? gettong1 += gettong - (gettong * couponPrice)
+                  : gettong1 += gettong
+              }
+
               return (
                 <tr className="tbody-item" key={key}>
                   <td className="product-remove">
@@ -217,26 +224,26 @@ function Productcart() {
                       </td>
                     </tr>
                     {/* <tr className="shipping-totals">
-                        <th>Shipping</th>
-                        <td>
-                          <ul className="shipping-list">
-                            <li className="radio">
-                              <input type="radio" name="shipping" id="radio1" defaultChecked />
-                              <label htmlFor="radio1">Flat rate: <span>$3.00</span></label>
-                            </li>
-                            <li className="radio">
-                              <input type="radio" name="shipping" id="radio2" />
-                              <label htmlFor="radio2">Free shipping</label>
-                            </li>
-                            <li className="radio">
-                              <input type="radio" name="shipping" id="radio3" />
-                              <label htmlFor="radio3">Local pickup</label>
-                            </li>
-                          </ul>
-                          <p className="destination">Shipping to <strong>USA</strong>.</p>
-                          <a href="javascript:void(0)" className="btn-shipping-address">Change address</a>
-                        </td>
-                      </tr> */}
+                      <th>Shipping</th>
+                      <td>
+                        <ul className="shipping-list">
+                          <li className="radio">
+                            <input type="radio" name="shipping" id="radio1" defaultChecked />
+                            <label htmlFor="radio1">Flat rate: <span>$3.00</span></label>
+                          </li>
+                          <li className="radio">
+                            <input type="radio" name="shipping" id="radio2" />
+                            <label htmlFor="radio2">Free shipping</label>
+                          </li>
+                          <li className="radio">
+                            <input type="radio" name="shipping" id="radio3" />
+                            <label htmlFor="radio3">Local pickup</label>
+                          </li>
+                        </ul>
+                        <p className="destination">Shipping to <strong>USA</strong>.</p>
+                        <a href="javascript:void(0)" className="btn-shipping-address">Change address</a>
+                      </td>
+                    </tr> */}
                     <tr className="order-total">
                       <th>Total</th>
                       <td>
