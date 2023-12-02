@@ -9,6 +9,7 @@ function Productcart() {
   const { getCart, setCart } = useContext(UserContext)
   const [coupon, setCoupon] = useState('')
   const [couponValue, setCouponValue] = useState('')
+  const getDataUser = JSON.parse(localStorage.getItem("User"))
   var gettong1 = 0
 
   useEffect(() => {
@@ -92,12 +93,17 @@ function Productcart() {
   }
 
   const handleCoupon = () => {
+    let accessToken = getDataUser.token
+    let config = {
+      headers: {
+          'token': 'bearer ' + accessToken,
+      }
+    }
     const body = {
       pid: Object.keys(getdataCartItem).join(''),
       coupon: couponValue
     }
-
-    axios.post('http://localhost:8000/coupons/apply-coupon', { body: body })
+    axios.post('http://localhost:8000/coupons/apply-coupon', { body: body },config)
       .then(res => {
         console.log(res.data);
       })
