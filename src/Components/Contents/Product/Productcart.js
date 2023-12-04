@@ -10,12 +10,13 @@ function Productcart() {
   const [couponValue, setCouponValue] = useState('')
   const [couponPrice, setCouponPrice] = useState()
   const getDataUser = JSON.parse(localStorage.getItem("User"))
+  const { gettotalorder,settotalorder } = useContext(UserContext)
   var gettong1 = 0
-
   useEffect(() => {
     axios.get('http://localhost:8000/coupons')
       .then(res => {
         setCoupon(res.data.coupon)
+        console.log(res.data.coupon)
       })
       .catch(err => {
         console.log(err)
@@ -105,6 +106,7 @@ function Productcart() {
     axios.post('http://localhost:8000/coupons/apply-coupon', body, config)
       .then(res => {
         setCouponPrice(res.data.couponPrice)
+        console.log(res)
       })
       .catch(err => {
         console.log(err)
@@ -124,7 +126,7 @@ function Productcart() {
                   ? gettong1 += gettong - (gettong * couponPrice)
                   : gettong1 += gettong
               }
-
+              settotalorder(gettong1)
               return (
                 <tr className="tbody-item" key={key}>
                   <td className="product-remove">
@@ -253,7 +255,9 @@ function Productcart() {
                   </tbody>
                 </table>
                 <div className="text-end">
-                  <a href="/productcheckout" className="checkout-button">Proceed to checkout</a>
+                  <Link to={"/productcheckout"}>
+                    <a className="checkout-button">Proceed to checkout</a>
+                  </Link>
                 </div>
               </div>
             </div>

@@ -16,6 +16,7 @@ function App(props) {
   const [getidwishlist,setidwishlist] = useState("")
   const [getvalueaorefresh,setvalueaorefresh] = useState("")
   const [getpageKey,setpageKey] = useState("")
+  const [gettotalorder,settotalorder] = useState("")
   return (
     <div>
       <ToastContainer />
@@ -24,7 +25,8 @@ function App(props) {
         getidlarge,setidlarge,
         getidwishlist,setidwishlist,
         getvalueaorefresh,setvalueaorefresh,
-        getpageKey,setpageKey}}>
+        getpageKey,setpageKey,
+        gettotalorder,settotalorder}}>
           <Header/>
             <main class="main-content">
               {props.children}

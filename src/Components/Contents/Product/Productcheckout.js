@@ -1,4 +1,98 @@
+import { useState,useContext, useEffect, } from "react"
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import axios from "axios"
+import { UserContext } from "../../../UserContext";
 function Productcheckout(){
+    const [getItem, setItem] = useState("")
+    const getdataCartItem = JSON.parse(localStorage.getItem("CartItem"))
+    const { gettotalorder,settotalorder } = useContext(UserContext)
+    const [inputs, setInputs] = useState({
+      firstname: "",
+      lastname: "",
+      street: "",
+      city: "",
+      phone: "",
+      email: "",
+      note: ""
+    })
+    var gettong1= 0
+    var gettong2= 0
+    useEffect(() => {
+      axios.get("http://localhost:8000/products")
+        .then(response => {
+          setItem(response.data.mess)
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    }, [])
+    function fetchData() {
+      if (getItem.length > 0) {
+        return getItem.map((value, key) => {
+          if (getdataCartItem != null) {
+            return Object.keys(getdataCartItem).map((key1, index) => {
+              if (value._id == key1) {
+                const gettong = parseInt(getdataCartItem[key1] * value.price)
+                gettong1 += gettong
+                gettong2 = gettong1+2000
+                return(
+                  <tr className="cart-item">
+                  <td className="product-name">{value.title} <span className="product-quantity">× {getdataCartItem[key1]}</span></td>
+                  <td className="product-total">{Intl.NumberFormat().format(gettong)}</td>
+                </tr>
+                )
+              }
+            })
+          }
+        })
+      }
+    }
+    function handleSubmit(e){
+      console.log(gettotalorder)
+      var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+      let flag = true
+      let errorSubmit = {}
+      if (inputs.email == "") {
+        errorSubmit.email = "Vui long nhap email"
+        flag = false
+        toast.error(""+errorSubmit.email);
+    } else {
+        if (!regex.test(inputs.email)) {
+            errorSubmit.email = "Nhap dung dinh dang"
+        }
+    }
+      if (inputs.street == "") {
+        errorSubmit.street = "Nhap street"
+        flag = false
+        toast.error(""+errorSubmit.street);
+      }
+      if (inputs.city == "") {
+        errorSubmit.city = "Nhap city"
+        flag = false
+        toast.error(""+errorSubmit.city);
+      }
+      if (inputs.phone == "") {
+          errorSubmit.phone = "Nhap phone"
+          flag = false
+          toast.error(""+errorSubmit.phone);
+      }
+      if (inputs.firstname == "") {
+        errorSubmit.firstname = "Nhap firstname"
+        flag = false
+        toast.error(""+errorSubmit.firstname);
+      }
+      if (inputs.lastname == "") {
+        errorSubmit.lastname = "Nhap lastname"
+        flag = false
+        toast.error(""+errorSubmit.lastname);
+      }
+    }
+    const handleInput = (e) => {
+      const nameInput = e.target.name
+      const value = e.target.value
+      setInputs(state => ({ ...state, [nameInput]: value }))
+    }
     return(
         <>
         {/*== Start Page Header Area Wrapper ==*/}
@@ -31,7 +125,7 @@ function Productcheckout(){
                           <div className="row">
                             <div className="col-md-6">
                               <div className="form-group">
-                                <input className="form-control" type="text" placeholder="Coupon code" />
+                                <input className="form-control" type="text"  placeholder="Coupon code" />
                               </div>
                             </div>
                             <div className="col-md-6">
@@ -57,43 +151,43 @@ function Productcheckout(){
                         <div className="col-md-6">
                           <div className="form-group">
                             <label htmlFor="f_name">First name <abbr className="required" title="required">*</abbr></label>
-                            <input id="f_name" type="text" className="form-control" />
+                            <input id="f_name" type="text" className="form-control" name="firstname"  onChange={handleInput} />
                           </div>
                         </div>
                         <div className="col-md-6">
                           <div className="form-group">
                             <label htmlFor="l_name">Last name <abbr className="required" title="required">*</abbr></label>
-                            <input id="l_name" type="text" className="form-control" />
+                            <input id="l_name" type="text" className="form-control" name="lastname"  onChange={handleInput} />
                           </div>
                         </div>
                         <div className="col-md-12">
                           <div className="form-group">
                             <label htmlFor="street-address">Street address <abbr className="required" title="required">*</abbr></label>
-                            <input id="street-address" type="text" className="form-control" placeholder="House number and street name" />
+                            <input id="street-address" type="text" className="form-control" placeholder="House number and street name"  name="street" onChange={handleInput} />
                           </div>
                         </div>
                         <div className="col-md-12">
                           <div className="form-group">
                             <label htmlFor="town">Town / City <abbr className="required" title="required">*</abbr></label>
-                            <input id="town" type="text" className="form-control" />
+                            <input id="town" type="text" className="form-control" name="city" onChange={handleInput} />
                           </div>
                         </div>
                         <div className="col-md-12">
                           <div className="form-group">
                             <label htmlFor="phone">Phone <abbr className="required" title="required">*</abbr></label>
-                            <input id="phone" type="text" className="form-control" />
+                            <input id="phone" type="text" className="form-control" name="phone"   onChange={handleInput}/>
                           </div>
                         </div>
                         <div className="col-md-12">
                           <div className="form-group">
                             <label htmlFor="email">Email address <abbr className="required" title="required">*</abbr></label>
-                            <input id="email" type="text" className="form-control" />
+                            <input id="email" type="text" className="form-control" name="email"  onChange={handleInput} />
                           </div>
                         </div>
                         <div className="col-md-12">
                           <div className="form-group mb-0">
                             <label htmlFor="order-notes">Order notes (optional)</label>
-                            <textarea id="order-notes" className="form-control" placeholder="Notes about your order, e.g. special notes for delivery." defaultValue={""} />
+                            <textarea id="order-notes" className="form-control" placeholder="Notes about your order, e.g. special notes for delivery." defaultValue={""} name="note" onChange={handleInput} />
                           </div>
                         </div>
                       </div>
@@ -115,27 +209,20 @@ function Productcheckout(){
                         </tr>
                       </thead>
                       <tbody className="table-body">
-                        <tr className="cart-item">
-                          <td className="product-name">Satin gown <span className="product-quantity">× 1</span></td>
-                          <td className="product-total">£69.99</td>
-                        </tr>
-                        <tr className="cart-item">
-                          <td className="product-name">Printed cotton t-shirt <span className="product-quantity">× 1</span></td>
-                          <td className="product-total">£20.00</td>
-                        </tr>
+                          {fetchData()}
                       </tbody>
                       <tfoot className="table-foot">
                         <tr className="cart-subtotal">
                           <th>Subtotal</th>
-                          <td>£89.99</td>
+                          <td>{Intl.NumberFormat().format(gettong1)}</td>
                         </tr>
                         <tr className="shipping">
                           <th>Shipping</th>
-                          <td>Flat rate: £2.00</td>
+                          <td>{Intl.NumberFormat().format(2000)}</td>
                         </tr>
                         <tr className="order-total">
                           <th>Total </th>
-                          <td>£91.99</td>
+                          <td>{Intl.NumberFormat().format(gettong2)}</td>
                         </tr>
                       </tfoot>
                     </table>
@@ -189,7 +276,7 @@ function Productcheckout(){
                           <label htmlFor="privacy" className="custom-control-label">I have read and agree to the website terms and conditions <span className="required">*</span></label>
                         </div>
                       </div>
-                      <a href="account.html" className="btn-place-order">Place order</a>
+                      <a className="btn-place-order" onClick={handleSubmit} type="submit">Place order</a>
                     </div>
                   </div>
                 </div>

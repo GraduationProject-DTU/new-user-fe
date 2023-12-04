@@ -2,8 +2,11 @@ import axios from "axios"
 import { useContext, useEffect, useState } from "react"
 import './product.css'
 import { Link } from "react-router-dom"
+import ReactPaginate from 'react-paginate';
 import { UserContext } from "../../../UserContext"
 function Product() {
+  const [getselected, setselected] = useState(1)
+  const [gettotalpage, settotalpage] = useState(1)
   const [products, setProducts] = useState([])
   const [category, setCategory] = useState([])
   const [value, setValue] = useState(0)
@@ -13,6 +16,9 @@ function Product() {
   const { getidlarge, setidlarge } = useContext(UserContext)
   const handleClicklarge = (id) => {
     setidlarge(id)
+  }
+  const handlePageClick = (event) => {
+    setselected(+event.selected + 1)
   }
   const handleclickwishlist = (id) => {
     setidwishlist(id)
@@ -52,16 +58,16 @@ function Product() {
   }
   useEffect(() => {
     try {
-      axios.get('http://localhost:8000/products')
+      axios.get(`http://localhost:8000/products?page=${getselected}`)
         .then(res => {
           setProducts(res.data.mess)
-          console.log(res.data.mess)
+          settotalpage(res.data.pageTotal)
+          console.log(res.data)
         })
 
       axios.get('http://localhost:8000/category-products')
         .then(res => {
           setCategory(res.data.category)
-          console.log(res.data.category)
         })
     } catch (error) {
       console.log('err', error)
@@ -85,6 +91,7 @@ function Product() {
         axios.get('http://localhost:8000/products?sort=title&type=asc&page=1')
           .then(res => {
             setProducts(res.data.mess);
+            console.log(res.data.mess)
           })
           .catch(err => {
             console.log('err', err);
@@ -139,11 +146,12 @@ function Product() {
     var categoryTitle = e.currentTarget.querySelector('.title').textContent
     var categories = []
     switch (categoryTitle) {
-      case 'Hare Care':
+      case 'Mặt Nạ':
         axios.get('http://localhost:8000/products')
           .then(res => {
-            res.data.mess?.forEach((value) =>
-              value?.category?.title === 'Hare Care'
+            console.log(res)
+            res.data.mess?.forEach((value) =>            
+              value?.category?.title === 'Mặt Nạ'
                 ? categories.push(value)
                 : '')
             setProducts(categories)
@@ -152,11 +160,11 @@ function Product() {
             console.log('err', err)
           })
         break
-      case 'Skin Care':
+      case 'Sửa rửa mặt':
         axios.get('http://localhost:8000/products')
           .then(res => {
             res.data.mess?.forEach((value) =>
-              value?.category?.title === 'Skin Care'
+              value?.category?.title === 'Sửa Rửa Mặt'
                 ? categories.push(value)
                 : '')
             setProducts(categories)
@@ -165,11 +173,11 @@ function Product() {
             console.log('err', err)
           })
         break
-      case 'Lip Stick':
+      case 'Kem Dưỡng':
         axios.get('http://localhost:8000/products')
           .then(res => {
             res.data.mess?.forEach((value) =>
-              value?.category?.title === 'Lip Stick'
+              value?.category?.title === 'Kem Dưỡng'
                 ? categories.push(value)
                 : '')
             setProducts(categories)
@@ -178,11 +186,11 @@ function Product() {
             console.log('err', err)
           })
         break
-      case 'Face Skin':
+      case 'Dụng cụ làm đẹp':
         axios.get('http://localhost:8000/products')
           .then(res => {
             res.data.mess?.forEach((value) =>
-              value?.category?.title === 'Face Skin'
+              value?.category?.title === 'Dụng cụ làm đẹp'
                 ? categories.push(value)
                 : '')
             setProducts(categories)
@@ -220,7 +228,6 @@ function Product() {
     }
 
   }
-
   const handleClear = () => {
     axios.get('http://localhost:8000/products')
       .then(res => {
@@ -230,8 +237,6 @@ function Product() {
         console.log(err)
       })
   }
-
-
   return (
     <>
       {/*== Start Page Header Area Wrapper ==*/}
@@ -297,7 +302,7 @@ function Product() {
             {
               category?.map((e, i) => (
                 <div className="col-6 col-lg-4 col-lg-2 col-xl-2">
-                  <a href="/product" onClick={e => handleClickCategory(e)} className="product-category-item">
+                  <a onClick={e => handleClickCategory(e)} className="product-category-item">
                     <img className="icon" src={`assets/images/shop/category/${i + 1}.webp`} width={70} height={80} alt="Image-HasTech" />
                     <h3 className="title">{e.title}</h3>
                     {/* <span className="flag-new"></span> */}
@@ -379,20 +384,20 @@ function Product() {
             }
             <div className="col-12">
               <ul className="pagination justify-content-center me-auto ms-auto mt-5 mb-0 mb-sm-10">
-                <li className="page-item">
-                  <a className="page-link previous" href="product.html" aria-label="Previous">
-                    <span className="fa fa-chevron-left" aria-hidden="true" />
-                  </a>
-                </li>
-                <li className="page-item"><a className="page-link" href="product.html">01</a></li>
-                <li className="page-item"><a className="page-link" href="product.html">02</a></li>
-                <li className="page-item"><a className="page-link" href="product.html">03</a></li>
-                <li className="page-item"><a className="page-link" href="product.html">....</a></li>
-                <li className="page-item">
-                  <a className="page-link next" href="product.html" aria-label="Next">
-                    <span className="fa fa-chevron-right" aria-hidden="true" />
-                  </a>
-                </li>
+              <ReactPaginate
+                    breakLabel="..."
+                    onPageChange={handlePageClick}
+                    pageRangeDisplayed={5}
+                    pageCount={gettotalpage}
+                    previousClassName="page-item"
+                    nextClassName="page-item"
+                    pageClassName="page-item"
+                    pageLinkClassName="page-link"
+                    breakClassName="page-item"
+                    breakLinkClassName="page-link"
+                    containerClassName="pagination"
+                    activeClassName="active"
+                  />
               </ul>
             </div>
           </div>
