@@ -6,12 +6,12 @@ import { UserContext } from "../../../UserContext";
 function Productcheckout(){
     const [getItem, setItem] = useState("")
     const getdataCartItem = JSON.parse(localStorage.getItem("CartItem"))
+    let getDataUser = JSON.parse(localStorage.getItem("User"))
     const { gettotalorder,settotalorder } = useContext(UserContext)
     const [inputs, setInputs] = useState({
       firstname: "",
       lastname: "",
       street: "",
-      city: "",
       phone: "",
       email: "",
       note: ""
@@ -151,13 +151,13 @@ function Productcheckout(){
                         <div className="col-md-6">
                           <div className="form-group">
                             <label htmlFor="f_name">First name <abbr className="required" title="required">*</abbr></label>
-                            <input id="f_name" type="text" className="form-control" name="firstname"  onChange={handleInput} />
+                            <input id="f_name" type="text" className="form-control" name="firstname"  onChange={handleInput} defaultValue={getDataUser?.user.firstname} />
                           </div>
                         </div>
                         <div className="col-md-6">
                           <div className="form-group">
                             <label htmlFor="l_name">Last name <abbr className="required" title="required">*</abbr></label>
-                            <input id="l_name" type="text" className="form-control" name="lastname"  onChange={handleInput} />
+                            <input id="l_name" type="text" className="form-control" name="lastname"  onChange={handleInput} defaultValue={getDataUser?.user.lastname} />
                           </div>
                         </div>
                         <div className="col-md-12">
@@ -168,20 +168,14 @@ function Productcheckout(){
                         </div>
                         <div className="col-md-12">
                           <div className="form-group">
-                            <label htmlFor="town">Town / City <abbr className="required" title="required">*</abbr></label>
-                            <input id="town" type="text" className="form-control" name="city" onChange={handleInput} />
-                          </div>
-                        </div>
-                        <div className="col-md-12">
-                          <div className="form-group">
                             <label htmlFor="phone">Phone <abbr className="required" title="required">*</abbr></label>
-                            <input id="phone" type="text" className="form-control" name="phone"   onChange={handleInput}/>
+                            <input id="phone" type="text" className="form-control" name="phone" onChange={handleInput} defaultValue={getDataUser?.user.phone}/>
                           </div>
                         </div>
                         <div className="col-md-12">
                           <div className="form-group">
                             <label htmlFor="email">Email address <abbr className="required" title="required">*</abbr></label>
-                            <input id="email" type="text" className="form-control" name="email"  onChange={handleInput} />
+                            <input id="email" type="text" className="form-control" name="email"  onChange={handleInput} defaultValue={getDataUser?.user.email} readOnly />
                           </div>
                         </div>
                         <div className="col-md-12">

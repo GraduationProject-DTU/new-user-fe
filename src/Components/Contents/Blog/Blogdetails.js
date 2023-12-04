@@ -39,39 +39,12 @@ function Blogdetails(props) {
         console.log(error)
       })
   }, [getcheck])
-  //Hàm nhận giá trị trả về từ comment
   function getcmt(novalue) {
     const concatter = getcheck.concat(novalue)
     setcheck(concatter)
   }
   const handlesetKey = (e) => {
-    // console.log(e.target.id)
     setpageKey(e.target.id)
-  }
-  function fetchDataNext() {
-    if (gettotalblog?.length > 0) {
-      return gettotalblog.map((value, key) => {
-        const setimage = value.images["0"]
-        if (getpageKey == value._id) {
-          console.log(value)
-          return (
-            <div className="col-sm-6" key={key}>
-              <Link to={`/blog-details/${value?._id}`} id={key} onClick={handlesetKey}>
-                <a className="blog-next-previous blog-next">
-                  <div className="thumb">
-                    <img src={"" + setimage} style={{ width: "93px", height: "80px" }} id={key} />
-                  </div>
-                  <div className="content">
-                    <h4 className="title">{value.title}</h4>
-                    <h5 className="post-date">{value.updatedAt}</h5>
-                  </div>
-                </a>
-              </Link>
-            </div>
-          )
-        }
-      })
-    }
   }
   function fetchDataicon() {
     return (

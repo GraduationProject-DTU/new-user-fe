@@ -64,7 +64,6 @@ function Product() {
           settotalpage(res.data.pageTotal)
           console.log(res.data)
         })
-
       axios.get('http://localhost:8000/category-products')
         .then(res => {
           setCategory(res.data.category)
@@ -72,7 +71,7 @@ function Product() {
     } catch (error) {
       console.log('err', error)
     }
-  }, [])
+  }, [getselected])
 
   const hanldeChangeOption = (e) => {
     const value = e.target.value
@@ -160,7 +159,7 @@ function Product() {
             console.log('err', err)
           })
         break
-      case 'Sửa rửa mặt':
+      case 'Sửa Rửa Mặt':
         axios.get('http://localhost:8000/products')
           .then(res => {
             res.data.mess?.forEach((value) =>

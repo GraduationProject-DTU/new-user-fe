@@ -55,7 +55,7 @@ function Header() {
             <div className="header-navigation">
               <ul className="main-nav justify-content-start">
                 <li><Link to="/">Home</Link></li>
-                <li><Link to="/about">Contact</Link></li>
+                <li><Link to="/about">About</Link></li>
                 <li><Link to="/product">Shop</Link></li>
                 <li><Link to="/blog">Blog</Link></li>
                 <li><Link to="/contact">Contact</Link></li>

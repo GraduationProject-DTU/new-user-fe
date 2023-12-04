@@ -1,5 +1,4 @@
 import axios from 'axios'
-
 let getDataUser = JSON.parse(localStorage.getItem("User"))
 let url = "http://localhost:8000/blogs/upload-cke"
 let config = {
@@ -19,7 +18,6 @@ export default class CustomUploadAdapter {
     constructor(loader) {
         this.loader = loader
     }
-
     upload = () => {
             return this.loader.file.then(file => new Promise((resolve, reject) => {
                 const formData = new FormData()

@@ -11,6 +11,13 @@ function Scroll(){
   const {getidlarge,setidlarge} = useContext(UserContext)
   const {getidwishlist,setidwishlist} = useContext(UserContext)
   var gettong1 = 0
+  const [getquantity,setquantity] = useState(1)
+  const onChancequantity= (e) =>{
+    setquantity(e.target.value)
+    if (e.target.value <=1){
+      setquantity(1)
+    }
+  }
   useEffect(() => {
     axios.get("http://localhost:8000/products")
         .then(response => {
@@ -24,22 +31,21 @@ function Scroll(){
     const handleClick = (id) => {
       let main = {}
       let nameInput = id
-      let value = 1
+      let value = +getquantity
       let test1 = localStorage.getItem("CartItem")
-        setid(nameInput)
-        if(test1){
-          main = JSON.parse(test1)
-          for(var key in main){
-              const getqty = main[key]
-              if(nameInput == key){
-                  value = main[nameInput] +1
-                  localStorage.setItem("CartItem",JSON.stringify(main))
-              }
+      setid(nameInput)
+      if (test1) {
+        main = JSON.parse(test1)
+        for (var key in main) {
+          if (nameInput == key) {
+            value = main[nameInput] + +value
+            localStorage.setItem("CartItem", JSON.stringify(main))
           }
+        }
       }
-        main[nameInput] = value
-        localStorage.setItem("CartItem",JSON.stringify(main))
-        setCart(main)
+      main[nameInput] = value
+      localStorage.setItem("CartItem", JSON.stringify(main))
+      setCart(main)
     }
     const deleteItem = (e) => {
       e.preventDefault()
@@ -142,11 +148,11 @@ function Scroll(){
                   <p className="mb-6">{value3.description}</p>
                   <div className="product-details-pro-qty">
                     <div className="pro-qty">
-                      <input type="text" title="Quantity" defaultValue={1} />
+                      <input type="text" title="Quantity" defaultValue={1} onChange={onChancequantity} min={1} />
                     </div>
                   </div>
                   <div className="product-details-action">
-                    <h4 className="price">{value3.price}</h4>
+                    <h4 className="price">{Intl.NumberFormat().format(value3.price * getquantity)}</h4>
                     <div className="product-details-cart-wishlist">
                       <button id={value3._id} onClick={()=>handleClick(value3._id)} type="button" className="btn" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">Add to cart</button>
                     </div>

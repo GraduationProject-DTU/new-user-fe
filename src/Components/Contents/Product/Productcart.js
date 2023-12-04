@@ -152,7 +152,7 @@ function Productcart() {
                   <td className="product-quantity">
                     <div className="pro-qty">
                       {/* <a onClick={decreaseqty} id={value._id} className="cart_quantity_up" href> - </a> */}
-                      <input id={value._id} style={{ width: "50%" }} type="text" className="quantity" title="Quantity" onChange={handleChangeInput} defaultValue={getdataCartItem[key1]} />
+                      <input id={value._id} style={{ width: "50%" }} type="number" className="quantity" title="Quantity" onChange={handleChangeInput} defaultValue={getdataCartItem[key1]} />
                       {/* <a onClick={increaseqty} id={value._id} className="cart_quantity_up" href> + </a> */}
                     </div>
                   </td>

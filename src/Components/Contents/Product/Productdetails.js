@@ -20,6 +20,9 @@ function Productdetails() {
   }
   const onChancequantity= (e) =>{
     setquantity(e.target.value)
+    if (e.target.value <=1){
+      setquantity(1)
+    }
   }
   const handleClick = (id) => {
     let main = {}
@@ -133,7 +136,7 @@ function Productdetails() {
                 </div>
                 <div className="product-details-pro-qty">
                   <div className="pro-qty">
-                    <input type="number" title="Quantity" defaultValue={1} onChange={onChancequantity} />
+                    <input type="number" title="Quantity" defaultValue={1} onChange={onChancequantity} min={1} />
                   </div>
                 </div>
                 <div className="product-details-shipping-cost">
@@ -143,7 +146,7 @@ function Productdetails() {
                   <label className="form-check-label" htmlFor="ShippingCost">FreeShip, Slow delivery</label>
                 </div>
                 <div className="product-details-action">
-                  <h4 style={{ color: 'rgb(239,84,53)' }} className="price">₫{Intl.NumberFormat().format(product.price)}</h4>
+                  <h4 style={{ color: 'rgb(239,84,53)' }} className="price">₫{Intl.NumberFormat().format(product.price * getquantity)}</h4>
                   <div className="product-details-cart-wishlist">
                     <button id={product._id} onClick={() => handleclickwishlist(product._id)}  type="button" className="btn-wishlist" data-bs-toggle="modal" data-bs-target="#action-WishlistModal"><i className="fa fa-heart-o" /></button>
                     <button id={product._id} onClick={() => handleClick(product._id)} type="button" className="btn" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">Add to cart</button>

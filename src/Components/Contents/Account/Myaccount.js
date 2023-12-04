@@ -6,12 +6,12 @@ import { useState,useContext, useEffect, } from "react"
 import axios from "axios";
 function Myaccount(){
 useEffect(() =>{
-  let getDataUser = JSON.parse(localStorage.getItem("User"))
+  const getDataUser = JSON.parse(localStorage.getItem("User"))
       setInputs({
-      email: getDataUser.user.email,
-      firstname: getDataUser.user.firstname,
-      lastname: getDataUser.user.lastname,
-      phone: getDataUser.user.phone
+      email: getDataUser?.user?.email,
+      firstname: getDataUser?.user?.firstname,
+      lastname: getDataUser?.user?.lastname,
+      phone: getDataUser?.user?.phone
   })
 },[])
   const {getvalueaorefresh,setvalueaorefresh} = useContext(UserContext)
@@ -58,13 +58,14 @@ useEffect(() =>{
 }
     const logout =(e) =>{
       if(getDataUser != null){
-        localStorage.removeItem("User")
+        localStorage.clear()
         toast.success("Logout thành công")
         navigate("/")
         // window.location.reload()
         setvalueaorefresh("ok1")
       }else{
         toast.error("Bạn phải đăng nhập trước");
+        navigate("/account")
       }
     }
     return(
@@ -95,7 +96,7 @@ useEffect(() =>{
                 <div className="my-account-tab-menu nav nav-tabs" id="nav-tab" role="tablist">
                   <button className="nav-link active" id="dashboad-tab" data-bs-toggle="tab" data-bs-target="#dashboad" type="button" role="tab" aria-controls="dashboad" aria-selected="true">Dashboard</button>
                   <button className="nav-link" id="orders-tab" data-bs-toggle="tab" data-bs-target="#orders" type="button" role="tab" aria-controls="orders" aria-selected="false"> Orders</button>
-                  <button className="nav-link" id="address-edit-tab" data-bs-toggle="tab" data-bs-target="#address-edit" type="button" role="tab" aria-controls="address-edit" aria-selected="false">Password Change</button>
+                  {/* <button className="nav-link" id="address-edit-tab" data-bs-toggle="tab" data-bs-target="#address-edit" type="button" role="tab" aria-controls="address-edit" aria-selected="false">Password Change</button> */}
                   <button className="nav-link" id="account-info-tab" data-bs-toggle="tab" data-bs-target="#account-info" type="button" role="tab" aria-controls="account-info" aria-selected="false">Account Details</button>
                   <button className="nav-link" onClick={logout} type="button">Logout</button>
                 </div>
