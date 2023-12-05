@@ -145,12 +145,12 @@ function Product() {
     var categoryTitle = e.currentTarget.querySelector('.title').textContent
     var categories = []
     switch (categoryTitle) {
-      case 'Mặt Nạ':
+      case 'Hare Care':
         axios.get('http://localhost:8000/products')
           .then(res => {
             console.log(res)
-            res.data.mess?.forEach((value) =>            
-              value?.category?.title === 'Mặt Nạ'
+            res.data.mess?.forEach((value) =>
+              value?.category?.title === 'Hare Care'
                 ? categories.push(value)
                 : '')
             setProducts(categories)
@@ -159,11 +159,11 @@ function Product() {
             console.log('err', err)
           })
         break
-      case 'Sửa Rửa Mặt':
+      case 'Skin Care':
         axios.get('http://localhost:8000/products')
           .then(res => {
             res.data.mess?.forEach((value) =>
-              value?.category?.title === 'Sửa Rửa Mặt'
+              value?.category?.title === 'Skin Care'
                 ? categories.push(value)
                 : '')
             setProducts(categories)
@@ -172,11 +172,11 @@ function Product() {
             console.log('err', err)
           })
         break
-      case 'Kem Dưỡng':
+      case 'Lip Stick':
         axios.get('http://localhost:8000/products')
           .then(res => {
             res.data.mess?.forEach((value) =>
-              value?.category?.title === 'Kem Dưỡng'
+              value?.category?.title === 'Lip Stick'
                 ? categories.push(value)
                 : '')
             setProducts(categories)
@@ -185,11 +185,11 @@ function Product() {
             console.log('err', err)
           })
         break
-      case 'Dụng cụ làm đẹp':
+      case 'Face Skin':
         axios.get('http://localhost:8000/products')
           .then(res => {
             res.data.mess?.forEach((value) =>
-              value?.category?.title === 'Dụng cụ làm đẹp'
+              value?.category?.title === 'Face Skin'
                 ? categories.push(value)
                 : '')
             setProducts(categories)
@@ -330,7 +330,7 @@ function Product() {
                       </a>
                       <span className="flag-new">{e?.category?.title}</span>
                       <div className="product-action">
-                        <button id={e._id} onClick={() => handleClicklarge(e._id)}  type="button" className="product-action-btn action-btn-quick-view" data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
+                        <button id={e._id} onClick={() => handleClicklarge(e._id)} type="button" className="product-action-btn action-btn-quick-view" data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
                           <i className="fa fa-expand" />
                         </button>
                         <button id={e._id} onClick={() => handleClick(e._id)} type="button" className="product-action-btn action-btn-cart" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">
@@ -383,20 +383,20 @@ function Product() {
             }
             <div className="col-12">
               <ul className="pagination justify-content-center me-auto ms-auto mt-5 mb-0 mb-sm-10">
-              <ReactPaginate
-                    breakLabel="..."
-                    onPageChange={handlePageClick}
-                    pageRangeDisplayed={5}
-                    pageCount={gettotalpage}
-                    previousClassName="page-item"
-                    nextClassName="page-item"
-                    pageClassName="page-item"
-                    pageLinkClassName="page-link"
-                    breakClassName="page-item"
-                    breakLinkClassName="page-link"
-                    containerClassName="pagination"
-                    activeClassName="active"
-                  />
+                <ReactPaginate
+                  breakLabel="..."
+                  onPageChange={handlePageClick}
+                  pageRangeDisplayed={5}
+                  pageCount={gettotalpage}
+                  previousClassName="page-item"
+                  nextClassName="page-item"
+                  pageClassName="page-item"
+                  pageLinkClassName="page-link"
+                  breakClassName="page-item"
+                  breakLinkClassName="page-link"
+                  containerClassName="pagination"
+                  activeClassName="active"
+                />
               </ul>
             </div>
           </div>
