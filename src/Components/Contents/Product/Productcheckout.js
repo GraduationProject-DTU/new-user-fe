@@ -8,6 +8,7 @@ function Productcheckout() {
   const getdataCartItem = JSON.parse(localStorage.getItem("CartItem"))
   let getDataUser = JSON.parse(localStorage.getItem("User"))
   const { gettotalorder, settotalorder } = useContext(UserContext)
+  const [getcheckBox,setcheckBox] = useState(false)
   const [inputs, setInputs] = useState({
     firstname: "",
     lastname: "",
@@ -19,6 +20,13 @@ function Productcheckout() {
   var gettong1 = 0
   var gettong2 = 0
   useEffect(() => {
+      const getDataUser = JSON.parse(localStorage.getItem("User"))
+      setInputs({
+      email: getDataUser?.user?.email,
+      firstname: getDataUser?.user?.firstname,
+      lastname: getDataUser?.user?.lastname,
+      phone: getDataUser?.user?.phone
+      })
     axios.get("http://localhost:8000/products")
       .then(response => {
         setItem(response.data.mess)
@@ -48,47 +56,49 @@ function Productcheckout() {
       })
     }
   }
+  function handleCheckBox(){
+    setcheckBox(!getcheckBox)
+  }
   function handleSubmit(e) {
-    console.log(gettotalorder)
+    console.log(inputs.order)
     var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     let flag = true
     let errorSubmit = {}
     if (inputs.email == "") {
-      errorSubmit.email = "Vui long nhap email"
+      errorSubmit.email = "Vui long nhập email"
       flag = false
       toast.error("" + errorSubmit.email);
     } else {
       if (!regex.test(inputs.email)) {
-        errorSubmit.email = "Nhap dung dinh dang"
+        errorSubmit.email = "Nhập dung dinh dang"
       }
     }
-    if (inputs.street == "") {
-      errorSubmit.street = "Nhap street"
+    if (inputs.street == undefined) {
+      errorSubmit.street = "Nhập street"
       flag = false
       toast.error("" + errorSubmit.street);
     }
-    if (inputs.city == "") {
-      errorSubmit.city = "Nhap city"
-      flag = false
-      toast.error("" + errorSubmit.city);
-    }
     if (inputs.phone == "") {
-      errorSubmit.phone = "Nhap phone"
+      errorSubmit.phone = "Nhập phone"
       flag = false
       toast.error("" + errorSubmit.phone);
     }
     if (inputs.firstname == "") {
-      errorSubmit.firstname = "Nhap firstname"
+      errorSubmit.firstname = "Nhập firstname"
       flag = false
       toast.error("" + errorSubmit.firstname);
     }
     if (inputs.lastname == "") {
-      errorSubmit.lastname = "Nhap lastname"
+      errorSubmit.lastname = "Nhập lastname"
       flag = false
       toast.error("" + errorSubmit.lastname);
     }
-
-    // TO DO ORDER 
+    if (getcheckBox == false){
+      flag = false
+      toast.error("Hãy đồng ý với các điều khoản");
+    }
+    if (flag){
+      // TO DO ORDER 
     let accessToken = getDataUser.token
     let config = {
       headers: {
@@ -108,7 +118,7 @@ function Productcheckout() {
       .catch(err => {
         console.log('err')
       })
-
+    }
   }
   const handleInput = (e) => {
     const nameInput = e.target.name
@@ -173,31 +183,31 @@ function Productcheckout() {
                       <div className="col-md-6">
                         <div className="form-group">
                           <label htmlFor="f_name">First name <abbr className="required" title="required">*</abbr></label>
-                          <input id="f_name" type="text" className="form-control" name="firstname" onChange={handleInput} defaultValue={getDataUser?.user.firstname} />
+                          <input id="f_name" type="text" className="form-control" name="firstname" onChange={handleInput} defaultValue={inputs.firstname} />
                         </div>
                       </div>
                       <div className="col-md-6">
                         <div className="form-group">
                           <label htmlFor="l_name">Last name <abbr className="required" title="required">*</abbr></label>
-                          <input id="l_name" type="text" className="form-control" name="lastname" onChange={handleInput} defaultValue={getDataUser?.user.lastname} />
+                          <input id="l_name" type="text" className="form-control" name="lastname" onChange={handleInput} defaultValue={inputs.lastname} />
                         </div>
                       </div>
                       <div className="col-md-12">
                         <div className="form-group">
                           <label htmlFor="street-address">Street address <abbr className="required" title="required">*</abbr></label>
-                          <input id="street-address" type="text" className="form-control" placeholder="House number and street name" name="street" onChange={handleInput} />
+                          <input id="street-address" type="text" className="form-control" placeholder="House number and street name" defaultValue={inputs.street} name="street" onChange={handleInput} />
                         </div>
                       </div>
                       <div className="col-md-12">
                         <div className="form-group">
                           <label htmlFor="phone">Phone <abbr className="required" title="required">*</abbr></label>
-                          <input id="phone" type="text" className="form-control" name="phone" onChange={handleInput} defaultValue={getDataUser?.user.phone} />
+                          <input id="phone" type="text" className="form-control" name="phone" onChange={handleInput} defaultValue={inputs.phone} />
                         </div>
                       </div>
                       <div className="col-md-12">
                         <div className="form-group">
                           <label htmlFor="email">Email address <abbr className="required" title="required">*</abbr></label>
-                          <input id="email" type="text" className="form-control" name="email" onChange={handleInput} defaultValue={getDataUser?.user.email} readOnly />
+                          <input id="email" type="text" className="form-control" name="email" onChange={handleInput} defaultValue={inputs.email} readOnly />
                         </div>
                       </div>
                       <div className="col-md-12">
@@ -288,7 +298,7 @@ function Productcheckout() {
                     <p className="p-text">Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our <a href="#/">privacy policy.</a></p>
                     <div className="agree-policy">
                       <div className="custom-control custom-checkbox">
-                        <input type="checkbox" id="privacy" className="custom-control-input visually-hidden" />
+                        <input type="checkbox" id="privacy" className="custom-control-input visually-hidden" onClick={handleCheckBox} />
                         <label htmlFor="privacy" className="custom-control-label">I have read and agree to the website terms and conditions <span className="required">*</span></label>
                       </div>
                     </div>

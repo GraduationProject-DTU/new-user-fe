@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import './product.css'
 import { UserContext } from "../../../UserContext"
+import { toast } from "react-toastify"
 function Productdetails() {
   const [product, setProduct] = useState([])
   const [products, setProducts] = useState([])
@@ -13,6 +14,7 @@ function Productdetails() {
   let params = useParams()
   const { getidwishlist, setidwishlist } = useContext(UserContext)
   const [getquantity,setquantity] = useState(1)
+  let getDataUser = JSON.parse(localStorage.getItem("User"))
   const body = {
     'postId': params.id,
     'star': star,  
@@ -25,23 +27,27 @@ function Productdetails() {
     }
   }
   const handleClick = (id) => {
-    let main = {}
-    let nameInput = id
-    let value = +getquantity
-    let test1 = localStorage.getItem("CartItem")
-    setid(nameInput)
-    if (test1) {
-      main = JSON.parse(test1)
-      for (var key in main) {
-        if (nameInput == key) {
-          value = main[nameInput] + +value
-          localStorage.setItem("CartItem", JSON.stringify(main))
+    if (getDataUser != null){
+      let main = {}
+      let nameInput = id
+      let value = +getquantity
+      let test1 = localStorage.getItem("CartItem")
+      setid(nameInput)
+      if (test1) {
+        main = JSON.parse(test1)
+        for (var key in main) {
+          if (nameInput == key) {
+            value = main[nameInput] + +value
+            localStorage.setItem("CartItem", JSON.stringify(main))
+          }
         }
       }
+      main[nameInput] = value
+      localStorage.setItem("CartItem", JSON.stringify(main))
+      setCart(main)
+    }else{
+      toast.error("Vui lòng đăng nhập")
     }
-    main[nameInput] = value
-    localStorage.setItem("CartItem", JSON.stringify(main))
-    setCart(main)
   }
   useEffect(() => {
     try {
@@ -71,20 +77,24 @@ function Productdetails() {
     }
   }, [])
   const handleclickwishlist = (id) => {
-    setidwishlist(id)
-    let idwishlist = id
-    let main = []
-    let test1 = localStorage.getItem("Wishlist")
-    if (test1) {
-      main = JSON.parse(test1)
-      for (var key in main) {
-        if (idwishlist == main[key]) {
-          main.splice(key, 1)
+    if (getDataUser != null){
+      setidwishlist(id)
+      let idwishlist = id
+      let main = []
+      let test1 = localStorage.getItem("Wishlist")
+      if (test1) {
+        main = JSON.parse(test1)
+        for (var key in main) {
+          if (idwishlist == main[key]) {
+            main.splice(key, 1)
+          }
         }
       }
+      main.push(idwishlist)
+      localStorage.setItem("Wishlist", JSON.stringify(main))
+    }else{
+      toast.error("Vui lòng đăng nhập")
     }
-    main.push(idwishlist)
-    localStorage.setItem("Wishlist", JSON.stringify(main))
   }
   return (
     <>
@@ -148,8 +158,8 @@ function Productdetails() {
                 <div className="product-details-action">
                   <h4 style={{ color: 'rgb(239,84,53)' }} className="price">₫{Intl.NumberFormat().format(product.price * getquantity)}</h4>
                   <div className="product-details-cart-wishlist">
-                    <button id={product._id} onClick={() => handleclickwishlist(product._id)}  type="button" className="btn-wishlist" data-bs-toggle="modal" data-bs-target="#action-WishlistModal"><i className="fa fa-heart-o" /></button>
-                    <button id={product._id} onClick={() => handleClick(product._id)} type="button" className="btn" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">Add to cart</button>
+                    <button id={product._id} onClick={() => handleclickwishlist(product._id)}  type="button" className="btn-wishlist" data-bs-toggle={getDataUser ? "modal" : ""} data-bs-target="#action-WishlistModal"><i className="fa fa-heart-o" /></button>
+                    <button id={product._id} onClick={() => handleClick(product._id)} type="button" className="btn" data-bs-toggle={getDataUser ? "modal" : ""} data-bs-target="#action-CartAddModal">Add to cart</button>
                   </div>
                 </div>
               </div>

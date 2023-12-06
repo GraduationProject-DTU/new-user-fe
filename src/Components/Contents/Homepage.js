@@ -318,7 +318,7 @@ function Homepage() {
                       </h4>
                       <ul className="meta">
                         <li className="author-info"><span>By:</span> <a href="blog.html">{e?.author}</a></li>
-                        <li className="post-date">{e?.createdAt}</li>
+                        <li className="post-date">{new Date(e?.createdAt).toDateString()}</li>
                       </ul>
                     </div>
                   </div>

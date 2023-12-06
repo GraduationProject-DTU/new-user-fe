@@ -325,9 +325,11 @@ function Product() {
                   {/*== Start Product Item ==*/}
                   <div style={{ objectFit: 'cover' }} className="product-item">
                     <div className="product-thumb">
-                      <a className="d-block" href={"product-details/" + e._id}>
-                        <img src={e.image} style={{ height: '400px' }} width={370} height={450} alt="Image-HasTech" />
-                      </a>
+                      <Link to={"/product-details/" + e._id}>
+                        <a className="d-block">
+                          <img src={e.image} style={{ height: '400px' }} width={370} height={450} alt="Image-HasTech" />
+                        </a>
+                      </Link>
                       <span className="flag-new">{e?.category?.title}</span>
                       <div className="product-action">
                         <button id={e._id} onClick={() => handleClicklarge(e._id)} type="button" className="product-action-btn action-btn-quick-view" data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">

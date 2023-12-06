@@ -2,6 +2,7 @@ import axios from "axios"
 import { Link } from "react-router-dom"
 import { useContext, useEffect, useState } from "react"
 import { UserContext } from "../../UserContext"
+import { toast } from "react-toastify"
 function Scroll(){
   const [getItem, setItem] = useState("")
   const [getdataCart,setdataCart] = useState("")
@@ -12,6 +13,7 @@ function Scroll(){
   const {getidwishlist,setidwishlist} = useContext(UserContext)
   var gettong1 = 0
   const [getquantity,setquantity] = useState(1)
+  let getDataUser = JSON.parse(localStorage.getItem("User"))
   const onChancequantity= (e) =>{
     setquantity(e.target.value)
     if (e.target.value <=1){
@@ -29,23 +31,27 @@ function Scroll(){
         })
   }, [])
     const handleClick = (id) => {
-      let main = {}
-      let nameInput = id
-      let value = +getquantity
-      let test1 = localStorage.getItem("CartItem")
-      setid(nameInput)
-      if (test1) {
-        main = JSON.parse(test1)
-        for (var key in main) {
-          if (nameInput == key) {
-            value = main[nameInput] + +value
-            localStorage.setItem("CartItem", JSON.stringify(main))
+      if(getDataUser != null){
+        let main = {}
+        let nameInput = id
+        let value = +getquantity
+        let test1 = localStorage.getItem("CartItem")
+        setid(nameInput)
+        if (test1) {
+          main = JSON.parse(test1)
+          for (var key in main) {
+            if (nameInput == key) {
+              value = main[nameInput] + +value
+              localStorage.setItem("CartItem", JSON.stringify(main))
+            }
           }
         }
+        main[nameInput] = value
+        localStorage.setItem("CartItem", JSON.stringify(main))
+        setCart(main)
+      }else{
+        toast.error("Vui lòng đăng nhập")
       }
-      main[nameInput] = value
-      localStorage.setItem("CartItem", JSON.stringify(main))
-      setCart(main)
     }
     const deleteItem = (e) => {
       e.preventDefault()
@@ -154,7 +160,7 @@ function Scroll(){
                   <div className="product-details-action">
                     <h4 className="price">{Intl.NumberFormat().format(value3.price * getquantity)}</h4>
                     <div className="product-details-cart-wishlist">
-                      <button id={value3._id} onClick={()=>handleClick(value3._id)} type="button" className="btn" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">Add to cart</button>
+                      <button id={value3._id} onClick={()=>handleClick(value3._id)} type="button" className="btn" data-bs-toggle={getDataUser ? "modal" : ""} data-bs-target="#action-CartAddModal">Add to cart</button>
                     </div>
                   </div>
                 </div>

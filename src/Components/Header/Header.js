@@ -64,7 +64,7 @@ function Header() {
           </div>
           <div className="col-7 col-sm-6 col-lg-3">
             <div className="header-action justify-content-end">
-              <button className="header-action-btn ms-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#AsideOffcanvasSearch" aria-controls="AsideOffcanvasSearch">
+              {/* <button className="header-action-btn ms-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#AsideOffcanvasSearch" aria-controls="AsideOffcanvasSearch">
                 <span className="icon">
                   <svg width={30} height={30} viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
                     <rect className="icon-rect" width={30} height={30} fill="url(#pattern1)" />
@@ -76,7 +76,7 @@ function Header() {
                     </defs>
                   </svg>
                 </span>
-              </button>
+              </button> */}
               <button className="header-action-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#AsideOffcanvasCart" aria-controls="AsideOffcanvasCart">
                 <span className="icon">
                   <svg width={30} height={30} viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">

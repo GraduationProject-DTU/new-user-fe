@@ -56,7 +56,7 @@ function Blog() {
                       <a>{value?.author}</a>
                     </Link>
                   </li>
-                  <li className="post-date">{value?.updatedAt}</li>
+                  <li className="post-date">{new Date(value?.updatedAt).toDateString()}</li>
                 </ul>
               </div>
             </div>
@@ -79,7 +79,7 @@ function Blog() {
                   <span className="title">{value?.title}</span>
                 </a>
               </Link>
-              <span className="date">{value?.updatedAt}</span>
+              <span className="date">{new Date(value?.updatedAt).toDateString()}</span>
             </div>
           )
         }

@@ -127,6 +127,7 @@ function Productcart() {
                   : gettong1 += gettong
               }
               settotalorder(gettong1)
+              console.log(getdataCartItem[key1])
               return (
                 <tr className="tbody-item" key={key}>
                   <td className="product-remove">
@@ -152,7 +153,7 @@ function Productcart() {
                   <td className="product-quantity">
                     <div className="pro-qty">
                       {/* <a onClick={decreaseqty} id={value._id} className="cart_quantity_up" href> - </a> */}
-                      <input id={value._id} style={{ width: "50%" }} type="number" className="quantity" title="Quantity" onChange={handleChangeInput} defaultValue={getdataCartItem[key1]} />
+                      <input id={value._id}  type="number" className="quantity" title="Quantity" onChange={handleChangeInput} defaultValue={getdataCartItem[key1]} />
                       {/* <a onClick={increaseqty} id={value._id} className="cart_quantity_up" href> + </a> */}
                     </div>
                   </td>
