@@ -9,7 +9,7 @@ function Productcheckout() {
   const getdataCartItem = JSON.parse(localStorage.getItem("CartItem"))
   let getDataUser = JSON.parse(localStorage.getItem("User"))
   const { gettotalorder, settotalorder } = useContext(UserContext)
-  const [getcheckBox,setcheckBox] = useState(false)
+  const [getcheckBox, setcheckBox] = useState(false)
   const location = useLocation()
   console.log(location)
   const [inputs, setInputs] = useState({
@@ -21,13 +21,13 @@ function Productcheckout() {
     note: ""
   })
   useEffect(() => {
-      const getDataUser = JSON.parse(localStorage.getItem("User"))
-      setInputs({
+    const getDataUser = JSON.parse(localStorage.getItem("User"))
+    setInputs({
       email: getDataUser?.user?.email,
       firstname: getDataUser?.user?.firstname,
       lastname: getDataUser?.user?.lastname,
       phone: getDataUser?.user?.phone
-      })
+    })
     axios.get("http://localhost:8000/products")
       .then(response => {
         setItem(response.data.mess)
@@ -55,7 +55,7 @@ function Productcheckout() {
       })
     }
   }
-  function handleCheckBox(){
+  function handleCheckBox() {
     setcheckBox(!getcheckBox)
   }
   function handleSubmit(e) {
@@ -91,32 +91,35 @@ function Productcheckout() {
       flag = false
       toast.error("" + errorSubmit.lastname);
     }
-    if (getcheckBox == false){
+    if (getcheckBox == false) {
       flag = false
       toast.error("Hãy đồng ý với các điều khoản");
     }
-    if (flag){
+    if (flag) {
       // TO DO ORDER 
-    let accessToken = getDataUser.token
-    let config = {
-      headers: {
-        'token': 'bearer ' + accessToken,
+      let accessToken = getDataUser.token
+      let config = {
+        headers: {
+          'token': 'bearer ' + accessToken,
+        }
       }
-    }
 
-    const body = [];
+      const body = [];
 
-    for (const key in getdataCartItem) {
-      body.push({ pid: key });
-    }
-    axios.post('http://localhost:8000/orders/placeOrders', body, config)
-      .then(res => {
-        console.log(res)
-        toast.success(res.data.mess)
-      })
-      .catch(err => {
-        console.log('err')
-      })
+      for (const key in getdataCartItem) {
+        body.push({
+          pid: key,
+          quatity: getdataCartItem[key]
+        });
+      }
+      axios.post('http://localhost:8000/orders/placeOrders', body, config)
+        .then(res => {
+          console.log(res)
+          toast.success(res.data.mess)
+        })
+        .catch(err => {
+          console.log('err')
+        })
     }
   }
   const handleInput = (e) => {
@@ -243,7 +246,7 @@ function Productcheckout() {
                       </tr> */}
                       <tr className="shipping">
                         <th>Giảm giá</th>
-                        <td>{Intl.NumberFormat().format(location.state.couponPrice ? location.state.couponPrice*100 : "0") } %</td>
+                        <td>{Intl.NumberFormat().format(location.state.couponPrice ? location.state.couponPrice * 100 : "0")} %</td>
                       </tr>
                       <tr className="order-total">
                         <th>Total </th>
