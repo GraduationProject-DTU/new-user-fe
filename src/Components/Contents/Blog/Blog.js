@@ -196,8 +196,10 @@ function Blog() {
                     onPageChange={handlePageClick}
                     pageRangeDisplayed={5}
                     pageCount={gettotalpage}
-                    previousClassName="page-item"
-                    nextClassName="page-item"
+                    previousClassName="page-link"
+                    nextClassName="page-link"
+                    nextLabel='>>'
+                    previousLabel='<<'
                     pageClassName="page-item"
                     pageLinkClassName="page-link"
                     breakClassName="page-item"
