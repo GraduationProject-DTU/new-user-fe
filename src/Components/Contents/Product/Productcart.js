@@ -127,7 +127,6 @@ function Productcart() {
                   : gettong1 += gettong
               }
               settotalorder(gettong1)
-              console.log(getdataCartItem[key1])
               return (
                 <tr className="tbody-item" key={key}>
                   <td className="product-remove">

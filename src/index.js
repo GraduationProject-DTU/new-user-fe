@@ -26,6 +26,7 @@ import CreateBlog from './Components/Contents/Blog/CreateBlog';
 import PageNotFound from './Components/Contents/PageNotFound';
 import ResetPassword from './Components/Contents/Account/ResetPassword';
 import ForgotPassword from './Components/Contents/Account/ForgotPassword';
+import Orderpage from './Components/Contents/Account/Order';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
@@ -36,6 +37,7 @@ root.render(
           <Route path="/about" element={<About />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog-details/:id" element={<Blogdetails />} />
+          <Route path="/order/:id" element={<Orderpage />} />
           <Route path="/account" element={<Account />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/auth/reset-password/:token" element={<ResetPassword />} />

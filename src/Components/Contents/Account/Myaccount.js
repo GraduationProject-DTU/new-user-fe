@@ -3,8 +3,10 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { UserContext } from "../../../UserContext";
 import { useState,useContext, useEffect, } from "react"
+import { Link } from "react-router-dom"
 import axios from "axios";
-function Myaccount(){
+function Myaccount(props){
+  const [getOrders,setOrders] = useState("")
 useEffect(() =>{
   const getDataUser = JSON.parse(localStorage.getItem("User"))
       setInputs({
@@ -13,6 +15,19 @@ useEffect(() =>{
       lastname: getDataUser?.user?.lastname,
       phone: getDataUser?.user?.phone
   })
+  let accessToken = getDataUser.token
+  let config = {
+        headers: {
+            'token': 'bearer ' + accessToken,
+        }
+    }
+    axios.get("http://localhost:8000/orders",config)
+    .then(response => {
+      setOrders(response.data.order)
+    })
+    .catch(function (error) {
+      console.log(error)
+    })
 },[])
   const {getvalueaorefresh,setvalueaorefresh} = useContext(UserContext)
   const navigate = useNavigate()
@@ -66,6 +81,27 @@ useEffect(() =>{
       }else{
         toast.error("Bạn phải đăng nhập trước");
         navigate("/account")
+      }
+    }
+    function fetchDataOrder(){
+      if(getOrders.length>0){
+        return getOrders.map((value,key)=>{
+          if(value.orderBy.email == getDataUser.user.email){
+            const newTo = { 
+              pathname: `/order/${+key+1}`, 
+              state: {value}
+            };
+            return(
+            <tr key={key}>
+              <td>{+key+1}</td>
+              <td>{new Date(value?.updatedAt).toDateString()}</td>
+              <td>{value.status}</td>
+              <td>{Intl.NumberFormat().format(value.total)}</td>
+              <td><Link to={`/order/${+key+1}`} state={{data:value}} ><a className="check-btn sqr-btn ">View</a></Link></td>
+          </tr>
+            )
+          }
+        })
       }
     }
     return(
@@ -127,27 +163,7 @@ useEffect(() =>{
                             </tr>
                           </thead>
                           <tbody>
-                            <tr>
-                              <td>1</td>
-                              <td>Aug 22, 2018</td>
-                              <td>Pending</td>
-                              <td>$3000</td>
-                              <td><a href="shop-cart.html" className="check-btn sqr-btn ">View</a></td>
-                            </tr>
-                            <tr>
-                              <td>2</td>
-                              <td>July 22, 2018</td>
-                              <td>Approved</td>
-                              <td>$200</td>
-                              <td><a href="shop-cart.html" className="check-btn sqr-btn ">View</a></td>
-                            </tr>
-                            <tr>
-                              <td>3</td>
-                              <td>June 12, 2017</td>
-                              <td>On Hold</td>
-                              <td>$990</td>
-                              <td><a href="shop-cart.html" className="check-btn sqr-btn ">View</a></td>
-                            </tr>
+                            {fetchDataOrder()}                        
                           </tbody>
                         </table>
                       </div>

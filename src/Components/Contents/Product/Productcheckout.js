@@ -60,7 +60,6 @@ function Productcheckout() {
     setcheckBox(!getcheckBox)
   }
   function handleSubmit(e) {
-    console.log(inputs.order)
     var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     let flag = true
     let errorSubmit = {}
@@ -113,6 +112,7 @@ function Productcheckout() {
     }
     axios.post('http://localhost:8000/orders/placeOrders', body, config)
       .then(res => {
+        console.log(res)
         toast.success(res.data.mess)
       })
       .catch(err => {
