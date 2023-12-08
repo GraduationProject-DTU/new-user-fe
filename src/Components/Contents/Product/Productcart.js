@@ -16,7 +16,6 @@ function Productcart() {
     axios.get('http://localhost:8000/coupons')
       .then(res => {
         setCoupon(res.data.coupon)
-        console.log(res.data.coupon)
       })
       .catch(err => {
         console.log(err)
@@ -106,7 +105,6 @@ function Productcart() {
     axios.post('http://localhost:8000/coupons/apply-coupon', body, config)
       .then(res => {
         setCouponPrice(res.data.couponPrice)
-        console.log(res)
       })
       .catch(err => {
         console.log(err)
@@ -222,7 +220,7 @@ function Productcart() {
                     <tr className="cart-subtotal">
                       <th>Subtotal</th>
                       <td>
-                        <span className="amount">{Intl.NumberFormat().format(gettong1)} VNĐ</span>
+                        <span className="amount">{Intl.NumberFormat().format(gettong1,couponPrice)} VNĐ</span>
                       </td>
                     </tr>
                     {/* <tr className="shipping-totals">
@@ -255,7 +253,7 @@ function Productcart() {
                   </tbody>
                 </table>
                 <div className="text-end">
-                  <Link to={"/productcheckout"}>
+                  <Link to={"/productcheckout"} state={{gettong1,couponPrice}}>
                     <a className="checkout-button">Proceed to checkout</a>
                   </Link>
                 </div>

@@ -96,7 +96,6 @@ function Blog() {
         console.log(err)
       })
   }
-
   function handleCategory(e) {
     e.preventDefault()
     var categoryTitle = e.target.innerHTML
@@ -170,8 +169,6 @@ function Blog() {
         break;
     }
   }
-
-
   return (
     <>
       {/*== Start Page Header Area Wrapper ==*/}

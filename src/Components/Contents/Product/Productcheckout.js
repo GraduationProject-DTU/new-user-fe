@@ -3,12 +3,15 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios"
 import { UserContext } from "../../../UserContext";
+import { useLocation } from "react-router-dom";
 function Productcheckout() {
   const [getItem, setItem] = useState("")
   const getdataCartItem = JSON.parse(localStorage.getItem("CartItem"))
   let getDataUser = JSON.parse(localStorage.getItem("User"))
   const { gettotalorder, settotalorder } = useContext(UserContext)
   const [getcheckBox,setcheckBox] = useState(false)
+  const location = useLocation()
+  console.log(location)
   const [inputs, setInputs] = useState({
     firstname: "",
     lastname: "",
@@ -17,8 +20,6 @@ function Productcheckout() {
     email: "",
     note: ""
   })
-  var gettong1 = 0
-  var gettong2 = 0
   useEffect(() => {
       const getDataUser = JSON.parse(localStorage.getItem("User"))
       setInputs({
@@ -42,8 +43,6 @@ function Productcheckout() {
           return Object.keys(getdataCartItem).map((key1, index) => {
             if (value._id == key1) {
               const gettong = parseInt(getdataCartItem[key1] * value.price)
-              gettong1 += gettong
-              gettong2 = gettong1 + 2000
               return (
                 <tr className="cart-item">
                   <td className="product-name">{value.title} <span className="product-quantity">× {getdataCartItem[key1]}</span></td>
@@ -238,17 +237,17 @@ function Productcheckout() {
                       {fetchData()}
                     </tbody>
                     <tfoot className="table-foot">
-                      <tr className="cart-subtotal">
+                      {/* <tr className="cart-subtotal">
                         <th>Subtotal</th>
-                        <td>{Intl.NumberFormat().format(gettong1)}</td>
-                      </tr>
+                        <td>{Intl.NumberFormat().format(location.state.gettong1)}</td>
+                      </tr> */}
                       <tr className="shipping">
-                        <th>Shipping</th>
-                        <td>{Intl.NumberFormat().format(2000)}</td>
+                        <th>Giảm giá</th>
+                        <td>{Intl.NumberFormat().format(location.state.couponPrice ? location.state.couponPrice*100 : "0") } %</td>
                       </tr>
                       <tr className="order-total">
                         <th>Total </th>
-                        <td>{Intl.NumberFormat().format(gettong2)}</td>
+                        <td>{Intl.NumberFormat().format(location.state.gettong1)}</td>
                       </tr>
                     </tfoot>
                   </table>
