@@ -7,27 +7,24 @@ import { toast } from "react-toastify"
 function Productdetails() {
   const [product, setProduct] = useState([])
   const [products, setProducts] = useState([])
-  const [star, setStar] = useState(0)
-  const [comment, setComment] = useState('')
+  const [star, setStar] = useState(1)
+  const [feedback, setFeedback] = useState('')
   const { getCart, setCart } = useContext(UserContext)
   const { getid, setid } = useContext(UserContext)
   let params = useParams()
   const { getidwishlist, setidwishlist } = useContext(UserContext)
-  const [getquantity,setquantity] = useState(1)
+  const [getquantity, setquantity] = useState(1)
   let getDataUser = JSON.parse(localStorage.getItem("User"))
-  const body = {
-    'postId': params.id,
-    'star': star,  
-    'comment': comment
-  }
-  const onChancequantity= (e) =>{
+
+
+  const onChancequantity = (e) => {
     setquantity(e.target.value)
-    if (e.target.value <=1){
+    if (e.target.value <= 1) {
       setquantity(1)
     }
   }
   const handleClick = (id) => {
-    if (getDataUser != null){
+    if (getDataUser != null) {
       let main = {}
       let nameInput = id
       let value = +getquantity
@@ -45,7 +42,7 @@ function Productdetails() {
       main[nameInput] = value
       localStorage.setItem("CartItem", JSON.stringify(main))
       setCart(main)
-    }else{
+    } else {
       toast.error("Vui lòng đăng nhập")
     }
   }
@@ -68,16 +65,12 @@ function Productdetails() {
           console.log('catch log', err)
         })
 
-      // axios.post('http://localhost:8000/products/rating-product', body)
-
-
-
     } catch (error) {
       console.log('error', error)
     }
   }, [])
   const handleclickwishlist = (id) => {
-    if (getDataUser != null){
+    if (getDataUser != null) {
       setidwishlist(id)
       let idwishlist = id
       let main = []
@@ -92,10 +85,34 @@ function Productdetails() {
       }
       main.push(idwishlist)
       localStorage.setItem("Wishlist", JSON.stringify(main))
-    }else{
+    } else {
       toast.error("Vui lòng đăng nhập")
     }
   }
+
+  const handleFeedback = () => {
+
+    let accessToken = getDataUser.token
+    let config = {
+      headers: {
+        'token': 'bearer ' + accessToken,
+      }
+    }
+
+    const body = {
+      postId: params.id,
+      star,
+      comment: feedback
+    }
+
+    axios.put('http://localhost:8000/products/rating-product', body, config)
+      .then(res => {
+        toast.success('Feedback Thành Công !!')
+        setFeedback('')
+      })
+      .catch(err => { toast.error("Bạn Không Được Phép Feedback") })
+  }
+
   return (
     <>
       {/*== Start Page Header Area Wrapper ==*/}
@@ -144,21 +161,21 @@ function Productdetails() {
                   <button type="button" className="product-review-show">{product.brand}</button>
                   <button style={{ marginLeft: '32px' }} type="button" className="product-review-show">Đã bán {product.sold}</button>
                 </div>
+
                 <div className="product-details-pro-qty">
                   <div className="pro-qty">
                     <input type="number" title="Quantity" defaultValue={1} onChange={onChancequantity} min={1} />
                   </div>
                 </div>
                 <div className="product-details-shipping-cost">
-                  <input className="form-check-input" type="checkbox" defaultValue id="ShippingCost" defaultChecked />
-                  <label className="form-check-label" htmlFor="ShippingCost">Shipping Fees $3.22 ,Fast delivery</label>
-                  <input style={{ marginLeft: '32px' }} className="form-check-input" type="checkbox" defaultValue id="ShippingCost" defaultChecked />
-                  <label className="form-check-label" htmlFor="ShippingCost">FreeShip, Slow delivery</label>
+                  <p><i class="fa fa-shield" aria-hidden="true"></i> Hàng chính hãng 100% </p>
+                  <p><i class="fa fa-arrow-circle-down" aria-hidden="true"></i> 3 ngày miễn phí trả hàng</p>
+                  <p>Vận Chuyển Nhanh <i class="fa fa-truck" aria-hidden="true"></i> Xử lý đơn hàng bởi Rose <i class="fa fa-shopping-bag" aria-hidden="true"></i></p>
                 </div>
                 <div className="product-details-action">
                   <h4 style={{ color: 'rgb(239,84,53)' }} className="price">₫{Intl.NumberFormat().format(product.price * getquantity)}</h4>
                   <div className="product-details-cart-wishlist">
-                    <button id={product._id} onClick={() => handleclickwishlist(product._id)}  type="button" className="btn-wishlist" data-bs-toggle={getDataUser ? "modal" : ""} data-bs-target="#action-WishlistModal"><i className="fa fa-heart-o" /></button>
+                    <button id={product._id} onClick={() => handleclickwishlist(product._id)} type="button" className="btn-wishlist" data-bs-toggle={getDataUser ? "modal" : ""} data-bs-target="#action-WishlistModal"><i className="fa fa-heart-o" /></button>
                     <button id={product._id} onClick={() => handleClick(product._id)} type="button" className="btn" data-bs-toggle={getDataUser ? "modal" : ""} data-bs-target="#action-CartAddModal">Add to cart</button>
                   </div>
                 </div>
@@ -192,11 +209,11 @@ function Productdetails() {
                             <span className="product-review-name">{e.postedBy?.firstname} {e.postedBy?.lastname}</span>
                             <span className="product-review-designation">Delveloper</span>
                             <div className="product-review-icon">
-
-                              <i className="fa fa-star-o" />
-                              <i className="fa fa-star-o" />
-                              <i className="fa fa-star-o" />
-                              <i className="fa fa-star-o" />
+                              {
+                                Array.from({ length: e.star }, (_, index) => (
+                                  <i key={index} className="fa fa-star-o" />
+                                ))
+                              }
 
                             </div>
                           </div>
@@ -216,17 +233,12 @@ function Productdetails() {
                 <div className="product-reviews-form">
                   <form action="#">
                     <div className="form-input-item">
-                      <textarea className="form-control" placeholder="Enter you feedback" defaultValue={""} />
+                      <textarea onChange={e => setFeedback(e.target.value)} value={feedback} className="form-control" placeholder="Enter you feedback" defaultValue={""} />
                     </div>
-                    <div className="form-input-item">
-                      <input className="form-control" type="text" placeholder="Full Name" />
-                    </div>
-                    <div className="form-input-item">
-                      <input className="form-control" type="email" placeholder="Email Address" />
-                    </div>
+
                     <div className="form-input-item">
                       <div className="form-ratings-item">
-                        <select id="product-review-form-rating-select" className="select-ratings">
+                        <select onChange={e => setStar(e.target.value)} id="product-review-form-rating-select" className="select-ratings">
                           <option value={1}>01</option>
                           <option value={2}>02</option>
                           <option value={3}>03</option>
@@ -236,28 +248,18 @@ function Productdetails() {
                         <span className="title">Provide Your Ratings</span>
                         <div className="product-ratingsform-form-wrap">
                           <div className="product-ratingsform-form-icon">
-                            <i className="fa fa-star-o" />
-                            <i className="fa fa-star-o" />
-                            <i className="fa fa-star-o" />
-                            <i className="fa fa-star-o" />
-                            <i className="fa fa-star-o" />
-                          </div>
-                          <div id="product-review-form-rating" className="product-ratingsform-form-icon-fill">
-                            <i className="fa fa-star" />
-                            <i className="fa fa-star" />
-                            <i className="fa fa-star" />
-                            <i className="fa fa-star" />
-                            <i className="fa fa-star" />
+                            {
+                              Array.from({ length: star }, (_, index) => (
+                                <i key={index} className="fa fa-star-o" />
+                              ))
+                            }
                           </div>
                         </div>
                       </div>
-                      <div className="reviews-form-checkbox">
-                        <input className="form-check-input" type="checkbox" defaultValue id="ReviewsFormCheckbox" defaultChecked />
-                        <label className="form-check-label" htmlFor="ReviewsFormCheckbox">Provide ratings anonymously.</label>
-                      </div>
+
                     </div>
                     <div className="form-input-item mb-0">
-                      <button type="submit" className="btn">SUBMIT</button>
+                      <button type="submit" onClick={handleFeedback} className="btn">SUBMIT</button>
                     </div>
                   </form>
                 </div>
