@@ -87,18 +87,15 @@ useEffect(() =>{
       if(getOrders.length>0){
         return getOrders.map((value,key)=>{
           if(value.orderBy.email == getDataUser.user.email){
-            const newTo = { 
-              pathname: `/order/${+key+1}`, 
-              state: {value}
-            };
+            const i = 0
             return(
             <tr key={key}>
-              <td>{+key+1}</td>
+              <td>{key+1}</td>
               <td>{new Date(value?.updatedAt).toDateString()}</td>
               <td>{value.status}</td>
               <td>{Intl.NumberFormat().format(value.total)}</td>
               <td><Link to={`/order/${+key+1}`} state={{data:value}} ><a className="check-btn sqr-btn ">View</a></Link></td>
-          </tr>
+            </tr>
             )
           }
         })

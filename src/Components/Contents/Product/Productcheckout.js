@@ -3,7 +3,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios"
 import { UserContext } from "../../../UserContext";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 function Productcheckout() {
   const [getItem, setItem] = useState("")
   const getdataCartItem = JSON.parse(localStorage.getItem("CartItem"))
@@ -12,6 +12,7 @@ function Productcheckout() {
   const [getcheckBox, setcheckBox] = useState(false)
   const location = useLocation()
   console.log(location)
+  const navigate = useNavigate()
   const [inputs, setInputs] = useState({
     firstname: "",
     lastname: "",
@@ -114,8 +115,9 @@ function Productcheckout() {
       }
       axios.post('http://localhost:8000/orders/placeOrders', body, config)
         .then(res => {
-          console.log(res)
           toast.success(res.data.mess)
+          localStorage.removeItem("CartItem")
+          navigate("/")
         })
         .catch(err => {
           console.log('err')

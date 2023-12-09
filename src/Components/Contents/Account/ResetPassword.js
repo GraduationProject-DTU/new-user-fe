@@ -11,9 +11,7 @@ function ForgotPassword() {
     const [password, setPassword] = useState('')
     const [rePassword, setRePassword] = useState('')
     const navigate = useNavigate()
-
     let params = useParams()
-
     function handleSubmit(e) {
         e.preventDefault()
         if (password === rePassword) {

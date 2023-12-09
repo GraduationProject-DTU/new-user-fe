@@ -68,7 +68,7 @@ function Productdetails() {
     } catch (error) {
       console.log('error', error)
     }
-  }, [])
+  }, [feedback])
   const handleclickwishlist = (id) => {
     if (getDataUser != null) {
       setidwishlist(id)
@@ -90,8 +90,8 @@ function Productdetails() {
     }
   }
 
-  const handleFeedback = () => {
-
+  const handleFeedback = (e) => {
+    e.preventDefault()
     let accessToken = getDataUser.token
     let config = {
       headers: {

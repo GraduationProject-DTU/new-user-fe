@@ -10,6 +10,7 @@ function Orderpage(props){
     console.log(location.state.data)
     let getDataUser = JSON.parse(localStorage.getItem("User"))
     var gettong1 = 0
+    gettong1 = location.state.data.total
     useEffect(() => {
             axios.get("http://localhost:8000/products")
             .then(response => {
@@ -38,12 +39,13 @@ function Orderpage(props){
             return getItem.map((value,key)=>{
                 if(location.state.data.products.length>0){
                     return location.state.data.products.map((value1,key1)=>{
-                        if(value._id == value1._id){
-                            const gettong = parseInt( 1 * value.price)
-                            gettong1 += gettong
+                        if(value._id == value1.product._id){
+                            const gettong = parseInt( value1.quatity * value.price)
                             return (
                                 <tr className="tbody-item" key={key}>
                                   <td className="product-remove">
+                                    <span className="number_order">{key1+1}
+                                    </span>
                                   </td>
                                   <td className="product-thumbnail">
                                     <div className="thumb">
@@ -65,7 +67,7 @@ function Orderpage(props){
                                   <td className="product-quantity">
                                     <div className="pro-qty">
                                       {/* <a onClick={decreaseqty} id={value._id} className="cart_quantity_up" href> - </a> */}
-                                      <input id={value._id} className="quantity" title="Quantity" value={1} readOnly />
+                                      <input id={value._id} className="quantity" title="Quantity" value={value1.quatity} readOnly />
                                       {/* <a onClick={increaseqty} id={value._id} className="cart_quantity_up" href> + </a> */}
                                     </div>
                                   </td>
