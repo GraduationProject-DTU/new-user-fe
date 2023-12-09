@@ -6,6 +6,7 @@ import { UserContext } from "../../../UserContext";
 import { useLocation, useNavigate } from "react-router-dom";
 function Productcheckout() {
   const [getItem, setItem] = useState("")
+  const {getCart,setCart} = useContext(UserContext)
   const getdataCartItem = JSON.parse(localStorage.getItem("CartItem"))
   let getDataUser = JSON.parse(localStorage.getItem("User"))
   const { gettotalorder, settotalorder } = useContext(UserContext)
@@ -118,6 +119,7 @@ function Productcheckout() {
           toast.success(res.data.mess)
           localStorage.removeItem("CartItem")
           navigate("/")
+          setCart("")
         })
         .catch(err => {
           console.log('err')

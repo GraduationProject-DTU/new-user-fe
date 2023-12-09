@@ -2,6 +2,7 @@ import axios from "axios"
 import { Link } from "react-router-dom"
 import { useContext, useEffect, useState } from "react"
 import { UserContext } from "../../../UserContext"
+import { toast } from "react-toastify"
 function Productcart() {
   const [getItem, setItem] = useState("")
   const getdataCartItem = JSON.parse(localStorage.getItem("CartItem"))
@@ -22,25 +23,36 @@ function Productcart() {
       })
 
   }, [])
-
   const handleChangeInput = (e) => {
     let main = {}
     let nameInput = e.target.id
     let value = +e.target.value
     let test1 = localStorage.getItem("CartItem")
-    if (test1) {
-      main = JSON.parse(test1)
-      console.log(nameInput)
-      for (var key in main) {
-        if (nameInput == key) {
-          localStorage.setItem("CartItem", JSON.stringify(main))
-          setvalueao(main)
+    if (getItem.length>0){
+      return getItem.map((value1, key) => {
+        if (nameInput == value1._id){
+          console.log(value1.quantity)
+          if (value < value1.quantity){
+            if (test1) {
+              main = JSON.parse(test1)
+              console.log(nameInput)
+              for (var key in main) {
+                if (nameInput == key) {
+                  localStorage.setItem("CartItem", JSON.stringify(main))
+                  setvalueao(main)
+                }
+              }
+            }
+            main[nameInput] = value
+            localStorage.setItem("CartItem", JSON.stringify(main))
+            setvalueao(main)
+          }else{
+            value = value1.quantity
+            toast.error("Số lượng sản phẩm quá lớn,giới hạn của sản phẩm này là : " +value1.quantity)
+          }
         }
-      }
+      })
     }
-    main[nameInput] = value
-    localStorage.setItem("CartItem", JSON.stringify(main))
-    setvalueao(main)
   }
   const deleteItem = (e) => {
     e.preventDefault()
@@ -90,7 +102,6 @@ function Productcart() {
       })
     }
   }
-
   const handleCoupon = () => {
     let accessToken = getDataUser.token
     let config = {
@@ -150,7 +161,7 @@ function Productcart() {
                   <td className="product-quantity">
                     <div className="pro-qty">
                       {/* <a onClick={decreaseqty} id={value._id} className="cart_quantity_up" href> - </a> */}
-                      <input id={value._id}  type="number" className="quantity" title="Quantity" onChange={handleChangeInput} defaultValue={getdataCartItem[key1]} />
+                      <input id={value._id}  type="number" className="quantity" title="Quantity" onChange={handleChangeInput} defaultValue={getdataCartItem[key1]} max={value.quantity} />
                       {/* <a onClick={increaseqty} id={value._id} className="cart_quantity_up" href> + </a> */}
                     </div>
                   </td>

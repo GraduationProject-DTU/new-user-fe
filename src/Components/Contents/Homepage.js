@@ -15,7 +15,9 @@ function Homepage() {
   const { getidwishlist, setidwishlist } = useContext(UserContext)
   const [valueao, setvalueao] = useState("valueao")
   let getDataUser = JSON.parse(localStorage.getItem("User"))
+  let [loading, setLoading] = useState(true);
   useEffect(() => {
+    setLoading(true)
     axios.get("http://localhost:8000/products")
       .then(response => {
         setItem(response.data.mess.slice(-3))
