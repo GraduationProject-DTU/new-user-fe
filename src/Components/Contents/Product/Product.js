@@ -14,6 +14,44 @@ function Product() {
   const { getid, setid } = useContext(UserContext)
   const { getidwishlist, setidwishlist } = useContext(UserContext)
   const { getidlarge, setidlarge } = useContext(UserContext)
+  const [search, setSearch] = useState('')
+  const [getImage, setImage] = useState("")
+  const [getFile, setFile] = useState("")
+  function handleFile(e) {
+    const file = e.target.file
+    // setFile(e.target.files)
+    console.log(e.target.files[0])
+    // let reader = new FileReader()
+    // reader.onload = (e) => {
+    //   setImage(e.target.result)
+    // }
+    // console.log(e.target.files)
+    // reader.readAsDataURL(file[0])
+    // console.log(e.target.result)
+    // if(Object.keys(getFile).length>0){
+    //   Object.keys(getFile).map((item,i)=>{
+    //     let checkImg = ["png", "jpg", "jpeg", "PNG", "JPG"]
+    //     let getsize = getFile[item].size
+    //     let getname = getFile[item].name
+    //     let test = getname.split(".")
+    //     let test1 = checkImg.includes(test[1])
+    //     if (getsize > 1024 * 1024) {
+    //         alert("File qua lon")
+    //     } else if (!checkImg.includes(test[1])) {
+    //         alert("Sai dinh dang")
+    //     }
+    // })
+    // }
+    const formData = new FormData()
+    formData.append("image",e.target.files[0])
+    console.log(formData)
+    axios.post("http://localhost:8000/products/find-image",formData)
+        .then(response => {
+            setProducts(response.data.product)
+      }).catch(err => {
+        console.log(err)
+      })
+}
   const handleClicklarge = (id) => {
     setidlarge(id)
   }
@@ -62,7 +100,6 @@ function Product() {
         .then(res => {
           setProducts(res.data.mess)
           settotalpage(res.data.pageTotal)
-          console.log(res.data)
         })
       axios.get('http://localhost:8000/category-products')
         .then(res => {
@@ -236,6 +273,15 @@ function Product() {
         console.log(err)
       })
   }
+  function handleSearch() {
+    axios.post('http://localhost:8000/products/find ', { productName: search })
+      .then(res => {
+        setProducts(res.data.product)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
   return (
     <>
       {/*== Start Page Header Area Wrapper ==*/}
@@ -269,7 +315,6 @@ function Product() {
               <option value={5}>Price, low to high</option>
               <option value={6}>Price, high to low</option>
             </select>
-
             <div className="select-price-range" onChange={e => hanldeChangePrice(e)} >
               <h4 className="title" style={{ marginRight: '16px' }}>Pricing</h4>
               <input style={{ width: '100px' }} min={0} max={800000} step={10000} type="range"
@@ -278,9 +323,14 @@ function Product() {
               <p style={{ marginLeft: '10px' }}>
                 ₫{value} - ₫{Number(value) + 200000}
               </p>
-
             </div>
-
+            <div className="product-search-widget">
+                  <div>
+                      <input type="search" onChange={e => setSearch(e.target.value)}  placeholder="Search Here" />
+                      <input type="file" onChange={handleFile}  placeholder="Search Here" />
+                      <button type="submit" onClick={handleSearch}><i className="fa fa-search" /></button>
+                  </div>
+              </div>
             <div className="select-on-sale d-none d-md-flex">
               <button onClick={handleClear} className="btnClear">Clear Filter <i class="fa fa-filter"></i></button>
               {/* <select style={{ border: 'none' }}>

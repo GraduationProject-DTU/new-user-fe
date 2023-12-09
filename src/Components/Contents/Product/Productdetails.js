@@ -15,8 +15,6 @@ function Productdetails() {
   const { getidwishlist, setidwishlist } = useContext(UserContext)
   const [getquantity, setquantity] = useState(1)
   let getDataUser = JSON.parse(localStorage.getItem("User"))
-
-
   const onChancequantity = (e) => {
     setquantity(e.target.value)
     if (e.target.value <= 1) {
@@ -138,7 +136,6 @@ function Productdetails() {
       {/*== Start Product Details Area Wrapper ==*/}
       <section className="section-space">
         <div className="container">
-
           <div className="row product-details">
             <div className="col-lg-6">
               <div className="product-details-thumb">
@@ -182,9 +179,6 @@ function Productdetails() {
               </div>
             </div>
           </div>
-
-
-
           <div className="row">
             <div className="col-lg-7">
               <div className="nav product-details-nav" id="product-details-nav-tab" role="tablist">
@@ -197,7 +191,6 @@ function Productdetails() {
                 </div>
                 <div className="tab-pane fade show active" id="review" role="tabpanel" aria-labelledby="review-tab">
                   {/*== Start Reviews Content Item ==*/}
-
                   {
                     product?.ratings?.map((e, i) => (
                       <div className="product-review-item">
