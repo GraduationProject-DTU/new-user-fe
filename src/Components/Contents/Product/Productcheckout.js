@@ -6,13 +6,12 @@ import { UserContext } from "../../../UserContext";
 import { useLocation, useNavigate } from "react-router-dom";
 function Productcheckout() {
   const [getItem, setItem] = useState("")
-  const {getCart,setCart} = useContext(UserContext)
+  const { getCart, setCart } = useContext(UserContext)
   const getdataCartItem = JSON.parse(localStorage.getItem("CartItem"))
   let getDataUser = JSON.parse(localStorage.getItem("User"))
   const { gettotalorder, settotalorder } = useContext(UserContext)
   const [getcheckBox, setcheckBox] = useState(false)
   const location = useLocation()
-  console.log(location)
   const navigate = useNavigate()
   const [inputs, setInputs] = useState({
     firstname: "",
@@ -107,11 +106,11 @@ function Productcheckout() {
       }
 
       const body = [];
-
       for (const key in getdataCartItem) {
         body.push({
           pid: key,
-          quatity: getdataCartItem[key]
+          quatity: getdataCartItem[key],
+          address: inputs.street
         });
       }
       axios.post('http://localhost:8000/orders/placeOrders', body, config)
