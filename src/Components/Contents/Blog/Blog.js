@@ -39,6 +39,7 @@ function Blog() {
     if (getItem?.length > 0) {
       return getItem?.map((value, key) => {
         const setimage = value.images["0"]
+        console.log(value)
         return (
           <div className="col-sm-6 col-lg-4 col-xl-6 mb-8">
             <div className="post-item">
@@ -57,6 +58,8 @@ function Blog() {
                     </Link>
                   </li>
                   <li className="post-date">{new Date(value?.updatedAt).toDateString()}</li>
+                  <li><i class="fa fa-thumbs-up" aria-hidden="true">{+value.likes.length}</i></li>
+                  <li><i class="fa fa-thumbs-down" aria-hidden="true">{+value.disLikes.length}</i></li>
                 </ul>
               </div>
             </div>

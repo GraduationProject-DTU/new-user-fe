@@ -17,6 +17,7 @@ function Product() {
   const [search, setSearch] = useState('')
   const [getImage, setImage] = useState("")
   const [getFile, setFile] = useState("")
+  const [getColor,setColor] = useState({})
   function handleFile(e) {
     const file = e.target.file
     // setFile(e.target.files)
@@ -104,12 +105,12 @@ function Product() {
       axios.get('http://localhost:8000/category-products')
         .then(res => {
           setCategory(res.data.category)
+          console.log(res.data.category)
         })
     } catch (error) {
       console.log('err', error)
     }
   }, [getselected])
-
   const hanldeChangeOption = (e) => {
     const value = e.target.value
 
@@ -164,7 +165,6 @@ function Product() {
         break;
     }
   }
-
   const hanldeChangePrice = (e) => {
     const value = e.target.value
     const valueNext = Number(e.target.value) + 200000
@@ -176,12 +176,12 @@ function Product() {
         console.log('err', err)
       })
   }
-
   const handleClickCategory = (e) => {
-    e.preventDefault()
+    console.log(e)
     var categoryTitle = e.currentTarget.querySelector('.title').textContent
     var categories = []
-    switch (categoryTitle) {
+    setColor(e.currentTarget.querySelector('.title').textContent)
+    switch (categoryTitle){
       case 'Hare Care':
         axios.get('http://localhost:8000/products')
           .then(res => {
@@ -327,12 +327,12 @@ function Product() {
             <div className="product-search-widget">
                   <div>
                       <input type="search" onChange={e => setSearch(e.target.value)}  placeholder="Search Here" />
-                      <input type="file" onChange={handleFile}  placeholder="Search Here" />
                       <button type="submit" onClick={handleSearch}><i className="fa fa-search" /></button>
                   </div>
               </div>
             <div className="select-on-sale d-none d-md-flex">
-              <button onClick={handleClear} className="btnClear">Clear Filter <i class="fa fa-filter"></i></button>
+            <input type="file" onChange={handleFile}/>
+              {/* <button onClick={handleClear} className="btnClear">Clear Filter <i class="fa fa-filter"></i></button> */}
               {/* <select style={{ border: 'none' }}>
                 <option selected>Yes</option>
                 <option value={1}>No</option>
@@ -351,7 +351,7 @@ function Product() {
             {
               category?.map((e, i) => (
                 <div className="col-6 col-lg-4 col-lg-2 col-xl-2">
-                  <a onClick={e => handleClickCategory(e)} className="product-category-item">
+                  <a id={""+e.title} onClick={e => handleClickCategory(e)} className="product-category-item" style={{backgroundColor : ""+(getColor == e.title ? "blue" : "")}} >
                     <img className="icon" src={`assets/images/shop/category/${i + 1}.webp`} width={70} height={80} alt="Image-HasTech" />
                     <h3 className="title">{e.title}</h3>
                     {/* <span className="flag-new"></span> */}

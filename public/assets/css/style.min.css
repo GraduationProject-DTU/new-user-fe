@@ -11,3 +11,9 @@
 img{
     object-fit: cover
 }
+ul.icon-blog li{
+    display: inline-block;
+}
+ul.icon-blog li:first-child{
+    margin-right: 30px;
+}
