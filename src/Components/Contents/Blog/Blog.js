@@ -53,7 +53,7 @@ function Blog() {
                 <ul className="meta">
                   <li className="author-info"><span>By:</span>
                     <Link to={`/blog-details/${value?._id}`} id={value._id} >
-                      <a>{value?.author}</a>
+                      <a> {value?.author?.firstname} {value?.author?.lastname}</a>
                     </Link>
                   </li>
                   <li className="post-date">{new Date(value?.updatedAt).toDateString()}</li>

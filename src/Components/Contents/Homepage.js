@@ -42,7 +42,7 @@ function Homepage() {
 
   }, [getvalueaorefresh])
   const handleClick = (id) => {
-    if(getDataUser != null){
+    if (getDataUser != null) {
       let main = {}
       let nameInput = id
       let value = 1
@@ -61,7 +61,7 @@ function Homepage() {
       main[nameInput] = value
       localStorage.setItem("CartItem", JSON.stringify(main))
       setCart(main)
-    }else{
+    } else {
       toast.error("Vui lòng đăng nhập")
     }
   }
@@ -69,7 +69,7 @@ function Homepage() {
     setidlarge(id)
   }
   const handleclickwishlist = (id) => {
-    if (getDataUser != null){
+    if (getDataUser != null) {
       setidwishlist(id)
       let idwishlist = id
       let main = []
@@ -84,7 +84,7 @@ function Homepage() {
       }
       main.push(idwishlist)
       localStorage.setItem("Wishlist", JSON.stringify(main))
-    }else{
+    } else {
       toast.error("Vui lòng đăng nhập")
     }
   }
@@ -319,7 +319,7 @@ function Homepage() {
                         </Link>
                       </h4>
                       <ul className="meta">
-                        <li className="author-info"><span>By:</span> <a href="blog.html">{e?.author}</a></li>
+                        <li className="author-info"><span>By:</span> <a href="blog.html">{e?.author?.firstname} {e?.author?.lastname}</a></li>
                         <li className="post-date">{new Date(e?.createdAt).toDateString()}</li>
                       </ul>
                     </div>

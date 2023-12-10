@@ -58,7 +58,7 @@ function Blogdetails(props) {
             <div className="row">
               <div className="col-md-7">
                 <ul className="blog-detail-meta">
-                  <li className="meta-admin"><img src="assets/images/blog/admin.webp" alt="Image" /> {getdata1.author}</li>
+                  <li className="meta-admin"><img style={{ width: '32px' }} src={getdata1.author?.avatar} alt="Image" />{getdata1.author?.firstname} {getdata1.author?.lastname}</li>
                   <li>{getdata1.updatedAt}</li>
                 </ul>
               </div>
@@ -151,7 +151,7 @@ function Blogdetails(props) {
                       <a className="post-category" >{e?.category?.title}</a>
                       <h4 className="title"><a href={`/blog-details/${e?._id}`}>{e?.title}</a></h4>
                       <ul className="meta">
-                        <li className="author-info"><span>By:</span> <a href="blog.html">{e?.author}</a></li>
+                        <li className="author-info"><span>By:</span> <a href="blog.html">{e?.author?.firstname} {e?.author?.lastname}</a></li>
                         <li className="post-date">{e?.createdAt}</li>
                       </ul>
                     </div>
