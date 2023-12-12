@@ -11,7 +11,7 @@ function Productcart() {
   const [couponValue, setCouponValue] = useState('')
   const [couponPrice, setCouponPrice] = useState()
   const getDataUser = JSON.parse(localStorage.getItem("User"))
-  const { gettotalorder, settotalorder } = useContext(UserContext)
+  const { gettotalorder,settotalorder } = useContext(UserContext)
   var gettong1 = 0
   useEffect(() => {
     axios.get('http://localhost:8000/coupons')
@@ -28,14 +28,12 @@ function Productcart() {
     let nameInput = e.target.id
     let value = +e.target.value
     let test1 = localStorage.getItem("CartItem")
-    if (getItem.length > 0) {
+    if (getItem.length>0){
       return getItem.map((value1, key) => {
-        if (nameInput == value1._id) {
-          console.log(value1.quantity)
-          if (value < value1.quantity) {
+        if (nameInput == value1._id){
+          if (value <= value1.quantity){
             if (test1) {
               main = JSON.parse(test1)
-              console.log(nameInput)
               for (var key in main) {
                 if (nameInput == key) {
                   localStorage.setItem("CartItem", JSON.stringify(main))
@@ -46,9 +44,9 @@ function Productcart() {
             main[nameInput] = value
             localStorage.setItem("CartItem", JSON.stringify(main))
             setvalueao(main)
-          } else {
+          }else{
             value = value1.quantity
-            toast.error("Số lượng sản phẩm quá lớn,giới hạn của sản phẩm này là : " + value1.quantity)
+            toast.error("Số lượng sản phẩm quá lớn,giới hạn của sản phẩm này là : " +value1.quantity)
           }
         }
       })
@@ -124,10 +122,10 @@ function Productcart() {
   }
 
   function fetchData() {
-    if (getItem.length > 0) {
-      return getItem.map((value, key) => {
+    if (getItem?.length > 0) {
+      return getItem?.map((value, key) => {
         if (getdataCartItem != null) {
-          return Object.keys(getdataCartItem)?.map((key1, index) => {
+          return Object.keys(getdataCartItem).map((key1, index) => {
             if (value._id == key1) {
               const gettong = parseInt(getdataCartItem[key1] * value.price)
               {
@@ -161,7 +159,7 @@ function Productcart() {
                   <td className="product-quantity">
                     <div className="pro-qty">
                       {/* <a onClick={decreaseqty} id={value._id} className="cart_quantity_up" href> - </a> */}
-                      <input id={value._id} type="number" className="quantity" title="Quantity" onChange={handleChangeInput} defaultValue={getdataCartItem[key1]} max={value.quantity} />
+                      <input id={value._id}  type="number" className="quantity" title="Quantity" onChange={handleChangeInput} defaultValue={getdataCartItem[key1]} max={value.quantity} />
                       {/* <a onClick={increaseqty} id={value._id} className="cart_quantity_up" href> + </a> */}
                     </div>
                   </td>
@@ -215,7 +213,7 @@ function Productcart() {
               <div className="coupon-wrap">
                 <h4 className="title">Coupon</h4>
                 {
-                  coupon[0]?.name
+                  coupon
                     ? <p className="desc">Nhập mã phiếu <b>"{coupon[0]?.name}"</b> để được giảm giá </p>
                     : <p className="desc">Nhập mã phiếu giảm giá của bạn nếu bạn có.</p>
                 }
@@ -231,10 +229,30 @@ function Productcart() {
                     <tr className="cart-subtotal">
                       <th>Subtotal</th>
                       <td>
-                        <span className="amount">{Intl.NumberFormat().format(gettong1, couponPrice)} VNĐ</span>
+                        <span className="amount">{Intl.NumberFormat().format(gettong1,couponPrice)} VNĐ</span>
                       </td>
                     </tr>
-
+                    {/* <tr className="shipping-totals">
+                      <th>Shipping</th>
+                      <td>
+                        <ul className="shipping-list">
+                          <li className="radio">
+                            <input type="radio" name="shipping" id="radio1" defaultChecked />
+                            <label htmlFor="radio1">Flat rate: <span>$3.00</span></label>
+                          </li>
+                          <li className="radio">
+                            <input type="radio" name="shipping" id="radio2" />
+                            <label htmlFor="radio2">Free shipping</label>
+                          </li>
+                          <li className="radio">
+                            <input type="radio" name="shipping" id="radio3" />
+                            <label htmlFor="radio3">Local pickup</label>
+                          </li>
+                        </ul>
+                        <p className="destination">Shipping to <strong>USA</strong>.</p>
+                        <a href="javascript:void(0)" className="btn-shipping-address">Change address</a>
+                      </td>
+                    </tr> */}
                     <tr className="order-total">
                       <th>Total</th>
                       <td>
@@ -244,7 +262,7 @@ function Productcart() {
                   </tbody>
                 </table>
                 <div className="text-end">
-                  <Link to={"/productcheckout"} state={{ gettong1, couponPrice }}>
+                  <Link to={"/productcheckout"} state={{gettong1,couponPrice}}>
                     <a className="checkout-button">Proceed to checkout</a>
                   </Link>
                 </div>

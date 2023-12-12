@@ -15,8 +15,6 @@ function Orderpage(props){
             axios.get("http://localhost:8000/products")
             .then(response => {
                 setItem(response.data.mess)
-                const result = response.data.mess.filter(e =>e.brand = "Beskin")
-                console.log(result)
             })
             .catch(function (error) {
                 console.log(error)

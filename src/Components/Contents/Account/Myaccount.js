@@ -23,7 +23,8 @@ useEffect(() =>{
     }
     axios.get("http://localhost:8000/orders",config)
     .then(response => {
-      setOrders(response.data.order)
+      const result = response.data.order.filter(e=>(e.orderBy.email.includes(getDataUser.user.email)))
+      setOrders(result)
     })
     .catch(function (error) {
       console.log(error)
