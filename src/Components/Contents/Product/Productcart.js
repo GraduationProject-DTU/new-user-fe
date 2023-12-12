@@ -13,6 +13,7 @@ function Productcart() {
   const getDataUser = JSON.parse(localStorage.getItem("User"))
   const { gettotalorder, settotalorder } = useContext(UserContext)
   var gettong1 = 0
+  const getMang = []
   useEffect(() => {
     axios.get('http://localhost:8000/coupons')
       .then(res => {
@@ -127,6 +128,7 @@ function Productcart() {
         if (getdataCartItem != null) {
           return Object.keys(getdataCartItem).map((key1, index) => {
             if (value._id == key1) {
+              getMang.push(value)
               const gettong = parseInt(getdataCartItem[key1] * value.price)
               {
                 couponPrice
@@ -262,7 +264,7 @@ function Productcart() {
                   </tbody>
                 </table>
                 <div className="text-end">
-                  <Link to={"/productcheckout"} state={{ gettong1, couponPrice }}>
+                  <Link to={"/productcheckout"} state={{ gettong1, couponPrice , getMang }}>
                     <a className="checkout-button">Proceed to checkout</a>
                   </Link>
                 </div>

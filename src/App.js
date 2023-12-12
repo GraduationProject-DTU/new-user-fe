@@ -9,6 +9,7 @@ import { UserContext } from './UserContext';
 import { useState } from 'react';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 function App(props) {
   const [getCart,setCart] = useState("")
   const [getid,setid] = useState("")
@@ -17,8 +18,14 @@ function App(props) {
   const [getvalueaorefresh,setvalueaorefresh] = useState("")
   const [getpageKey,setpageKey] = useState("")
   const [gettotalorder,settotalorder] = useState("")
-  return (
-    <div>
+  const initialOptions = {
+    clientId:"AUiz_-HyipJfmSMuQWlpURDajkySVzuQYjdm_xsEZ8chn0VThOm7HyBILax88CVxn9Ht2pzqRpsRnbOo",
+    currency: "USD",
+    intent: "capture",
+    };
+  return (    
+    <PayPalScriptProvider options={initialOptions}>
+      <div>
       <ToastContainer />
       <UserContext.Provider value={{getCart,setCart
         ,getid,setid,
@@ -35,7 +42,7 @@ function App(props) {
           <Scroll/> 
       </UserContext.Provider>
     </div>
+    </PayPalScriptProvider>
   );
 }
-
 export default App;

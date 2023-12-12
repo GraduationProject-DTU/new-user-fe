@@ -4,14 +4,17 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios"
 import { UserContext } from "../../../UserContext";
 import { useLocation, useNavigate } from "react-router-dom";
+import Paypal from "./Paypal";
 function Productcheckout() {
   const [getItem, setItem] = useState("")
   const { getCart, setCart } = useContext(UserContext)
+  const [getOption,setOption] = useState(1)
   const getdataCartItem = JSON.parse(localStorage.getItem("CartItem"))
   let getDataUser = JSON.parse(localStorage.getItem("User"))
   const { gettotalorder, settotalorder } = useContext(UserContext)
   const [getcheckBox, setcheckBox] = useState(false)
   const location = useLocation()
+  console.log(location.state)
   const navigate = useNavigate()
   const [inputs, setInputs] = useState({
     firstname: "",
@@ -29,7 +32,6 @@ function Productcheckout() {
       lastname: getDataUser?.user?.lastname,
       phone: getDataUser?.user?.phone
     })
-
     axios.get("http://localhost:8000/products")
       .then(response => {
         setItem(response.data.mess)
@@ -59,6 +61,7 @@ function Productcheckout() {
   }
   function handleCheckBox() {
     setcheckBox(!getcheckBox)
+    console.log(getOption)
   }
   function handleSubmit(e) {
     var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
@@ -99,35 +102,40 @@ function Productcheckout() {
     }
     if (flag) {
       // TO DO ORDER 
-      let accessToken = getDataUser.token
-      let config = {
-        headers: {
-          'token': 'bearer ' + accessToken,
+      if (getOption === 1){
+        let accessToken = getDataUser.token
+        let config = {
+          headers: {
+            'token': 'bearer ' + accessToken,
+          }
         }
+        const body = [];
+        for (const key in getdataCartItem) {
+          body.push({
+            pid: key,
+            quatity: getdataCartItem[key],
+            address: inputs.street
+          });
+        }
+        axios.post('http://localhost:8000/orders/placeOrders', body, config)
+          .then(res => {
+            toast.success(res.data.mess)
+            localStorage.removeItem("CartItem")
+            navigate("/")
+            setCart("")
+          })
+          .catch(err => {
+            console.log('err')
+          })
       }
-
-      const body = [];
-      for (const key in getdataCartItem) {
-        body.push({
-          pid: key,
-          quatity: getdataCartItem[key],
-          address: inputs.street,
-          coupon: location.state.couponPrice
-        });
-      }
-      axios.post('http://localhost:8000/orders/placeOrders', body, config)
-        .then(res => {
-          toast.success(res.data.mess)
-          localStorage.removeItem("CartItem")
-          navigate("/")
-          setCart("")
-        })
-        .catch(err => {
-          console.log('err')
-        })
     }
   }
+  const handleChangeOption=(e)=>{
+    setOption(e)
+
+  }
   const handleInput = (e) => {
+
     const nameInput = e.target.name
     const value = e.target.value
     setInputs(state => ({ ...state, [nameInput]: value }))
@@ -261,44 +269,47 @@ function Productcheckout() {
                   </table>
                   <div className="shop-payment-method">
                     <div id="PaymentMethodAccordion">
-                      <div className="card">
+                      <div className="card" onClick={() => handleChangeOption(1)}>
                         <div className="card-header" id="check_payments">
-                          <h5 className="title" data-bs-toggle="collapse" data-bs-target="#itemOne" aria-controls="itemOne" aria-expanded="true">Direct bank transfer</h5>
+                          <h5 className="title" value="1" data-bs-toggle="collapse" data-bs-target="#itemOne" aria-controls="itemOne" aria-expanded="true">Cash on Delivery</h5>
                         </div>
                         <div id="itemOne" className="collapse show" aria-labelledby="check_payments" data-bs-parent="#PaymentMethodAccordion">
-                          {/* <div className="card-body">
-                            <p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.</p>
-                          </div> */}
                         </div>
-                      </div>
-                      {/* <div className="card">
-                          <div className="card-header" id="check_payments2">
-                            <h5 className="title" data-bs-toggle="collapse" data-bs-target="#itemTwo" aria-controls="itemTwo" aria-expanded="false">Check payments</h5>
-                          </div>
-                          <div id="itemTwo" className="collapse" aria-labelledby="check_payments2" data-bs-parent="#PaymentMethodAccordion">
-                            <div className="card-body">
-                              <p>Please send a check to Store Name, Store Street, Store Town, Store State / County, Store Postcode.</p>
-                            </div>
-                          </div>
-                        </div> */}
-                      {/* <div className="card">
-                          <div className="card-header" id="check_payments3">
-                            <h5 className="title" data-bs-toggle="collapse" data-bs-target="#itemThree" aria-controls="itemTwo" aria-expanded="false">Cash on delivery</h5>
-                          </div>
-                          <div id="itemThree" className="collapse" aria-labelledby="check_payments3" data-bs-parent="#PaymentMethodAccordion">
-                            <div className="card-body">
-                              <p>Pay with cash upon delivery.</p>
-                            </div>
-                          </div>
-                        </div> */}
-                      <div className="card">
+                      </div>                      
+                      <div className="card" onClick={() => handleChangeOption(2)}>
                         <div className="card-header" id="check_payments4">
-                          <h5 className="title" data-bs-toggle="collapse" data-bs-target="#itemFour" aria-controls="itemTwo" aria-expanded="false">Cash On Delivery</h5>
+                          <h5 className="title" data-bs-toggle="collapse" data-bs-target="#itemFour" aria-controls="itemTwo" aria-expanded="false">Direct bank transfer</h5>
                         </div>
+                        <Paypal
+                        createOrder={(data,actions)=>{
+                          // const items =location.state.getMang.map((value2)=>({
+                          //   name: value2.title,
+                          //   unit_amount: {
+                          //     currency_code: "USD", // Đổi sang đơn vị tiền tệ mong muốn
+                          //     value: (location.state.gettong1 / 23000).toFixed(2), // Đổi giá về đơn vị tiền tệ mong muốn
+                          //   },
+                          //   quantity: "1"
+                          // }))
+                          return actions.order.create({
+                            purchase_units: [
+                              {
+                                description: "Purchase from your website",
+                                amount: {
+                                  value: (+120000 / +23000).toFixed(2),
+                                },
+                              },
+                            ],
+                          })
+                        }}
+                        onApprove={async (data, actions) => {
+                          // const order = await actions.order.capture();
+                          toast.success("Thanh toán thành công");
+                        }}
+                        onCancel={() => {}}
+                        onError={() => {
+                        }}
+                         />
                         <div id="itemFour" className="collapse" aria-labelledby="check_payments4" data-bs-parent="#PaymentMethodAccordion">
-                          {/* <div className="card-body">
-                            <p>Pay via PayPal; you can pay with your credit card if you don’t have a PayPal account.</p>
-                          </div> */}
                         </div>
                       </div>
                     </div>
