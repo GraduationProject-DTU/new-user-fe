@@ -49,7 +49,7 @@ function Contact(){
               </div>
             </div>
           </div>
-          <div className="contact-left-img" data-bg-img="assets/images/photos/contact.webp" />
+          <div className="contact-left-img" data-bg-img="/assets/images/photos/contact.webp" />
         </section>
         {/*== End Contact Area Wrapper ==*/}
         {/*== Start Contact Area Wrapper ==*/}

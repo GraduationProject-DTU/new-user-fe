@@ -4,6 +4,7 @@ import './product.css'
 import { Link } from "react-router-dom"
 import ReactPaginate from 'react-paginate';
 import { UserContext } from "../../../UserContext"
+import { toast } from "react-toastify"
 function Product() {
   const [getselected, setselected] = useState(1)
   const [gettotalpage, settotalpage] = useState(1)
@@ -277,7 +278,11 @@ function Product() {
   function handleSearch() {
     axios.post('http://localhost:8000/products/find ', { productName: search })
       .then(res => {
-        setProducts(res.data.product)
+        if(res.data.product!=null){
+          setProducts(res.data.product)
+        }else{
+          toast.error("Sản phẩm không tồn tại")
+        }
       })
       .catch(err => {
         console.log(err)
@@ -325,10 +330,10 @@ function Product() {
                 ₫{value} - ₫{Number(value) + 200000}
               </p>
             </div> */}
-            <div className="product-search-widget">
-                  <div>
+            <div className="product-middle-widget">
+                  <div className="product-search-widget">
                       <input type="search" onChange={e => setSearch(e.target.value)}  placeholder="Search Here" />
-                      <button type="submit" onClick={handleSearch}><i className="fa fa-search" /></button>
+                      <button className="submit-search" type="submit" onClick={handleSearch}><i className="fa fa-search" /></button>
                   </div>
               </div>
             <div className="select-on-sale d-none d-md-flex">

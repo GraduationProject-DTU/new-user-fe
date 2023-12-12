@@ -17,3 +17,24 @@ ul.icon-blog li{
 ul.icon-blog li:first-child{
     margin-right: 30px;
 }
+.product-middle-widget .product-search-widget{
+    display: inline-block;
+}
+.product-middle-widget .product-search-widget [type=search] {
+    background-color: #fff;
+    border: 1px solid #cfcfcf;
+    border-radius: 15px;
+    box-shadow: none;
+    color: #747474;
+    font-size: 14px;
+    font-weight: 400;
+    height: 30px;
+    padding: 10px 64px 10px 18px;
+    width: 80%;
+}
+.product-middle-widget .product-search-widget .submit-search {
+    border: none;
+    background: none;
+    box-shadow: none;
+    margin-left: 5px;
+}
