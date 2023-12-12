@@ -32,7 +32,6 @@ function Blog() {
     setselected(+event.selected + 1)
   }
   const handlesetKey = (e) => {
-    console.log(e.target.id)
     setpageKey(e.target.id)
   }
   function fetchData() {
@@ -89,7 +88,6 @@ function Blog() {
       })
     }
   }
-
   function handleSearch() {
     axios.post('http://localhost:8000/blogs/find ', { blogName: search })
       .then(res => {
@@ -112,6 +110,7 @@ function Blog() {
                 ? categories.push(value)
                 : '')
             setItem(categories)
+            settotalpage(Math.ceil(categories.length/5))
           })
           .catch(err => {
             console.log('err', err)
@@ -125,6 +124,7 @@ function Blog() {
                 ? categories.push(value)
                 : '')
             setItem(categories)
+            settotalpage(Math.ceil(categories.length/5))
           })
           .catch(err => {
             console.log('err', err)
@@ -138,6 +138,7 @@ function Blog() {
                 ? categories.push(value)
                 : '')
             setItem(categories)
+            settotalpage(Math.ceil(categories.length/5))
           })
           .catch(err => {
             console.log('err', err)
@@ -151,6 +152,7 @@ function Blog() {
                 ? categories.push(value)
                 : '')
             setItem(categories)
+            settotalpage(Math.ceil(categories.length/5))
           })
           .catch(err => {
             console.log('err', err)
@@ -165,6 +167,7 @@ function Blog() {
                 ? categories.push(value)
                 : '')
             setItem(categories)
+            settotalpage(Math.ceil(categories.length/5))
           })
           .catch(err => {
             console.log('err', err)

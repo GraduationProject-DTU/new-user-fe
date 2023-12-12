@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 
 
 function Category({ handleCategory }) {
-    const [getItem, setItem] = useState("")
+    const [getItem, setItem] = useState([])
     useEffect(() => {
         axios.get("http://localhost:8000/category-blogs")
             .then(response => {
@@ -18,7 +18,9 @@ function Category({ handleCategory }) {
         if (getItem.length > 0) {
             return getItem.map((value, key) => {
                 return (
-                    <li><a onClick={e => handleCategory(e)}>{value.title}</a></li>
+                <li>
+                    <a onClick={e => handleCategory(e)}>{value.title}</a>
+                </li>
                 )
             })
         }
@@ -28,7 +30,13 @@ function Category({ handleCategory }) {
         <div className="blog-widget">
             <h4 className="blog-widget-title">Popular Categoris</h4>
             <ul className="blog-widget-category">
-                {fetchData()}
+                {getItem?.map((e,i)=>(
+                    <Link to={"/blog/filter/"+e.title} state={{data:e.title}}>
+                        <li>
+                            <a>{e.title}</a>
+                        </li>
+                    </Link>
+                ))}
             </ul>
         </div>
     )

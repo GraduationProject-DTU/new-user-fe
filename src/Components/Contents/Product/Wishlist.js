@@ -1,7 +1,7 @@
 function Wishlist(){
     return(
         <>
-            {/*== Start Wishlist Area Wrapper ==*/}
+      {/*== Start Wishlist Area Wrapper ==*/}
       <section className="section-space">
         <div className="container">
           <div className="shopping-wishlist-form table-responsive">

@@ -15,9 +15,6 @@ function Product() {
   const { getidwishlist, setidwishlist } = useContext(UserContext)
   const { getidlarge, setidlarge } = useContext(UserContext)
   const [search, setSearch] = useState('')
-  const [getImage, setImage] = useState("")
-  const [getFile, setFile] = useState("")
-  const [getColor,setColor] = useState({})
   function handleFile(e) {
     const file = e.target.file
     // setFile(e.target.files)
@@ -113,7 +110,6 @@ function Product() {
   }, [getselected])
   const hanldeChangeOption = (e) => {
     const value = e.target.value
-
     switch (value) {
       case '2':
         axios.get('http://localhost:8000/products')
@@ -176,103 +172,108 @@ function Product() {
         console.log('err', err)
       })
   }
-  const handleClickCategory = (e) => {
-    console.log(e)
-    var categoryTitle = e.currentTarget.querySelector('.title').textContent
-    var categories = []
-    setColor(e.currentTarget.querySelector('.title').textContent)
-    switch (categoryTitle){
-      case 'Hare Care':
-        axios.get('http://localhost:8000/products')
-          .then(res => {
-            console.log(res)
-            res.data.mess?.forEach((value) =>
-              value?.category?.title === 'Hare Care'
-                ? categories.push(value)
-                : '')
-            setProducts(categories)
-          })
-          .catch(err => {
-            console.log('err', err)
-          })
-        break
-      case 'Skin Care':
-        axios.get('http://localhost:8000/products')
-          .then(res => {
-            res.data.mess?.forEach((value) =>
-              value?.category?.title === 'Skin Care'
-                ? categories.push(value)
-                : '')
-            setProducts(categories)
-          })
-          .catch(err => {
-            console.log('err', err)
-          })
-        break
-      case 'Lip Stick':
-        axios.get('http://localhost:8000/products')
-          .then(res => {
-            res.data.mess?.forEach((value) =>
-              value?.category?.title === 'Lip Stick'
-                ? categories.push(value)
-                : '')
-            setProducts(categories)
-          })
-          .catch(err => {
-            console.log('err', err)
-          })
-        break
-      case 'Face Skin':
-        axios.get('http://localhost:8000/products')
-          .then(res => {
-            res.data.mess?.forEach((value) =>
-              value?.category?.title === 'Face Skin'
-                ? categories.push(value)
-                : '')
-            setProducts(categories)
-          })
-          .catch(err => {
-            console.log('err', err)
-          })
-        break
-      case 'Blusher':
-        axios.get('http://localhost:8000/products')
-          .then(res => {
-            res.data.mess?.forEach((value) =>
-              value?.category?.title === 'Blusher'
-                ? categories.push(value)
-                : '')
-            setProducts(categories)
-          })
-          .catch(err => {
-            console.log('err', err)
-          })
-        break
-      default:
-        axios.get('http://localhost:8000/products')
-          .then(res => {
-            res.data.mess?.forEach((value) =>
-              value?.category?.title === 'Natural'
-                ? categories.push(value)
-                : '')
-            setProducts(categories)
-          })
-          .catch(err => {
-            console.log('err', err)
-          })
-        break;
-    }
-
-  }
-  const handleClear = () => {
-    axios.get('http://localhost:8000/products')
-      .then(res => {
-        setProducts(res.data.mess)
-      })
-      .catch(err => {
-        console.log(err)
-      })
-  }
+  // const handleClickCategory = (e) => {
+  //   console.log(e)
+  //   var categoryTitle = e.currentTarget.querySelector('.title').textContent
+  //   var categories = []
+  //   setColor(e.currentTarget.querySelector('.title').textContent)
+  //   switch (categoryTitle){
+  //     case 'Hare Care':
+  //       axios.get('http://localhost:8000/products')
+  //         .then(res => {
+  //           console.log(res)
+  //           res.data.mess?.forEach((value) =>
+  //             value?.category?.title === 'Hare Care'
+  //               ? categories.push(value)
+  //               : '')
+  //           setProducts(categories)
+  //           settotalpage(Math.ceil(categories.length/5))
+  //         })
+  //         .catch(err => {
+  //           console.log('err', err)
+  //         })
+  //       break
+  //     case 'Skin Care':
+  //       axios.get('http://localhost:8000/products')
+  //         .then(res => {
+  //           res.data.mess?.forEach((value) =>
+  //             value?.category?.title === 'Skin Care'
+  //               ? categories.push(value)
+  //               : '')
+  //           setProducts(categories)
+  //           settotalpage(Math.ceil(categories.length/5))
+  //         })
+  //         .catch(err => {
+  //           console.log('err', err)
+  //         })
+  //       break
+  //     case 'Lip Stick':
+  //       axios.get('http://localhost:8000/products')
+  //         .then(res => {
+  //           res.data.mess?.forEach((value) =>
+  //             value?.category?.title === 'Lip Stick'
+  //               ? categories.push(value)
+  //               : '')
+  //           setProducts(categories)
+  //           settotalpage(Math.ceil(categories.length/5))
+  //         })
+  //         .catch(err => {
+  //           console.log('err', err)
+  //         })
+  //       break
+  //     case 'Face Skin':
+  //       axios.get('http://localhost:8000/products')
+  //         .then(res => {
+  //           res.data.mess?.forEach((value) =>
+  //             value?.category?.title === 'Face Skin'
+  //               ? categories.push(value)
+  //               : '')
+  //           setProducts(categories)
+  //           settotalpage(Math.ceil(categories.length/5))
+  //         })
+  //         .catch(err => {
+  //           console.log('err', err)
+  //         })
+  //       break
+  //     case 'Blusher':
+  //       axios.get('http://localhost:8000/products')
+  //         .then(res => {
+  //           res.data.mess?.forEach((value) =>
+  //             value?.category?.title === 'Blusher'
+  //               ? categories.push(value)
+  //               : '')
+  //           setProducts(categories)
+  //           settotalpage(Math.ceil(categories.length/5))
+  //         })
+  //         .catch(err => {
+  //           console.log('err', err)
+  //         })
+  //       break
+  //     default:
+  //       axios.get('http://localhost:8000/products')
+  //         .then(res => {
+  //           res.data.mess?.forEach((value) =>
+  //             value?.category?.title === 'Natural'
+  //               ? categories.push(value)
+  //               : '')
+  //           setProducts(categories)
+  //           settotalpage(Math.ceil(categories.length/5))
+  //         })
+  //         .catch(err => {
+  //           console.log('err', err)
+  //         })
+  //       break;
+  //   }
+  // }
+  // const handleClear = () => {
+  //   axios.get('http://localhost:8000/products')
+  //     .then(res => {
+  //       setProducts(res.data.mess)
+  //     })
+  //     .catch(err => {
+  //       console.log(err)
+  //     })
+  // }
   function handleSearch() {
     axios.post('http://localhost:8000/products/find ', { productName: search })
       .then(res => {
@@ -351,11 +352,13 @@ function Product() {
             {
               category?.map((e, i) => (
                 <div className="col-6 col-lg-4 col-lg-2 col-xl-2">
-                  <a id={""+e.title} onClick={e => handleClickCategory(e)} className="product-category-item" style={{backgroundColor : ""+(getColor == e.title ? "blue" : "")}} >
-                    <img className="icon" src={`assets/images/shop/category/${i + 1}.webp`} width={70} height={80} alt="Image-HasTech" />
-                    <h3 className="title">{e.title}</h3>
-                    {/* <span className="flag-new"></span> */}
-                  </a>
+                  <Link to={"/product/filter/"+e.title} state={{data:e.title}}>
+                    <a id={""+e.title} className="product-category-item">
+                      <img className="icon" src={`/assets/images/shop/category/${i + 1}.webp`} width={70} height={80} alt="Image-HasTech" />
+                      <h3 className="title">{e.title}</h3>
+                      {/* <span className="flag-new"></span> */}
+                    </a>
+                  </Link>
                 </div>
               ))
             }

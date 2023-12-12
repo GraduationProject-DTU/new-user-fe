@@ -27,6 +27,8 @@ import PageNotFound from './Components/Contents/PageNotFound';
 import ResetPassword from './Components/Contents/Account/ResetPassword';
 import ForgotPassword from './Components/Contents/Account/ForgotPassword';
 import Orderpage from './Components/Contents/Account/Order';
+import ProductFilter from './Components/Contents/Product/ProductFilter';
+import BlogFilter from './Components/Contents/Blog/BlogFilter';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
@@ -36,6 +38,7 @@ root.render(
           <Route index path="/" element={<Homepage />} />
           <Route path="/about" element={<About />} />
           <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/filter/:id" element={<BlogFilter />} />
           <Route path="/blog-details/:id" element={<Blogdetails />} />
           <Route path="/order/:id" element={<Orderpage />} />
           <Route path="/account" element={<Account />} />
@@ -45,6 +48,7 @@ root.render(
           <Route path="/faq" element={<Faq />} />
           <Route path="/myaccount" element={<Myaccount />} />
           <Route path="/product" element={<Product />} />
+          <Route path="/product/filter/:id" element={<ProductFilter />} />
           <Route path="/productcart" element={<Productcart />} />
           <Route path="/productcheckout" element={<Productcheckout />} />
           <Route path="/product-details/:id" element={<Productdetails />} />

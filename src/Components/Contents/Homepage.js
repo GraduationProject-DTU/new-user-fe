@@ -13,6 +13,7 @@ function Homepage() {
   const { getidlarge, setidlarge } = useContext(UserContext)
   const { getdataCart1, setdataCart1 } = useContext(UserContext)
   const { getidwishlist, setidwishlist } = useContext(UserContext)
+  const [category, setCategory] = useState([])
   const [valueao, setvalueao] = useState("valueao")
   let getDataUser = JSON.parse(localStorage.getItem("User"))
   let [loading, setLoading] = useState(true);
@@ -39,7 +40,11 @@ function Homepage() {
       .catch(function (error) {
         console.log(error)
       })
-
+      axios.get('http://localhost:8000/category-products')
+      .then(res => {
+        setCategory(res.data.category)
+        console.log(res.data.category)
+      })
   }, [getvalueaorefresh])
   const handleClick = (id) => {
     if (getDataUser != null) {
@@ -155,7 +160,6 @@ function Homepage() {
     <>
       {/*== Start Hero Area Wrapper ==*/}
       <section className="hero-slider-area position-relative">
-
         <div className="swiper hero-slider-container">
           <div className="swiper-wrapper">
             <div className="swiper-slide hero-slide-item">
@@ -211,7 +215,27 @@ function Homepage() {
         </div>
       </section>
       {/*== End Hero Area Wrapper ==*/}
-
+      <section className="section-space pb-0">
+        <div className="container">
+          <div className="row g-3 g-sm-6">
+            {/*== Start Product Category Item ==*/}
+            {
+              category?.map((e, i) => (
+                <div className="col-6 col-lg-4 col-lg-2 col-xl-2">
+                  <Link to={"/product/filter/"+e.title} state={{data:e.title}}>
+                    <a id={""+e.title} className="product-category-item" >
+                      <img className="icon" src={`assets/images/shop/category/${i + 1}.webp`} width={70} height={80} alt="Image-HasTech" />
+                      <h3 className="title">{e.title}</h3>
+                      {/* <span className="flag-new"></span> */}
+                    </a>
+                  </Link>
+                </div>
+              ))
+            }
+            {/*== End Product Category Item ==*/}
+          </div>
+        </div>
+      </section >
       {/*== Start Product Area Wrapper ==*/}
       <section className="section-space">
         <div className="container">

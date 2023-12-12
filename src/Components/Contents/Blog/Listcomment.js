@@ -13,7 +13,7 @@ function Listcomment(props) {
                         <img className="media_man" src={value?.userId?.avatar} alt="" />
                         <div className="media-body">
                             <div className="custom_flex">
-                                <h5 className="custom_para">{value.userId.firstname} {value.userId.lastname} <span>{value.date}</span></h5>
+                                <h5 className="custom_para">{value?.userId?.firstname} {value?.userId?.lastname} <span>{value.date}</span></h5>
                                 {/* <a className="reply_text" href="#"><i className="fa fa-reply" /></a> */}
                             </div>
                             <p className="blog_details_para">{value.content}</p>

@@ -264,9 +264,9 @@ function Productcheckout() {
                           <h5 className="title" data-bs-toggle="collapse" data-bs-target="#itemOne" aria-controls="itemOne" aria-expanded="true">Direct bank transfer</h5>
                         </div>
                         <div id="itemOne" className="collapse show" aria-labelledby="check_payments" data-bs-parent="#PaymentMethodAccordion">
-                          <div className="card-body">
+                          {/* <div className="card-body">
                             <p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.</p>
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                       {/* <div className="card">
@@ -291,12 +291,12 @@ function Productcheckout() {
                         </div> */}
                       <div className="card">
                         <div className="card-header" id="check_payments4">
-                          <h5 className="title" data-bs-toggle="collapse" data-bs-target="#itemFour" aria-controls="itemTwo" aria-expanded="false">COD</h5>
+                          <h5 className="title" data-bs-toggle="collapse" data-bs-target="#itemFour" aria-controls="itemTwo" aria-expanded="false">Cash On Delivery</h5>
                         </div>
                         <div id="itemFour" className="collapse" aria-labelledby="check_payments4" data-bs-parent="#PaymentMethodAccordion">
-                          <div className="card-body">
+                          {/* <div className="card-body">
                             <p>Pay via PayPal; you can pay with your credit card if you don’t have a PayPal account.</p>
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                     </div>

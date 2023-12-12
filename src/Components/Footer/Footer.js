@@ -9,7 +9,7 @@ function Footer(){
               <div className="widget-item">
                 <div className="widget-about">
                   <a className="widget-logo" href="index.html">
-                    <img src="assets/images/logo.webp" width={95} height={68} alt="Logo" />
+                    <img src="/assets/images/logo.webp" width={95} height={68} alt="Logo" />
                   </a>
                   <p className="desc">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been.</p>
                 </div>
