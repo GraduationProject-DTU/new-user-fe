@@ -3,9 +3,14 @@ import { Link } from "react-router-dom"
 import { useContext, useEffect, useState } from "react"
 import { UserContext } from "../../UserContext"
 import { toast } from "react-toastify"
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import React from 'react';
 function Homepage() {
   const { getvalueaorefresh, setvalueaorefresh } = useContext(UserContext)
   const [getItem, setItem] = useState("")
+  const [getAllItem,setAllItem] = useState([])
   const [sold, setSold] = useState([])
   const [blog, setBlog] = useState([])
   const { getCart, setCart } = useContext(UserContext)
@@ -17,11 +22,28 @@ function Homepage() {
   const [valueao, setvalueao] = useState("valueao")
   let getDataUser = JSON.parse(localStorage.getItem("User"))
   let [loading, setLoading] = useState(true);
+  var settings = {
+    dots: true,
+    autoplay: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1
+  };
+  var settings1 = {
+    dots: true,
+    autoplay: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1
+  };
   useEffect(() => {
     setLoading(true)
     axios.get("http://localhost:8000/products")
       .then(response => {
         setItem(response.data.mess.slice(-3))
+        setAllItem(response.data.mess)
       })
       .catch(function (error) {
         console.log(error)
@@ -159,62 +181,92 @@ function Homepage() {
   return (
     <>
       {/*== Start Hero Area Wrapper ==*/}
-      <section className="hero-slider-area position-relative">
-        <div className="swiper hero-slider-container">
-          <div className="swiper-wrapper">
-            <div className="swiper-slide hero-slide-item">
-              <div className="container">
-                <div className="row align-items-center position-relative">
-                  <div className="col-12 col-md-6">
-                    <div className="hero-slide-content">
-                      <div className="hero-slide-text-img"><img src="assets/images/slider/text-theme.webp" width={427} height={232} alt="Image" /></div>
-                      <h2 className="hero-slide-title">CLEAN FRESH</h2>
-                      <p className="hero-slide-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus venenatis.</p>
-                      <a className="btn btn-border-dark" href={"product-details/" + sold[0]?._id}>BUY NOW</a>
-                    </div>
-                  </div>
-                  <div className="col-12 col-md-6">
-                    <div className="hero-slide-thumb">
-                      <img src={sold[0]?.image} width={841} height={832} alt="Image" />
-                    </div>
-                  </div>
-                </div>
+      <div className="banner">
+        <Slider {...settings1}>
+          <div className="card">
+          <img className="d-block w-100" src="/assets/images/slider/slider1.jpg" style={{width:"1268px",height:"507px"}} alt="First slide"/>
+          </div>
+          <div className="card">
+          <img className="d-block w-100" src="/assets/images/slider/slider2.jpg" style={{width:"1268px",height:"507px"}} alt="Second slide"/>
+          </div>
+          <div className="card">
+          <img className="d-block w-100" src="/assets/images/slider/slider3.jpg" style={{width:"1268px",height:"507px"}} alt="Second slide"/>
+          </div>
+        </Slider>
+      </div>
+      {/*== End Hero Area Wrapper ==*/}
+      <section className="section-space">
+        <div className="container">
+          <div className="row">
+            <div className="col-12">
+              <div className="section-title text-center">
+                <h2 className="title">All Products</h2>
+                {/* <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus venenatis</p> */}
               </div>
-              <div className="hero-slide-text-shape"><img src="assets/images/slider/text1.webp" width={70} height={955} alt="Image" /></div>
-              <div className="hero-slide-social-shape" />
-            </div>
-            <div className="swiper-slide hero-slide-item">
-              <div className="container">
-                <div className="row align-items-center position-relative">
-                  <div className="col-12 col-md-6">
-                    <div className="hero-slide-content">
-                      <div className="hero-slide-text-img"><img src="assets/images/slider/text-theme.webp" width={427} height={232} alt="Image" /></div>
-                      <h2 className="hero-slide-title">Facial Cream</h2>
-                      <p className="hero-slide-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus venenatis.</p>
-                      <a className="btn btn-border-dark" href={"product-details/" + sold[1]?._id}>BUY NOW</a>
-                    </div>
-                  </div>
-                  <div className="col-12 col-md-6">
-                    <div className="hero-slide-thumb">
-                      <img src={sold[1]?.image} width={841} height={832} alt="Image" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="hero-slide-text-shape"><img src="assets/images/slider/text1.webp" width={70} height={955} alt="Image" /></div>
-              <div className="hero-slide-social-shape" />
             </div>
           </div>
-          {/*== Add Pagination ==*/}
-          <div className="hero-slider-pagination" />
-        </div>
-        <div className="hero-slide-social-media">
-          <a href="https://www.pinterest.com/" target="_blank" rel="noopener"><i className="fa fa-pinterest-p" /></a>
-          <a href="https://twitter.com/" target="_blank" rel="noopener"><i className="fa fa-twitter" /></a>
-          <a href="https://www.facebook.com/" target="_blank" rel="noopener"><i className="fa fa-facebook" /></a>
+          <div className="row mb-n4 mb-sm-n10 g-3 g-sm-6">  
+          <Slider {...settings}>          
+          {getAllItem?.map((value,key)=>(
+            <div className="col-6 col-lg-4 mb-4 mb-sm-9" key={key}>
+            <div className="product-item">
+              <div className="product-thumb">
+                <Link to={`/product-details/${value._id}`}>
+                  <img src={"" + value.image} style={{ width: "370px", height: "450px" }} width={370} height={450} alt="Image-HasTech" />
+                </Link>
+
+                <span className="flag-new">new</span>
+                <div className="product-action">
+                  <button id={value._id} onClick={() => handleClicklarge(value._id)} type="button" className="product-action-btn action-btn-quick-view" data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
+                    <i className="fa fa-expand" />
+                  </button>
+                  <button id={value._id} onClick={() => handleClick(value._id)} type="button" className="product-action-btn action-btn-cart" data-bs-toggle={getDataUser ? "modal" : ""} data-bs-target="#action-CartAddModal">
+                    <span>Add to cart</span>
+                  </button>
+                  <button id={value._id} onClick={() => handleclickwishlist(value._id)} type="button" className="product-action-btn action-btn-wishlist" data-bs-toggle={getDataUser ? "modal" : ""} data-bs-target="#action-WishlistModal">
+                    <i className="fa fa-heart-o" />
+                  </button>
+                </div>
+              </div>
+              <div className="product-info">
+                <div className="product-rating">
+                  <div className="rating">
+                    {Array.from({ length: value.totalRatings }, (_, index) => (
+                      <i key={index} className="fa fa-star-o" />
+                    ))}
+                  </div>
+
+                  <div className="reviews">{value.brand}</div>
+                </div>
+                <h4 className="title">
+                  <Link to={`/product-details/${value._id}`}>{value.title}</Link>
+                </h4>
+                <div className="product-rating">
+                  <div className="reviews">Đã bán {value.sold}</div>
+                </div>
+                <div className="prices">
+                  <span style={{ color: 'rgb(239,84,53)' }} className="price">₫{Intl.NumberFormat().format(value.price)}</span>
+                </div>
+              </div>
+              <div className="product-action-bottom">
+                <button type="button" className="product-action-btn action-btn-quick-view" data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
+                  <i className="fa fa-expand" />
+                </button>
+                <button type="button" className="product-action-btn action-btn-wishlist" data-bs-toggle="modal" data-bs-target="#action-WishlistModal">
+                  <i className="fa fa-heart-o" />
+                </button>
+                <button type="button" className="product-action-btn action-btn-cart" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">
+                  <span>Add to cart</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          ))}
+          </Slider>
+          </div>
+          {/* </Slider> */}
         </div>
       </section>
-      {/*== End Hero Area Wrapper ==*/}
       <section className="section-space pb-0">
         <div className="container">
           <div className="row g-3 g-sm-6">
@@ -243,7 +295,7 @@ function Homepage() {
             <div className="col-12">
               <div className="section-title text-center">
                 <h2 className="title">Top Products</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus venenatis</p>
+                {/* <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus venenatis</p> */}
               </div>
             </div>
           </div>
@@ -261,7 +313,7 @@ function Homepage() {
             <div className="col-12">
               <div className="section-title text-center">
                 <h2 className="title">Top Sold</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus venenatis</p>
+                {/* <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus venenatis</p> */}
               </div>
             </div>
           </div>

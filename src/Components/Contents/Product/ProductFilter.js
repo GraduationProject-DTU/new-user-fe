@@ -283,7 +283,7 @@ function ProductFilter(){
               )
             })
           }
-          if(getOption == "5"){
+          if(getOption == "6"){
             return products.sort((a,b)=>b.price -a.price).map((e,i)=>{
               return(
                 <div key={i} className="col-6 col-lg-4 mb-4 mb-sm-8">
@@ -349,7 +349,7 @@ function ProductFilter(){
               )
             })
           }
-          if(getOption == "6"){
+          if(getOption == "5"){
             return products.sort((a,b)=>a.price - b.price).map((e,i)=>{
               return(
                 <div key={i} className="col-6 col-lg-4 mb-4 mb-sm-8">

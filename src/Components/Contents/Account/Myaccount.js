@@ -86,7 +86,7 @@ useEffect(() =>{
     function fetchDataOrder(){
       if(getOrders.length>0){
         return getOrders.map((value,key)=>{
-          if(value.orderBy.email == getDataUser.user.email){
+          if(value?.orderBy?.email == getDataUser.user.email){
             const i = 0
             return(
             <tr key={key}>

@@ -316,7 +316,7 @@ function Product() {
               <option value={5}>Price, low to high</option>
               <option value={6}>Price, high to low</option>
             </select>
-            <div className="select-price-range" onChange={e => hanldeChangePrice(e)} >
+            {/* <div className="select-price-range" onChange={e => hanldeChangePrice(e)} >
               <h4 className="title" style={{ marginRight: '16px' }}>Pricing</h4>
               <input style={{ width: '100px' }} min={0} max={800000} step={10000} type="range"
                 class="form-range" id="customRange1" onChange={(e) => setValue(e.currentTarget.value)}>
@@ -324,7 +324,7 @@ function Product() {
               <p style={{ marginLeft: '10px' }}>
                 ₫{value} - ₫{Number(value) + 200000}
               </p>
-            </div>
+            </div> */}
             <div className="product-search-widget">
                   <div>
                       <input type="search" onChange={e => setSearch(e.target.value)}  placeholder="Search Here" />
