@@ -29,6 +29,7 @@ function Productcheckout() {
       lastname: getDataUser?.user?.lastname,
       phone: getDataUser?.user?.phone
     })
+
     axios.get("http://localhost:8000/products")
       .then(response => {
         setItem(response.data.mess)
@@ -110,7 +111,8 @@ function Productcheckout() {
         body.push({
           pid: key,
           quatity: getdataCartItem[key],
-          address: inputs.street
+          address: inputs.street,
+          coupon: location.state.couponPrice
         });
       }
       axios.post('http://localhost:8000/orders/placeOrders', body, config)
