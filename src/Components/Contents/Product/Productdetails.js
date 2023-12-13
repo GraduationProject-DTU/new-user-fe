@@ -46,6 +46,7 @@ function Productdetails() {
   }
   useEffect(() => {
     try {
+      window.scrollTo(0, 0)
       axios.get('http://localhost:8000/products/' + params.id)
         .then(res => {
           setProduct(res.data.product)

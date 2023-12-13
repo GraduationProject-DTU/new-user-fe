@@ -42,15 +42,15 @@ function Product() {
     // })
     // }
     const formData = new FormData()
-    formData.append("image",e.target.files[0])
+    formData.append("image", e.target.files[0])
     console.log(formData)
-    axios.post("http://localhost:8000/products/find-image",formData)
-        .then(response => {
-            setProducts(response.data.product)
+    axios.post("http://localhost:8000/products/find-image", formData)
+      .then(response => {
+        setProducts(response.data.product)
       }).catch(err => {
         console.log(err)
       })
-}
+  }
   const handleClicklarge = (id) => {
     setidlarge(id)
   }
@@ -95,6 +95,7 @@ function Product() {
   }
   useEffect(() => {
     try {
+      window.scrollTo(0, 0)
       axios.get(`http://localhost:8000/products?page=${getselected}`)
         .then(res => {
           setProducts(res.data.mess)
@@ -278,9 +279,9 @@ function Product() {
   function handleSearch() {
     axios.post('http://localhost:8000/products/find ', { productName: search })
       .then(res => {
-        if(res.data.product!=null){
+        if (res.data.product != null) {
           setProducts(res.data.product)
-        }else{
+        } else {
           toast.error("Sản phẩm không tồn tại")
         }
       })
@@ -331,13 +332,13 @@ function Product() {
               </p>
             </div> */}
             <div className="product-middle-widget">
-                  <div className="product-search-widget">
-                      <input type="search" onChange={e => setSearch(e.target.value)}  placeholder="Search Here" />
-                      <button className="submit-search" type="submit" onClick={handleSearch}><i className="fa fa-search" /></button>
-                  </div>
+              <div className="product-search-widget">
+                <input type="search" onChange={e => setSearch(e.target.value)} placeholder="Search Here" />
+                <button className="submit-search" type="submit" onClick={handleSearch}><i className="fa fa-search" /></button>
               </div>
+            </div>
             <div className="select-on-sale d-none d-md-flex">
-            <input type="file" onChange={handleFile}/>
+              <input type="file" onChange={handleFile} />
               {/* <button onClick={handleClear} className="btnClear">Clear Filter <i class="fa fa-filter"></i></button> */}
               {/* <select style={{ border: 'none' }}>
                 <option selected>Yes</option>
@@ -357,8 +358,8 @@ function Product() {
             {
               category?.map((e, i) => (
                 <div className="col-6 col-lg-4 col-lg-2 col-xl-2">
-                  <Link to={"/product/filter/"+e.title} state={{data:e.title}}>
-                    <a id={""+e.title} className="product-category-item">
+                  <Link to={"/product/filter/" + e.title} state={{ data: e.title }}>
+                    <a id={"" + e.title} className="product-category-item">
                       <img className="icon" src={`/assets/images/shop/category/${i + 1}.webp`} width={70} height={80} alt="Image-HasTech" />
                       <h3 className="title">{e.title}</h3>
                       {/* <span className="flag-new"></span> */}

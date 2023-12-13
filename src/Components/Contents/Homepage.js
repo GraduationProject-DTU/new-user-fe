@@ -10,7 +10,7 @@ import React from 'react';
 function Homepage() {
   const { getvalueaorefresh, setvalueaorefresh } = useContext(UserContext)
   const [getItem, setItem] = useState("")
-  const [getAllItem,setAllItem] = useState([])
+  const [getAllItem, setAllItem] = useState([])
   const [sold, setSold] = useState([])
   const [blog, setBlog] = useState([])
   const { getCart, setCart } = useContext(UserContext)
@@ -39,6 +39,7 @@ function Homepage() {
     slidesToScroll: 1
   };
   useEffect(() => {
+    window.scrollTo(0, 0)
     setLoading(true)
     axios.get("http://localhost:8000/products")
       .then(response => {
@@ -62,7 +63,7 @@ function Homepage() {
       .catch(function (error) {
         console.log(error)
       })
-      axios.get('http://localhost:8000/category-products')
+    axios.get('http://localhost:8000/category-products')
       .then(res => {
         setCategory(res.data.category)
         console.log(res.data.category)
@@ -184,13 +185,13 @@ function Homepage() {
       <div className="banner">
         <Slider {...settings1}>
           <div className="card">
-          <img className="d-block w-100" src="/assets/images/slider/slider1.jpg" style={{width:"1268px",height:"507px"}} alt="First slide"/>
+            <img className="d-block w-100" src="/assets/images/slider/slider1.jpg" style={{ width: "1268px", height: "507px" }} alt="First slide" />
           </div>
           <div className="card">
-          <img className="d-block w-100" src="/assets/images/slider/slider2.jpg" style={{width:"1268px",height:"507px"}} alt="Second slide"/>
+            <img className="d-block w-100" src="/assets/images/slider/slider2.jpg" style={{ width: "1268px", height: "507px" }} alt="Second slide" />
           </div>
           <div className="card">
-          <img className="d-block w-100" src="/assets/images/slider/slider3.jpg" style={{width:"1268px",height:"507px"}} alt="Second slide"/>
+            <img className="d-block w-100" src="/assets/images/slider/slider3.jpg" style={{ width: "1268px", height: "507px" }} alt="Second slide" />
           </div>
         </Slider>
       </div>
@@ -205,64 +206,64 @@ function Homepage() {
               </div>
             </div>
           </div>
-          <div className="row mb-n4 mb-sm-n10 g-3 g-sm-6">  
-          <Slider {...settings}>          
-          {getAllItem?.map((value,key)=>(
-            <div className="col-6 col-lg-4 mb-4 mb-sm-9" key={key}>
-            <div className="product-item">
-              <div className="product-thumb">
-                <Link to={`/product-details/${value._id}`}>
-                  <img src={"" + value.image} style={{ width: "370px", height: "450px" }} width={370} height={450} alt="Image-HasTech" />
-                </Link>
+          <div className="row mb-n4 mb-sm-n10 g-3 g-sm-6">
+            <Slider {...settings}>
+              {getAllItem?.map((value, key) => (
+                <div className="col-6 col-lg-4 mb-4 mb-sm-9" key={key}>
+                  <div className="product-item">
+                    <div className="product-thumb">
+                      <Link to={`/product-details/${value._id}`}>
+                        <img src={"" + value.image} style={{ width: "370px", height: "450px" }} width={370} height={450} alt="Image-HasTech" />
+                      </Link>
 
-                <span className="flag-new">new</span>
-                <div className="product-action">
-                  <button id={value._id} onClick={() => handleClicklarge(value._id)} type="button" className="product-action-btn action-btn-quick-view" data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
-                    <i className="fa fa-expand" />
-                  </button>
-                  <button id={value._id} onClick={() => handleClick(value._id)} type="button" className="product-action-btn action-btn-cart" data-bs-toggle={getDataUser ? "modal" : ""} data-bs-target="#action-CartAddModal">
-                    <span>Add to cart</span>
-                  </button>
-                  <button id={value._id} onClick={() => handleclickwishlist(value._id)} type="button" className="product-action-btn action-btn-wishlist" data-bs-toggle={getDataUser ? "modal" : ""} data-bs-target="#action-WishlistModal">
-                    <i className="fa fa-heart-o" />
-                  </button>
-                </div>
-              </div>
-              <div className="product-info">
-                <div className="product-rating">
-                  <div className="rating">
-                    {Array.from({ length: value.totalRatings }, (_, index) => (
-                      <i key={index} className="fa fa-star-o" />
-                    ))}
+                      <span className="flag-new">new</span>
+                      <div className="product-action">
+                        <button id={value._id} onClick={() => handleClicklarge(value._id)} type="button" className="product-action-btn action-btn-quick-view" data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
+                          <i className="fa fa-expand" />
+                        </button>
+                        <button id={value._id} onClick={() => handleClick(value._id)} type="button" className="product-action-btn action-btn-cart" data-bs-toggle={getDataUser ? "modal" : ""} data-bs-target="#action-CartAddModal">
+                          <span>Add to cart</span>
+                        </button>
+                        <button id={value._id} onClick={() => handleclickwishlist(value._id)} type="button" className="product-action-btn action-btn-wishlist" data-bs-toggle={getDataUser ? "modal" : ""} data-bs-target="#action-WishlistModal">
+                          <i className="fa fa-heart-o" />
+                        </button>
+                      </div>
+                    </div>
+                    <div className="product-info">
+                      <div className="product-rating">
+                        <div className="rating">
+                          {Array.from({ length: value.totalRatings }, (_, index) => (
+                            <i key={index} className="fa fa-star-o" />
+                          ))}
+                        </div>
+
+                        <div className="reviews">{value.brand}</div>
+                      </div>
+                      <h4 className="title">
+                        <Link to={`/product-details/${value._id}`}>{value.title}</Link>
+                      </h4>
+                      <div className="product-rating">
+                        <div className="reviews">Đã bán {value.sold}</div>
+                      </div>
+                      <div className="prices">
+                        <span style={{ color: 'rgb(239,84,53)' }} className="price">₫{Intl.NumberFormat().format(value.price)}</span>
+                      </div>
+                    </div>
+                    <div className="product-action-bottom">
+                      <button type="button" className="product-action-btn action-btn-quick-view" data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
+                        <i className="fa fa-expand" />
+                      </button>
+                      <button type="button" className="product-action-btn action-btn-wishlist" data-bs-toggle="modal" data-bs-target="#action-WishlistModal">
+                        <i className="fa fa-heart-o" />
+                      </button>
+                      <button type="button" className="product-action-btn action-btn-cart" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">
+                        <span>Add to cart</span>
+                      </button>
+                    </div>
                   </div>
-
-                  <div className="reviews">{value.brand}</div>
                 </div>
-                <h4 className="title">
-                  <Link to={`/product-details/${value._id}`}>{value.title}</Link>
-                </h4>
-                <div className="product-rating">
-                  <div className="reviews">Đã bán {value.sold}</div>
-                </div>
-                <div className="prices">
-                  <span style={{ color: 'rgb(239,84,53)' }} className="price">₫{Intl.NumberFormat().format(value.price)}</span>
-                </div>
-              </div>
-              <div className="product-action-bottom">
-                <button type="button" className="product-action-btn action-btn-quick-view" data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
-                  <i className="fa fa-expand" />
-                </button>
-                <button type="button" className="product-action-btn action-btn-wishlist" data-bs-toggle="modal" data-bs-target="#action-WishlistModal">
-                  <i className="fa fa-heart-o" />
-                </button>
-                <button type="button" className="product-action-btn action-btn-cart" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">
-                  <span>Add to cart</span>
-                </button>
-              </div>
-            </div>
-          </div>
-          ))}
-          </Slider>
+              ))}
+            </Slider>
           </div>
           {/* </Slider> */}
         </div>
@@ -274,8 +275,8 @@ function Homepage() {
             {
               category?.map((e, i) => (
                 <div className="col-6 col-lg-4 col-lg-2 col-xl-2">
-                  <Link to={"/product/filter/"+e.title} state={{data:e.title}}>
-                    <a id={""+e.title} className="product-category-item" >
+                  <Link to={"/product/filter/" + e.title} state={{ data: e.title }}>
+                    <a id={"" + e.title} className="product-category-item" >
                       <img className="icon" src={`assets/images/shop/category/${i + 1}.webp`} width={70} height={80} alt="Image-HasTech" />
                       <h3 className="title">{e.title}</h3>
                       {/* <span className="flag-new"></span> */}

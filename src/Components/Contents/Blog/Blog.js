@@ -12,6 +12,7 @@ function Blog() {
   const [gettotalpage, settotalpage] = useState(1)
   const [search, setSearch] = useState('')
   useEffect(() => {
+    window.scrollTo(0, 0)
     axios.get(`http://localhost:8000/blogs`)
       .then(response => {
         settotalblog(response.data.blogs)
@@ -110,7 +111,7 @@ function Blog() {
                 ? categories.push(value)
                 : '')
             setItem(categories)
-            settotalpage(Math.ceil(categories.length/5))
+            settotalpage(Math.ceil(categories.length / 5))
           })
           .catch(err => {
             console.log('err', err)
@@ -124,7 +125,7 @@ function Blog() {
                 ? categories.push(value)
                 : '')
             setItem(categories)
-            settotalpage(Math.ceil(categories.length/5))
+            settotalpage(Math.ceil(categories.length / 5))
           })
           .catch(err => {
             console.log('err', err)
@@ -138,7 +139,7 @@ function Blog() {
                 ? categories.push(value)
                 : '')
             setItem(categories)
-            settotalpage(Math.ceil(categories.length/5))
+            settotalpage(Math.ceil(categories.length / 5))
           })
           .catch(err => {
             console.log('err', err)
@@ -152,7 +153,7 @@ function Blog() {
                 ? categories.push(value)
                 : '')
             setItem(categories)
-            settotalpage(Math.ceil(categories.length/5))
+            settotalpage(Math.ceil(categories.length / 5))
           })
           .catch(err => {
             console.log('err', err)
@@ -167,7 +168,7 @@ function Blog() {
                 ? categories.push(value)
                 : '')
             setItem(categories)
-            settotalpage(Math.ceil(categories.length/5))
+            settotalpage(Math.ceil(categories.length / 5))
           })
           .catch(err => {
             console.log('err', err)

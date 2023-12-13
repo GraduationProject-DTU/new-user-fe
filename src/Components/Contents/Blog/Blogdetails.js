@@ -15,12 +15,13 @@ function Blogdetails(props) {
   const [getComment, setcomment] = useState("")
   const [getcheck, setcheck] = useState("")
   const [blog, setBlog] = useState([])
-  const [like,setlike] = useState(false)
-  const [dislike,setdislike] = useState(false)
+  const [like, setlike] = useState(false)
+  const [dislike, setdislike] = useState(false)
   let params = useParams()
   const getDataUser = JSON.parse(localStorage.getItem("User"))
   console.log(getdata1)
   useEffect(() => {
+    window.scrollTo(0, 0)
     axios.get(`http://localhost:8000/blogs`)
       .then(response => {
         settotalblog(response.data.blogs)
@@ -87,68 +88,68 @@ function Blogdetails(props) {
         <div className="col-lg-10">
           <div className="blog-detail" dangerouslySetInnerHTML={{ __html: getdata1.description }}>
           </div>
-          <ul className="icon-blog" style={{float: "right",display: "inline-block"}}>
-              <li className={""+ (like ? "text-primary" : "")}>
-                <i class="fa fa-thumbs-up fa-3x" onClick={handleClickLike} aria-hidden="true"></i>
-              </li>
-              <li className={""+ (dislike ? "text-primary" : "")}>
-                <i class="fa fa-thumbs-down fa-3x" onClick={handleClickdisLike} aria-hidden="true"></i>
-              </li>
+          <ul className="icon-blog" style={{ float: "right", display: "inline-block" }}>
+            <li className={"" + (like ? "text-primary" : "")}>
+              <i class="fa fa-thumbs-up fa-3x" onClick={handleClickLike} aria-hidden="true"></i>
+            </li>
+            <li className={"" + (dislike ? "text-primary" : "")}>
+              <i class="fa fa-thumbs-down fa-3x" onClick={handleClickdisLike} aria-hidden="true"></i>
+            </li>
           </ul>
         </div>
       </div>
     )
   }
-  const handleClickLike=()=>{
-    if(getDataUser == null){
+  const handleClickLike = () => {
+    if (getDataUser == null) {
       toast.error("Vui lòng đăng nhập")
-    }else{
+    } else {
       setlike(true)
       setdislike(false)
       let accessToken = getDataUser.token
       let config = {
-          headers: {
-              'token': 'bearer ' + accessToken,
-          }
+        headers: {
+          'token': 'bearer ' + accessToken,
+        }
       }
-      const data ={
+      const data = {
         blogId: params.id
       }
-      axios.post("http://localhost:8000/blogs/like-blog",data,config)
-      .then(response => {
-        toast.success("Đánh giá thành công", {
+      axios.post("http://localhost:8000/blogs/like-blog", data, config)
+        .then(response => {
+          toast.success("Đánh giá thành công", {
             position: toast.POSITION.TOP_RIGHT,
-        });
-        console.log(response)
-    }).catch(function (error) {
-      console.log(error)
-    })
+          });
+          console.log(response)
+        }).catch(function (error) {
+          console.log(error)
+        })
     }
   }
-  const handleClickdisLike=()=>{
-    if(getDataUser == null){
+  const handleClickdisLike = () => {
+    if (getDataUser == null) {
       toast.error("Vui lòng đăng nhập")
-    }else{
+    } else {
       setlike(false)
       setdislike(true)
       let accessToken = getDataUser.token
       let config = {
-          headers: {
-              'token': 'bearer ' + accessToken,
-          }
+        headers: {
+          'token': 'bearer ' + accessToken,
+        }
       }
-      const data ={
+      const data = {
         blogId: params.id
       }
-      axios.post("http://localhost:8000/blogs/dislike-blog",data,config)
-      .then(response => {
-        toast.success("Đánh giá thành công", {
+      axios.post("http://localhost:8000/blogs/dislike-blog", data, config)
+        .then(response => {
+          toast.success("Đánh giá thành công", {
             position: toast.POSITION.TOP_RIGHT,
-        });
-        console.log(response)
-    }).catch(function (error) {
-      console.log(error)
-    })
+          });
+          console.log(response)
+        }).catch(function (error) {
+          console.log(error)
+        })
     }
   }
   return (

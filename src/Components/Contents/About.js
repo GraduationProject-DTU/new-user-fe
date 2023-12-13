@@ -1,4 +1,9 @@
+import { useEffect } from "react"
+
 function About() {
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
   return (
     <>
       {/*== Start Page Header Area Wrapper ==*/}
