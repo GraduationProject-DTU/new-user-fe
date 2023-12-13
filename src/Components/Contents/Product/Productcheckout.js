@@ -4,7 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios"
 import { UserContext } from "../../../UserContext";
 import { useLocation, useNavigate } from "react-router-dom";
-import Paypal from "./Paypal";
+import { PayPalButtons } from "@paypal/react-paypal-js"
 function Productcheckout() {
   const [getItem, setItem] = useState("")
   const { getCart, setCart } = useContext(UserContext)
@@ -14,8 +14,8 @@ function Productcheckout() {
   const { gettotalorder, settotalorder } = useContext(UserContext)
   const [getcheckBox, setcheckBox] = useState(false)
   const location = useLocation()
-  console.log(location.state)
   const navigate = useNavigate()
+  const [checkpaypal,setpaypal] = useState(false)
   const [inputs, setInputs] = useState({
     firstname: "",
     lastname: "",
@@ -26,6 +26,7 @@ function Productcheckout() {
   })
   useEffect(() => {
     const getDataUser = JSON.parse(localStorage.getItem("User"))
+    const getdataCartItem = JSON.parse(localStorage.getItem("CartItem"))
     setInputs({
       email: getDataUser?.user?.email,
       firstname: getDataUser?.user?.firstname,
@@ -39,7 +40,30 @@ function Productcheckout() {
       .catch(function (error) {
         console.log(error)
       })
-  }, [])
+    if(checkpaypal){
+        let accessToken = getDataUser.token
+        let config = {
+          headers: {
+            'token': 'bearer ' + accessToken,
+          }
+        }
+        const body = [];
+        for (const key in getdataCartItem) {
+          body.push({
+            pid: key,
+            quatity: getdataCartItem[key],
+            address: inputs.street
+          });
+        }
+        axios.post('http://localhost:8000/orders/placeOrders', body, config)
+          .then(res => {
+            console.log(res)
+            navigate("/")
+            setCart("")
+            localStorage.removeItem("CartItem")
+          })
+      }
+  }, [checkpaypal])
   function fetchData() {
     if (getItem.length > 0) {
       return getItem.map((value, key) => {
@@ -135,7 +159,6 @@ function Productcheckout() {
 
   }
   const handleInput = (e) => {
-
     const nameInput = e.target.name
     const value = e.target.value
     setInputs(state => ({ ...state, [nameInput]: value }))
@@ -280,29 +303,37 @@ function Productcheckout() {
                         <div className="card-header" id="check_payments4">
                           <h5 className="title" data-bs-toggle="collapse" data-bs-target="#itemFour" aria-controls="itemTwo" aria-expanded="false">Direct bank transfer</h5>
                         </div>
-                        <Paypal
-                        createOrder={(data,actions)=>{
-                          // const items =location.state.getMang.map((value2)=>({
-                          //   name: value2.title,
-                          //   unit_amount: {
-                          //     currency_code: "USD", // Đổi sang đơn vị tiền tệ mong muốn
-                          //     value: (location.state.gettong1 / 23000).toFixed(2), // Đổi giá về đơn vị tiền tệ mong muốn
-                          //   },
-                          //   quantity: "1"
-                          // }))
+                        <PayPalButtons style={{
+                            color: "silver",
+                            layout: "horizontal",
+                            height: 48,
+                            tagline: false,
+                            shape: "pill",
+                          }}
+                          createOrder={(data, actions) => {
+                          //   const items = location.state.getMang.map((item) => ({
+                          //     name: item.title,
+                          //     unit_amount: {
+                          //       currency_code: "USD", // Đổi sang đơn vị tiền tệ mong muốn
+                          //       value: (item.price / 23000).toFixed(2), // Đổi giá về đơn vị tiền tệ mong muốn
+                          //     },
+                          //     quantity: "1", // Số lượng sản phẩm (1 sản phẩm mỗi item)
+                          // }));
                           return actions.order.create({
                             purchase_units: [
                               {
                                 description: "Purchase from your website",
                                 amount: {
-                                  value: (+120000 / +23000).toFixed(2),
+                                  value: (location.state.gettong1 / +23000).toFixed(2),
                                 },
                               },
                             ],
                           })
                         }}
                         onApprove={async (data, actions) => {
-                          // const order = await actions.order.capture();
+                          const order = await actions.order.capture();
+                          setpaypal(true)
+                          console.log(order)
                           toast.success("Thanh toán thành công");
                         }}
                         onCancel={() => {}}
