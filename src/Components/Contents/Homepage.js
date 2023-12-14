@@ -99,19 +99,19 @@ function Homepage() {
   const handleclickwishlist = (id) => {
     if (getDataUser != null) {
       setidwishlist(id)
-      let idwishlist = id
-      let main = []
-      let test1 = localStorage.getItem("Wishlist")
-      if (test1) {
-        main = JSON.parse(test1)
-        for (var key in main) {
-          if (idwishlist == main[key]) {
-            main.splice(key, 1)
+      let accessToken = getDataUser.token
+        let config = {
+          headers: {
+            'token': 'bearer ' + accessToken,
           }
         }
-      }
-      main.push(idwishlist)
-      localStorage.setItem("Wishlist", JSON.stringify(main))
+        const data ={
+          pid: id
+        }
+      axios.post("http://localhost:8000/users/wish-list",data,config)
+      .then(res => {
+        console.log(res)
+      })
     } else {
       toast.error("Vui lòng đăng nhập")
     }

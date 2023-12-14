@@ -192,7 +192,6 @@ function Blog() {
         <div className="container">
           <div className="row justify-content-between flex-xl-row-reverse">
             <div className="col-xl-8">
-              <button><Link to={"/createblog"}>Create New Blog</Link></button>
               <div className="row" style={{ padding: "10px 0 0 0 " }}>
                 {fetchData()}
               </div>

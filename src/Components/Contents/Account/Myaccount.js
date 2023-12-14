@@ -7,71 +7,72 @@ import { Link } from "react-router-dom"
 import axios from "axios";
 function Myaccount(props){
   const [getOrders,setOrders] = useState("")
-useEffect(() =>{
-  const getDataUser = JSON.parse(localStorage.getItem("User"))
-      setInputs({
-      email: getDataUser?.user?.email,
-      firstname: getDataUser?.user?.firstname,
-      lastname: getDataUser?.user?.lastname,
-      phone: getDataUser?.user?.phone
-  })
-  let accessToken = getDataUser.token
-  let config = {
-        headers: {
-            'token': 'bearer ' + accessToken,
-        }
-    }
-    axios.get("http://localhost:8000/orders",config)
-    .then(response => {
-      const result = response.data.order.filter(e=>(e.orderBy.email.includes(getDataUser.user.email)))
-      setOrders(result)
-    })
-    .catch(function (error) {
-      console.log(error)
-    })
-},[])
+    useEffect(() =>{
+      const getDataUser = JSON.parse(localStorage.getItem("User"))
+          setInputs({
+          email: getDataUser?.user?.email,
+          firstname: getDataUser?.user?.firstname,
+          lastname: getDataUser?.user?.lastname,
+          phone: getDataUser?.user?.phone
+      })
+    let accessToken = getDataUser.token
+    let config = {
+          headers: {
+              'token': 'bearer ' + accessToken,
+          }
+      }
+      axios.get("http://localhost:8000/orders",config)
+      .then(response => {
+        const result = response.data.order.filter(e=>(e.orderBy.email.includes(getDataUser.user.email)))
+        setOrders(result)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+  },[])
   const {getvalueaorefresh,setvalueaorefresh} = useContext(UserContext)
   const navigate = useNavigate()
   let getDataUser = JSON.parse(localStorage.getItem("User"))
-  const [inputs, setInputs] = useState({
-    email: "",
-    password: "",
-    phone: "",
-    firstname:"",
-    lastname: ""
-  })
-  const handleSaveChange = (e) =>{
-    e.preventDefault()
-    console.log(inputs.firstname)
-    let url = "http://localhost:8000/users/update-user"
-    let accessToken = getDataUser?.token
-    let config = {
-        headers: {
-            'token': 'baerer ' + accessToken,
-        }
+  console.log(getDataUser.user.role)
+    const [inputs, setInputs] = useState({
+      email: "",
+      password: "",
+      phone: "",
+      firstname:"",
+      lastname: ""
+    })
+    const handleSaveChange = (e) =>{
+      e.preventDefault()
+      console.log(inputs.firstname)
+      let url = "http://localhost:8000/users/update-user"
+      let accessToken = getDataUser?.token
+      let config = {
+          headers: {
+              'token': 'baerer ' + accessToken,
+          }
+      }
+      const data = {
+        email: inputs.email,
+        firstname: inputs.firstname,
+        lastname: inputs.lastname,
+        phone:inputs.phone
+      }
+      axios.put(url, data, config)
+          .then(response => {
+              console.log(response)
+              toast.success("Update thông tin thành công", {
+                  position: toast.POSITION.TOP_RIGHT,
+              });
+          })
+          .catch(function (error) {
+            console.log(error)
+          })
     }
-    const data = {
-      email: inputs.email,
-      firstname: inputs.firstname,
-      lastname: inputs.lastname,
-      phone:inputs.phone
+    const handleInput = (e) => {
+        const nameInput = e.target.name
+        const value = e.target.value
+        setInputs(state => ({ ...state, [nameInput]: value }))
     }
-    axios.put(url, data, config)
-        .then(response => {
-            console.log(response)
-            toast.success("Update thông tin thành công", {
-                position: toast.POSITION.TOP_RIGHT,
-            });
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
-  }
-  const handleInput = (e) => {
-    const nameInput = e.target.name
-    const value = e.target.value
-    setInputs(state => ({ ...state, [nameInput]: value }))
-}
     const logout =(e) =>{
       if(getDataUser != null){
         localStorage.clear()
@@ -102,6 +103,12 @@ useEffect(() =>{
         })
       }
     }
+    const createBlog = (e) =>{
+      navigate("/createblog")
+    }
+    const onClickwishlist = (e) =>{
+      navigate("/wishlist")
+    }
     return(
         <>
         <ToastContainer />
@@ -130,8 +137,12 @@ useEffect(() =>{
                 <div className="my-account-tab-menu nav nav-tabs" id="nav-tab" role="tablist">
                   <button className="nav-link active" id="dashboad-tab" data-bs-toggle="tab" data-bs-target="#dashboad" type="button" role="tab" aria-controls="dashboad" aria-selected="true">Dashboard</button>
                   <button className="nav-link" id="orders-tab" data-bs-toggle="tab" data-bs-target="#orders" type="button" role="tab" aria-controls="orders" aria-selected="false"> Orders</button>
-                  {/* <button className="nav-link" id="address-edit-tab" data-bs-toggle="tab" data-bs-target="#address-edit" type="button" role="tab" aria-controls="address-edit" aria-selected="false">Password Change</button> */}
+                  <button className="nav-link" id="address-edit-tab" data-bs-toggle="tab" data-bs-target="#address-edit" type="button" role="tab" aria-controls="address-edit" aria-selected="false">Password Change</button>
                   <button className="nav-link" id="account-info-tab" data-bs-toggle="tab" data-bs-target="#account-info" type="button" role="tab" aria-controls="account-info" aria-selected="false">Account Details</button>
+                  {getDataUser.user.role === "admin" ? 
+                  <button className="nav-link" id="create-blog-tab" onClick={createBlog} >Create Blog</button>
+                  : ""}
+                  <button className="nav-link" id="wishlist-tab" onClick={onClickwishlist} >Wishlist</button>
                   <button className="nav-link" onClick={logout} type="button">Logout</button>
                 </div>
               </div>
@@ -218,12 +229,6 @@ useEffect(() =>{
                               <div className="single-input-item">
                                 <label htmlFor="first-name" className="required">New password</label>
                                 <input type="password" id="password" onChange={handleInput} />
-                              </div>
-                            </div>
-                            <div className="col-lg-6">
-                              <div className="single-input-item">
-                                <label htmlFor="last-name" className="required">Confirm password</label>
-                                <input type="password" id="confirm-password" onChange={handleInput}  />
                               </div>
                             </div>
                           </div>

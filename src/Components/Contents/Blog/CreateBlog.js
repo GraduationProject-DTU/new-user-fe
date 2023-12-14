@@ -1,5 +1,5 @@
 import axios from "axios"
-import { Link } from "react-router-dom"
+import { Link, Navigate, useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -10,9 +10,9 @@ function CreateBlog() {
     let getDataUser = JSON.parse(localStorage.getItem("User"))
     const [getItem, setItem] = useState("")
     const [inputs, setInputs] = useState({
-        author: "",
         title: ""
     })
+    const navigate = useNavigate()
     const [getFile, setFile] = useState("")
     const [getAvatar, setAvatar] = useState("")
     const [getdata, setdata] = useState("")
@@ -71,11 +71,6 @@ function CreateBlog() {
             flag = false
             toast.error("Ban phai dang nhap truoc");            
         }else{
-            if (inputs.author == "") {
-                errorSubmit.author = "Nhap author"
-                flag = false
-                toast.error(""+errorSubmit.author);
-            }
             if (inputs.title == "") {
                 errorSubmit.title = "Nhap title"
                 flag = false
@@ -131,8 +126,9 @@ function CreateBlog() {
                 axios.post(url, formData, config)
                     .then(response => {
                         toast.success("Đăng bài thành công", {
-                            position: toast.POSITION.TOP_RIGHT,
+                        position: toast.POSITION.TOP_RIGHT,                       
                         });
+                        navigate("/blog")
                     })
                     .catch(error => {
                         console.log(error)
@@ -148,11 +144,6 @@ function CreateBlog() {
                         <div className="card-header"><h3 className="text-center font-weight-light my-4">Create Blog</h3></div>
                         <div className="card-body">
                             <form action="#" encType="multipart/form-data" onSubmit={handleSubmit}>
-                                <div className="form-floating mb-3">
-                                    <input onChange={handleInput} className="form-control" id="inputAuthor" type="name" name="author" placeholder="Author" />
-                                    {errors.author}
-                                    <label for="inputAuthor">Author</label>
-                                </div>
                                 <div className="form-floating mb-3">
                                     <input onChange={handleInput} className="form-control" id="inputTitle" type="name" name="title" placeholder="title" />
                                     {errors.title}

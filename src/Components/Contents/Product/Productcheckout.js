@@ -303,43 +303,37 @@ function Productcheckout() {
                         <div className="card-header" id="check_payments4">
                           <h5 className="title" data-bs-toggle="collapse" data-bs-target="#itemFour" aria-controls="itemTwo" aria-expanded="false">Direct bank transfer</h5>
                         </div>
-                        <PayPalButtons style={{
-                            color: "silver",
-                            layout: "horizontal",
-                            height: 48,
-                            tagline: false,
-                            shape: "pill",
-                          }}
-                          createOrder={(data, actions) => {
-                          //   const items = location.state.getMang.map((item) => ({
-                          //     name: item.title,
-                          //     unit_amount: {
-                          //       currency_code: "USD", // Đổi sang đơn vị tiền tệ mong muốn
-                          //       value: (item.price / 23000).toFixed(2), // Đổi giá về đơn vị tiền tệ mong muốn
-                          //     },
-                          //     quantity: "1", // Số lượng sản phẩm (1 sản phẩm mỗi item)
-                          // }));
-                          return actions.order.create({
-                            purchase_units: [
-                              {
-                                description: "Purchase from your website",
-                                amount: {
-                                  value: (location.state.gettong1 / +23000).toFixed(2),
-                                },
-                              },
-                            ],
-                          })
-                        }}
-                        onApprove={async (data, actions) => {
-                          const order = await actions.order.capture();
-                          setpaypal(true)
-                          console.log(order)
-                          toast.success("Thanh toán thành công");
-                        }}
-                        onCancel={() => {}}
-                        onError={() => {
-                        }}
-                         />
+                          {getOption === 2 ?
+                                                  <PayPalButtons style={{
+                                                    color: "silver",
+                                                    layout: "horizontal",
+                                                    height: 48,
+                                                    tagline: false,
+                                                    shape: "pill",
+                                                  }}
+                                                  createOrder={(data, actions) => {
+                                                  return actions.order.create({
+                                                    purchase_units: [
+                                                      {
+                                                        description: "Purchase from your website",
+                                                        amount: {
+                                                          value: (location.state.gettong1 / +23000).toFixed(2),
+                                                        },
+                                                      },
+                                                    ],
+                                                  })
+                                                }}
+                                                onApprove={async (data, actions) => {
+                                                  const order = await actions.order.capture();
+                                                  setpaypal(true)
+                                                  console.log(order)
+                                                  toast.success("Thanh toán thành công");
+                                                }}
+                                                onCancel={() => {}}
+                                                onError={() => {
+                                                }}
+                                                 />: ""
+                                                 }
                         <div id="itemFour" className="collapse" aria-labelledby="check_payments4" data-bs-parent="#PaymentMethodAccordion">
                         </div>
                       </div>
