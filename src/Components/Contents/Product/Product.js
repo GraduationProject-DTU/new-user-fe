@@ -16,6 +16,7 @@ function Product() {
   const { getidwishlist, setidwishlist } = useContext(UserContext)
   const { getidlarge, setidlarge } = useContext(UserContext)
   const [search, setSearch] = useState('')
+  let getDataUser = JSON.parse(localStorage.getItem("User"))
   function handleFile(e) {
     const file = e.target.file
     // setFile(e.target.files)
@@ -58,20 +59,27 @@ function Product() {
     setselected(+event.selected + 1)
   }
   const handleclickwishlist = (id) => {
-    setidwishlist(id)
-    let idwishlist = id
-    let main = []
-    let test1 = localStorage.getItem("Wishlist")
-    if (test1) {
-      main = JSON.parse(test1)
-      for (var key in main) {
-        if (idwishlist == main[key]) {
-          main.splice(key, 1)
+    if (getDataUser != null) {
+      setidwishlist(id)
+      let accessToken = getDataUser.token
+        let config = {
+          headers: {
+            'token': 'bearer ' + accessToken,
+          }
         }
-      }
+        const data ={
+          pid: id
+        }
+      axios.post("http://localhost:8000/users/wish-list",data,config)
+      .then(res => {
+        console.log(res)
+      })
+      .catch(function (error) {
+        toast.error("Bạn đã thêm sản phẩm này")
+      })
+    } else {
+      toast.error("Vui lòng đăng nhập")
     }
-    main.push(idwishlist)
-    localStorage.setItem("Wishlist", JSON.stringify(main))
   }
   const handleClick = (id) => {
     let main = {}

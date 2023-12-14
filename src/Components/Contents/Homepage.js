@@ -112,6 +112,9 @@ function Homepage() {
       .then(res => {
         console.log(res)
       })
+      .catch(function (error) {
+        toast.error("Bạn đã thêm sản phẩm này")
+      })
     } else {
       toast.error("Vui lòng đăng nhập")
     }

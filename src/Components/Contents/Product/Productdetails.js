@@ -71,24 +71,26 @@ function Productdetails() {
   const handleclickwishlist = (id) => {
     if (getDataUser != null) {
       setidwishlist(id)
-      let idwishlist = id
-      let main = []
-      let test1 = localStorage.getItem("Wishlist")
-      if (test1) {
-        main = JSON.parse(test1)
-        for (var key in main) {
-          if (idwishlist == main[key]) {
-            main.splice(key, 1)
+      let accessToken = getDataUser.token
+        let config = {
+          headers: {
+            'token': 'bearer ' + accessToken,
           }
         }
-      }
-      main.push(idwishlist)
-      localStorage.setItem("Wishlist", JSON.stringify(main))
+        const data ={
+          pid: id
+        }
+      axios.post("http://localhost:8000/users/wish-list",data,config)
+      .then(res => {
+        console.log(res)
+      })
+      .catch(function (error) {
+        toast.error("Bạn đã thêm sản phẩm này")
+      })
     } else {
       toast.error("Vui lòng đăng nhập")
     }
   }
-
   const handleFeedback = (e) => {
     e.preventDefault()
     let accessToken = getDataUser.token
@@ -103,7 +105,6 @@ function Productdetails() {
       star,
       comment: feedback
     }
-
     axios.put('http://localhost:8000/products/rating-product', body, config)
       .then(res => {
         toast.success('Feedback Thành Công !!')
@@ -111,7 +112,6 @@ function Productdetails() {
       })
       .catch(err => { toast.error("Bạn Không Được Phép Feedback") })
   }
-
   return (
     <>
       {/*== Start Page Header Area Wrapper ==*/}
