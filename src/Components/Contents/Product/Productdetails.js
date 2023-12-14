@@ -79,9 +79,11 @@ function Productdetails() {
         const data ={
           pid: id
         }
+        
       axios.post("http://localhost:8000/users/wish-list",data,config)
       .then(res => {
         setidwishlist(id)
+        toast.success("Thêm sản phẩm thành công")
       })
       .catch(function (error) {
         toast.error("Bạn đã thêm sản phẩm này")

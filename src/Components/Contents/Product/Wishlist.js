@@ -41,40 +41,42 @@ function Wishlist(){
   function fetchDatwishlist(){
     if(getWishlist?.length>0){
       return getWishlist?.map((value,key)=>{
-        return getItem?.map((value1,key1)=>{
-          if(value._id === value1._id){
-            return(
-              <tr className="tbody-item">
-              <td className="product-remove">
-                <a className="remove" onClick={handleRemove} id ={""+value._id}>×</a>
-              </td>
-              <td className="product-thumbnail">
-                <div className="thumb">
+        if(getItem.length>0){
+          return getItem?.map((value1,key1)=>{
+            if(value._id === value1._id){
+              return(
+                <tr className="tbody-item">
+                <td className="product-remove">
+                  <a className="remove" onClick={handleRemove} id ={""+value._id}>×</a>
+                </td>
+                <td className="product-thumbnail">
+                  <div className="thumb">
+                    <Link to={`/product-details/${value1._id}`}>
+                    <a>
+                      <img src={"" + value1.image} style={{ width: "68", height: "84" }} width={68} height={84} alt="Image-HasTech" />
+                    </a>
+                    </Link>
+                  </div>
+                </td>
+                <td className="product-name">
                   <Link to={`/product-details/${value1._id}`}>
-                  <a>
-                    <img src={"" + value1.image} style={{ width: "68", height: "84" }} width={68} height={84} alt="Image-HasTech" />
-                  </a>
+                    <a className="title" href="single-product.html">{value1.title}</a>
                   </Link>
-                </div>
-              </td>
-              <td className="product-name">
-                <Link to={`/product-details/${value1._id}`}>
-                  <a className="title" href="single-product.html">{value1.title}</a>
-                </Link>
-              </td>
-              <td className="product-price">
-                <span className="price">{value1.price}</span>
-              </td>
-              <td className="product-stock-status">
-                <span className="wishlist-in-stock">{value1.quantity > 0 ? "In Stock" : "Hết Hàng"}</span>
-              </td>
-              <td className="product-add-to-cart">
-                <a className="btn-shop-cart" id={value._id} onClick={handleClick}>Add to Cart</a>
-              </td>
-            </tr>
-            )
-          }
-        })
+                </td>
+                <td className="product-price">
+                  <span className="price">{value1.price}</span>
+                </td>
+                <td className="product-stock-status">
+                  <span className="wishlist-in-stock">{value1.quantity > 0 ? "In Stock" : "Hết Hàng"}</span>
+                </td>
+                <td className="product-add-to-cart">
+                  <a className="btn-shop-cart" id={value._id} onClick={handleClick}>Add to Cart</a>
+                </td>
+              </tr>
+              )
+            }
+          })
+        }
       })
     }
   }
