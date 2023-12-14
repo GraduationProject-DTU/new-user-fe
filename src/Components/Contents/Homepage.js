@@ -98,7 +98,6 @@ function Homepage() {
   }
   const handleclickwishlist = (id) => {
     if (getDataUser != null) {
-      setidwishlist(id)
       let accessToken = getDataUser.token
         let config = {
           headers: {
@@ -110,10 +109,11 @@ function Homepage() {
         }
       axios.post("http://localhost:8000/users/wish-list",data,config)
       .then(res => {
-        console.log(res)
+        setidwishlist(id)
       })
       .catch(function (error) {
         toast.error("Bạn đã thêm sản phẩm này")
+        setidwishlist("")
       })
     } else {
       toast.error("Vui lòng đăng nhập")
@@ -227,7 +227,7 @@ function Homepage() {
                         <button id={value._id} onClick={() => handleClick(value._id)} type="button" className="product-action-btn action-btn-cart" data-bs-toggle={getDataUser ? "modal" : ""} data-bs-target="#action-CartAddModal">
                           <span>Add to cart</span>
                         </button>
-                        <button id={value._id} onClick={() => handleclickwishlist(value._id)} type="button" className="product-action-btn action-btn-wishlist" data-bs-toggle={getDataUser ? "modal" : ""} data-bs-target="#action-WishlistModal">
+                        <button id={value._id} onClick={() => handleclickwishlist(value._id)} type="button" className="product-action-btn action-btn-wishlist" data-bs-toggle={getDataUser && getidwishlist ? "modal" : ""} data-bs-target="#action-WishlistModal">
                           <i className="fa fa-heart-o" />
                         </button>
                       </div>

@@ -70,7 +70,6 @@ function Productdetails() {
   }, [feedback])
   const handleclickwishlist = (id) => {
     if (getDataUser != null) {
-      setidwishlist(id)
       let accessToken = getDataUser.token
         let config = {
           headers: {
@@ -82,10 +81,11 @@ function Productdetails() {
         }
       axios.post("http://localhost:8000/users/wish-list",data,config)
       .then(res => {
-        console.log(res)
+        setidwishlist(id)
       })
       .catch(function (error) {
         toast.error("Bạn đã thêm sản phẩm này")
+        setidwishlist("")
       })
     } else {
       toast.error("Vui lòng đăng nhập")
@@ -173,7 +173,7 @@ function Productdetails() {
                 <div className="product-details-action">
                   <h4 style={{ color: 'rgb(239,84,53)' }} className="price">₫{Intl.NumberFormat().format(product.price * getquantity)}</h4>
                   <div className="product-details-cart-wishlist">
-                    <button id={product._id} onClick={() => handleclickwishlist(product._id)} type="button" className="btn-wishlist" data-bs-toggle={getDataUser ? "modal" : ""} data-bs-target="#action-WishlistModal"><i className="fa fa-heart-o" /></button>
+                    <button id={product._id} onClick={() => handleclickwishlist(product._id)} type="button" className="btn-wishlist" data-bs-toggle={getDataUser && getidwishlist ? "modal" : ""} data-bs-target="#action-WishlistModal"><i className="fa fa-heart-o" /></button>
                     <button id={product._id} onClick={() => handleClick(product._id)} type="button" className="btn" data-bs-toggle={getDataUser ? "modal" : ""} data-bs-target="#action-CartAddModal">Add to cart</button>
                   </div>
                 </div>

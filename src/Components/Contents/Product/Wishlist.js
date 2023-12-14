@@ -7,6 +7,12 @@ function Wishlist(){
   const [getWishlist, setWishlist] = useState("")
   const [getItem, setItem] = useState("")
   const { getCart, setCart } = useContext(UserContext)
+  const handleRemove=(e)=>{
+    console.log(e.target.id)
+    const data ={
+      pid: e.target.id
+    }
+  }
   useEffect(() => {
     window.scrollTo(0, 0)
     const getDataUser = JSON.parse(localStorage.getItem("User"))
@@ -26,7 +32,6 @@ function Wishlist(){
       axios.get("http://localhost:8000/products")
       .then(response => {
         setItem(response.data.mess)
-        console.log(response.data.mess)
       })
       .catch(function (error) {
         console.log(error)
@@ -34,14 +39,14 @@ function Wishlist(){
   }, [])
   const getDataUser = JSON.parse(localStorage.getItem("User"))
   function fetchDatwishlist(){
-    if(getWishlist.length>0){
-      return getWishlist.map((value,key)=>{
-        return getItem.map((value1,key1)=>{
+    if(getWishlist?.length>0){
+      return getWishlist?.map((value,key)=>{
+        return getItem?.map((value1,key1)=>{
           if(value._id === value1._id){
             return(
               <tr className="tbody-item">
               <td className="product-remove">
-                <a className="remove" href="javascript:void(0)">×</a>
+                <a className="remove" onClick={handleRemove} id ={""+value._id}>×</a>
               </td>
               <td className="product-thumbnail">
                 <div className="thumb">
