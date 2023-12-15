@@ -6,7 +6,14 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import CustomUploadAdapter from "../../../helpers/CustomUploadAdapter";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ClipLoader from "react-spinners/ClipLoader";
 function CreateBlog() {
+    const [loading,setLoading] = useState(false)
+    const override= {
+        display: "block",
+        margin: "0 auto",
+        borderColor: "red",
+      };
     let getDataUser = JSON.parse(localStorage.getItem("User"))
     const [getItem, setItem] = useState("")
     const [inputs, setInputs] = useState({
@@ -105,6 +112,7 @@ function CreateBlog() {
                 })
             }
             if (flag) {
+                setLoading(true)
                 let url = "http://localhost:8000/blogs/create-blog"
                 let accessToken = getDataUser.token
                 let config = {
@@ -137,7 +145,16 @@ function CreateBlog() {
         }
     }
     return (
-        <div className="container">
+        <>
+        {
+            loading ? <ClipLoader
+            loading={loading}
+            size={75}
+            cssOverride={override}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+            /> : 
+            <div className="container">
             <div className="row justify-content-center">
                 <div className="col-lg-7">
                     <div className="card shadow-lg border-0 rounded-lg mt-5">
@@ -184,6 +201,8 @@ function CreateBlog() {
                 </div>
             </div>
         </div>
+        }
+        </>
     )
 }
 export default CreateBlog

@@ -93,7 +93,7 @@ function ProductFilter() {
               {/*== Start Product Item ==*/}
               <div style={{ objectFit: 'cover' }} className="product-item">
                 <div className="product-thumb">
-                  <Link to={"/product-details/" + e._id}>
+                  <Link to={"/product-details/" + e._id} state={{data: e.category.title}}>
                     <a className="d-block">
                       <img src={e.image} style={{ height: '400px' }} width={370} height={450} alt="Image-HasTech" />
                     </a>
@@ -159,7 +159,7 @@ function ProductFilter() {
               {/*== Start Product Item ==*/}
               <div style={{ objectFit: 'cover' }} className="product-item">
                 <div className="product-thumb">
-                  <Link to={"/product-details/" + e._id}>
+                  <Link to={"/product-details/" + e._id} state={{data: e.category.title}}>
                     <a className="d-block">
                       <img src={e.image} style={{ height: '400px' }} width={370} height={450} alt="Image-HasTech" />
                     </a>
@@ -225,7 +225,7 @@ function ProductFilter() {
               {/*== Start Product Item ==*/}
               <div style={{ objectFit: 'cover' }} className="product-item">
                 <div className="product-thumb">
-                  <Link to={"/product-details/" + e._id}>
+                  <Link to={"/product-details/" + e._id} state={{data: e.category.title}}>
                     <a className="d-block">
                       <img src={e.image} style={{ height: '400px' }} width={370} height={450} alt="Image-HasTech" />
                     </a>
@@ -291,7 +291,7 @@ function ProductFilter() {
               {/*== Start Product Item ==*/}
               <div style={{ objectFit: 'cover' }} className="product-item">
                 <div className="product-thumb">
-                  <Link to={"/product-details/" + e._id}>
+                  <Link to={"/product-details/" + e._id} state={{data: e.category.title}}>
                     <a className="d-block">
                       <img src={e.image} style={{ height: '400px' }} width={370} height={450} alt="Image-HasTech" />
                     </a>
@@ -357,7 +357,7 @@ function ProductFilter() {
               {/*== Start Product Item ==*/}
               <div style={{ objectFit: 'cover' }} className="product-item">
                 <div className="product-thumb">
-                  <Link to={"/product-details/" + e._id}>
+                  <Link to={"/product-details/" + e._id} state={{data: e.category.title}}>
                     <a className="d-block">
                       <img src={e.image} style={{ height: '400px' }} width={370} height={450} alt="Image-HasTech" />
                     </a>

@@ -6,7 +6,7 @@ import About from './Components/Contents/About';
 import Homepage from './Components/Contents/Homepage';
 import Scroll from './Components/Scroll/Scroll';
 import { UserContext } from './UserContext';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
@@ -18,6 +18,7 @@ function App(props) {
   const [getvalueaorefresh,setvalueaorefresh] = useState("")
   const [getpageKey,setpageKey] = useState("")
   const [gettotalorder,settotalorder] = useState("")
+  const [loading, setLoading] = useState(false)
   const initialOptions = {
     clientId:"AUiz_-HyipJfmSMuQWlpURDajkySVzuQYjdm_xsEZ8chn0VThOm7HyBILax88CVxn9Ht2pzqRpsRnbOo",
     currency: "USD",
@@ -27,13 +28,15 @@ function App(props) {
     <PayPalScriptProvider options={initialOptions}>
       <div>
       <ToastContainer />
-      <UserContext.Provider value={{getCart,setCart
+      <UserContext.Provider value={{
+        getCart,setCart
         ,getid,setid,
         getidlarge,setidlarge,
         getidwishlist,setidwishlist,
         getvalueaorefresh,setvalueaorefresh,
         getpageKey,setpageKey,
-        gettotalorder,settotalorder}}>
+        gettotalorder,settotalorder,
+        loading, setLoading}}>
           <Header/>
             <main class="main-content">
               {props.children}

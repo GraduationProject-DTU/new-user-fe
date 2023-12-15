@@ -1,10 +1,11 @@
 import axios from "axios"
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect, useState,CSSProperties  } from "react"
 import './product.css'
 import { Link } from "react-router-dom"
 import ReactPaginate from 'react-paginate';
 import { UserContext } from "../../../UserContext"
 import { toast } from "react-toastify"
+import ClipLoader from "react-spinners/ClipLoader";
 function Product() {
   const [getselected, setselected] = useState(1)
   const [gettotalpage, settotalpage] = useState(1)
@@ -15,40 +16,26 @@ function Product() {
   const { getid, setid } = useContext(UserContext)
   const { getidwishlist, setidwishlist } = useContext(UserContext)
   const { getidlarge, setidlarge } = useContext(UserContext)
+  const [loading,setLoading] = useState(false)
   const [search, setSearch] = useState('')
   const [getPage,setPage] = useState("")
   let getDataUser = JSON.parse(localStorage.getItem("User"))
+  const override= {
+    display: "block",
+    margin: "0 auto",
+    borderColor: "silver",
+  };
   function handleFile(e) {
     const file = e.target.file
     // setFile(e.target.files)
-    console.log(e.target.files[0])
-    // let reader = new FileReader()
-    // reader.onload = (e) => {
-    //   setImage(e.target.result)
-    // }
-    // console.log(e.target.files)
-    // reader.readAsDataURL(file[0])
-    // console.log(e.target.result)
-    // if(Object.keys(getFile).length>0){
-    //   Object.keys(getFile).map((item,i)=>{
-    //     let checkImg = ["png", "jpg", "jpeg", "PNG", "JPG"]
-    //     let getsize = getFile[item].size
-    //     let getname = getFile[item].name
-    //     let test = getname.split(".")
-    //     let test1 = checkImg.includes(test[1])
-    //     if (getsize > 1024 * 1024) {
-    //         alert("File qua lon")
-    //     } else if (!checkImg.includes(test[1])) {
-    //         alert("Sai dinh dang")
-    //     }
-    // })
-    // }
+    let reader = new FileReader()
     const formData = new FormData()
     formData.append("image", e.target.files[0])
-    console.log(formData)
-    axios.post("http://localhost:8000/products/find-image", formData)
+    setLoading(true)
+      axios.post("http://localhost:8000/products/find-image", formData)
       .then(response => {
         setProducts(response.data.product)
+        setLoading(false)
       }).catch(err => {
         console.log(err)
       })
@@ -391,8 +378,8 @@ function Product() {
                 <button className="submit-search" type="submit" onClick={handleSearch}><i className="fa fa-search" /></button>
               </div>
             </div>
-            <div className="select-on-sale d-none d-md-flex">
-              <input type="file" onChange={handleFile} />
+            <div className="input-file-product">
+              <input type="file" onChange={handleFile} title=""/>
               {/* <button onClick={handleClear} className="btnClear">Clear Filter <i class="fa fa-filter"></i></button> */}
               {/* <select style={{ border: 'none' }}>
                 <option selected>Yes</option>
@@ -433,12 +420,19 @@ function Product() {
           <div className="row mb-n4 mb-sm-n10 g-3 g-sm-6">
             {/* START MAP PRODUCT */}
             {
+              loading ? <ClipLoader
+              loading={loading}
+              size={75}
+              cssOverride={override}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+              /> : 
               products?.map((e, i) => (
                 <div key={i} className="col-6 col-lg-4 mb-4 mb-sm-8">
                   {/*== Start Product Item ==*/}
                   <div style={{ objectFit: 'cover' }} className="product-item">
                     <div className="product-thumb">
-                      <Link to={"/product-details/" + e._id}>
+                      <Link to={"/product-details/" + e._id} state={{data: e.category.title}}>
                         <a className="d-block">
                           <img src={e.image} style={{ height: '400px' }} width={370} height={450} alt="Image-HasTech" />
                         </a>

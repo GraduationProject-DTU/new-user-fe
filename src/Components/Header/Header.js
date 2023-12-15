@@ -54,11 +54,13 @@ function Header() {
           <div className="col-lg-6 d-none d-lg-block">
             <div className="header-navigation">
               <ul className="main-nav justify-content-start">
-                <li><Link to="/">Home</Link></li>
-                <li><Link to="/about">About</Link></li>
-                <li><Link to="/product">Shop</Link></li>
-                <li><Link to="/blog">Blog</Link></li>
-                <li><Link to="/contact">Contact</Link></li>
+                <li><Link to="/">
+                <i class="fa fa-home" aria-hidden="true">Home</i>
+                  </Link></li>
+                <li><Link to="/about"><i class="fa fa-address-card-o" aria-hidden="true">About</i></Link></li>
+                <li><Link to="/product"><i class="fa fa-shopping-basket" aria-hidden="true">Shop</i></Link></li>
+                <li><Link to="/blog"><i class="fa fa-book" aria-hidden="true">Blog</i></Link></li>
+                <li><Link to="/contact"><i class="fa fa-envelope" aria-hidden="true">Contact</i></Link></li>
               </ul>
             </div>
           </div>

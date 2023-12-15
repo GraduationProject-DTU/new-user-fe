@@ -45,6 +45,7 @@ function Homepage() {
       .then(response => {
         setItem(response.data.mess.slice(-3))
         setAllItem(response.data.mess)
+        console.log(response.data.mess)
       })
       .catch(function (error) {
         console.log(error)
@@ -66,7 +67,7 @@ function Homepage() {
     axios.get('http://localhost:8000/category-products')
       .then(res => {
         setCategory(res.data.category)
-        console.log(res.data.category)
+
       })
   }, [getvalueaorefresh])
   const handleClick = (id) => {
@@ -132,7 +133,7 @@ function Homepage() {
             <div className="col-6 col-lg-4 mb-4 mb-sm-9" key={key}>
               <div className="product-item">
                 <div className="product-thumb">
-                  <Link to={`/product-details/${value._id}`}>
+                  <Link to={`/product-details/${value._id}`} state={{data: value.category.title}}>
                     <img src={"" + value.image} style={{ width: "370px", height: "450px" }} width={370} height={450} alt="Image-HasTech" />
                   </Link>
 
@@ -220,7 +221,7 @@ function Homepage() {
                 <div className="col-6 col-lg-4 mb-4 mb-sm-9" key={key}>
                   <div className="product-item">
                     <div className="product-thumb">
-                      <Link to={`/product-details/${value._id}`}>
+                      <Link to={`/product-details/${value._id} `} state={{data: value.category.title}}>
                         <img src={"" + value.image} style={{ width: "370px", height: "450px" }} width={370} height={450} alt="Image-HasTech" />
                       </Link>
 
@@ -332,9 +333,11 @@ function Homepage() {
                 <div key={i} style={{ width: '370px' }} className="swiper mb-10">
                   <div className="product-item product-st2-item">
                     <div className="product-thumb">
-                      <a className="d-block" href={"/product-details/" + value._id}>
-                        <img src={value.image} style={{ height: '400px' }} width={370} height={450} alt="Image-HasTech" />
-                      </a>
+                      <Link to={"/product-details/" + value._id} state={{data: value.category.title}}>
+                        <a className="d-block">
+                          <img src={value.image} style={{ height: '400px' }} width={370} height={450} alt="Image-HasTech" />
+                        </a>
+                      </Link>
                       <span className="flag-new">new</span>
                     </div>
                     <div className="product-info">

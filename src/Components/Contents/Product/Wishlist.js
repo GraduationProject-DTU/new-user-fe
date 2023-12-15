@@ -7,6 +7,7 @@ function Wishlist() {
   const [getWishlist, setWishlist] = useState("")
   const [getItem, setItem] = useState("")
   const { getCart, setCart } = useContext(UserContext)
+  const [refresh,setrefresh] = useState("")
   const handleRemove = (e) => {
     let accessToken = getDataUser.token
     let config = {
@@ -14,7 +15,7 @@ function Wishlist() {
         'token': 'bearer' + accessToken
       }
     }
-    axios.delete(`http://localhost:8000/users/wish-list/${e.target.id}`, config)
+    axios.delete(`http://localhost:8000/users/wish-list/${e.target.id}`,config)
       .then(response => {
         console.log(response)
       })

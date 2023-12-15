@@ -1,6 +1,6 @@
 import axios from "axios"
 import { useContext, useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { Link, useLocation, useParams } from "react-router-dom"
 import './product.css'
 import { UserContext } from "../../../UserContext"
 import { toast } from "react-toastify"
@@ -15,6 +15,9 @@ function Productdetails() {
   const { getidwishlist, setidwishlist } = useContext(UserContext)
   const [getquantity, setquantity] = useState(1)
   let getDataUser = JSON.parse(localStorage.getItem("User"))
+  const location = useLocation()
+  const [getAllItem,setAllItem] = useState([])
+  console.log(location.state.data)
   const onChancequantity = (e) => {
     setquantity(e.target.value)
     if (e.target.value <= 1) {
@@ -55,7 +58,14 @@ function Productdetails() {
         .catch(err => {
           console.log('catch log', err)
         })
-
+      axios.get('http://localhost:8000/products/')
+        .then(res => {
+          const result = res.data.mess.filter(e => (e.category.title.includes(location.state.data)))
+          setAllItem(result)
+        })
+        .catch(err => {
+          console.log('catch log', err)
+        })
       axios.get('http://localhost:8000/products/')
         .then(res => {
           setProducts(res.data.mess.slice(0, 3))
@@ -63,7 +73,13 @@ function Productdetails() {
         .catch(err => {
           console.log('catch log', err)
         })
-
+        axios.get('http://localhost:8000/products/' + params.id)
+        .then(res => {
+          setProduct(res.data.product)
+        })
+        .catch(err => {
+          console.log('catch log', err)
+        })
     } catch (error) {
       console.log('error', error)
     }
@@ -148,7 +164,7 @@ function Productdetails() {
             </div>
             <div className="col-lg-6">
               <div className="product-details-content">
-                <h5 className="product-details-collection">Premioum collection</h5>
+                {/* <h5 className="product-details-collection">Premioum collection</h5> */}
                 <h1 className="product-details-title" style={{ fontSize: '26px' }}>{product.title}</h1>
                 <div className="product-details-review mb-7">
                   <div className="product-review-icon">
@@ -281,9 +297,8 @@ function Productdetails() {
         <div className="container">
           <div className="row">
             <div className="col-12">
-              <div className="section-title">
-                <h2 className="title">Related Products</h2>
-                <p className="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus venenatis</p>
+              <div className="title-product">
+                <h2 >Sản phẩm liên quan</h2>
               </div>
             </div>
           </div>
@@ -291,16 +306,17 @@ function Productdetails() {
             <div className="col-12">
               <div className="swiper related-product-slide-container">
                 <div className="swiper-wrapper">
-
                   {/*== Start Product Item ==*/}
                   {
-                    products?.map((e, i) => (
+                    getAllItem?.map((e, i) => (
                       <div key={i} style={{ width: '370px' }} className="swiper mb-10">
                         <div className="product-item product-st2-item">
                           <div className="product-thumb">
-                            <a className="d-block" href={"/product-details/" + e._id}>
-                              <img src={e.image} style={{ height: '400px' }} width={370} height={450} alt="Image-HasTech" />
-                            </a>
+                            <Link to={"/product-details/" + e._id} state={{data: e.category.title}}>
+                              <a className="d-block">
+                                <img src={e.image} style={{ height: '400px' }} width={370} height={450} alt="Image-HasTech" />
+                              </a>
+                            </Link>
                             <span className="flag-new">new</span>
                           </div>
                           <div className="product-info">
