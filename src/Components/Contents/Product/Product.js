@@ -16,6 +16,7 @@ function Product() {
   const { getidwishlist, setidwishlist } = useContext(UserContext)
   const { getidlarge, setidlarge } = useContext(UserContext)
   const [search, setSearch] = useState('')
+  const [getPage,setPage] = useState("")
   let getDataUser = JSON.parse(localStorage.getItem("User"))
   function handleFile(e) {
     const file = e.target.file
@@ -105,11 +106,54 @@ function Product() {
   useEffect(() => {
     try {
       window.scrollTo(0, 0)
-      axios.get(`http://localhost:8000/products?page=${getselected}`)
+      if(getPage  === ""){
+        axios.get(`http://localhost:8000/products?page=${getselected}`)
         .then(res => {
           setProducts(res.data.mess)
           settotalpage(res.data.pageTotal)
         })
+      }else{
+        if (getPage === "3"){
+          axios.get(`http://localhost:8000/products?sort=title&type=asc&page=${getselected}`)
+          .then(res => {
+            setProducts(res.data.mess);
+            console.log(res.data.mess)
+          })
+          .catch(err => {
+            console.log('err', err);
+          })
+        }
+        if (getPage === "4"){
+          axios.get(`http://localhost:8000/products?sort=title&type=desc&page=${getselected}`)
+          .then(res => {
+            setProducts(res.data.mess);
+            console.log(res.data.mess)
+          })
+          .catch(err => {
+            console.log('err', err);
+          })
+        }
+        if (getPage === "5"){
+          axios.get(`http://localhost:8000/products?sort=price&type=asc&page=${getselected}`)
+          .then(res => {
+            setProducts(res.data.mess);
+            console.log(res.data.mess)
+          })
+          .catch(err => {
+            console.log('err', err);
+          })
+        }
+        if (getPage === "6"){
+          axios.get(`http://localhost:8000/products?sort=price&type=desc&page=${getselected}`)
+          .then(res => {
+            setProducts(res.data.mess);
+            console.log(res.data.mess)
+          })
+          .catch(err => {
+            console.log('err', err);
+          })
+        }
+      }
       axios.get('http://localhost:8000/category-products')
         .then(res => {
           setCategory(res.data.category)
@@ -121,6 +165,7 @@ function Product() {
   }, [getselected])
   const hanldeChangeOption = (e) => {
     const value = e.target.value
+    setPage(value)
     switch (value) {
       case '2':
         axios.get('http://localhost:8000/products')
