@@ -8,14 +8,14 @@ import { PayPalButtons } from "@paypal/react-paypal-js"
 function Productcheckout() {
   const [getItem, setItem] = useState("")
   const { getCart, setCart } = useContext(UserContext)
-  const [getOption,setOption] = useState(1)
+  const [getOption, setOption] = useState(1)
   const getdataCartItem = JSON.parse(localStorage.getItem("CartItem"))
   let getDataUser = JSON.parse(localStorage.getItem("User"))
   const { gettotalorder, settotalorder } = useContext(UserContext)
   const [getcheckBox, setcheckBox] = useState(false)
   const location = useLocation()
   const navigate = useNavigate()
-  const [checkpaypal,setpaypal] = useState(false)
+  const [checkpaypal, setpaypal] = useState(false)
   const [inputs, setInputs] = useState({
     firstname: "",
     lastname: "",
@@ -40,29 +40,31 @@ function Productcheckout() {
       .catch(function (error) {
         console.log(error)
       })
-    if(checkpaypal){
-        let accessToken = getDataUser.token
-        let config = {
-          headers: {
-            'token': 'bearer ' + accessToken,
-          }
+    if (checkpaypal) {
+      let accessToken = getDataUser.token
+      let config = {
+        headers: {
+          'token': 'bearer ' + accessToken,
         }
-        const body = [];
-        for (const key in getdataCartItem) {
-          body.push({
-            pid: key,
-            quatity: getdataCartItem[key],
-            address: inputs.street
-          });
-        }
-        axios.post('http://localhost:8000/orders/placeOrders', body, config)
-          .then(res => {
-            console.log(res)
-            navigate("/")
-            setCart("")
-            localStorage.removeItem("CartItem")
-          })
       }
+      const body = [];
+      for (const key in getdataCartItem) {
+        body.push({
+          pid: key,
+          quatity: getdataCartItem[key],
+          address: inputs.street,
+          payment: getOption == 2 && 'Chuyển khoản'
+        });
+      }
+
+      axios.post('http://localhost:8000/orders/placeOrders', body, config)
+        .then(res => {
+          console.log(res)
+          navigate("/")
+          setCart("")
+          localStorage.removeItem("CartItem")
+        })
+    }
   }, [checkpaypal])
   function fetchData() {
     if (getItem.length > 0) {
@@ -85,7 +87,6 @@ function Productcheckout() {
   }
   function handleCheckBox() {
     setcheckBox(!getcheckBox)
-    console.log(getOption)
   }
   function handleSubmit(e) {
     var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
@@ -126,7 +127,7 @@ function Productcheckout() {
     }
     if (flag) {
       // TO DO ORDER 
-      if (getOption === 1){
+      if (getOption === 1) {
         let accessToken = getDataUser.token
         let config = {
           headers: {
@@ -154,7 +155,7 @@ function Productcheckout() {
       }
     }
   }
-  const handleChangeOption=(e)=>{
+  const handleChangeOption = (e) => {
     setOption(e)
 
   }
@@ -298,42 +299,42 @@ function Productcheckout() {
                         </div>
                         <div id="itemOne" className="collapse show" aria-labelledby="check_payments" data-bs-parent="#PaymentMethodAccordion">
                         </div>
-                      </div>                      
+                      </div>
                       <div className="card" onClick={() => handleChangeOption(2)}>
                         <div className="card-header" id="check_payments4">
-                          <h5 className="title" data-bs-toggle="collapse" data-bs-target="#itemFour" aria-controls="itemTwo" aria-expanded="false">Direct bank transfer</h5>
+                          <h5 className="title" data-bs-toggle="collapse" data-bs-target="#itemFour" aria-controls="itemTwo" aria-expanded="false" >Direct bank transfer</h5>
                         </div>
-                          {getOption === 2 ?
-                                                  <PayPalButtons style={{
-                                                    color: "silver",
-                                                    layout: "horizontal",
-                                                    height: 48,
-                                                    tagline: false,
-                                                    shape: "pill",
-                                                  }}
-                                                  createOrder={(data, actions) => {
-                                                  return actions.order.create({
-                                                    purchase_units: [
-                                                      {
-                                                        description: "Purchase from your website",
-                                                        amount: {
-                                                          value: (location.state.gettong1 / +23000).toFixed(2),
-                                                        },
-                                                      },
-                                                    ],
-                                                  })
-                                                }}
-                                                onApprove={async (data, actions) => {
-                                                  const order = await actions.order.capture();
-                                                  setpaypal(true)
-                                                  console.log(order)
-                                                  toast.success("Thanh toán thành công");
-                                                }}
-                                                onCancel={() => {}}
-                                                onError={() => {
-                                                }}
-                                                 />: ""
-                                                 }
+                        {getOption === 2 ?
+                          <PayPalButtons style={{
+                            color: "silver",
+                            layout: "horizontal",
+                            height: 48,
+                            tagline: false,
+                            shape: "pill",
+                          }}
+                            createOrder={(data, actions) => {
+                              return actions.order.create({
+                                purchase_units: [
+                                  {
+                                    description: "Purchase from your website",
+                                    amount: {
+                                      value: (location.state.gettong1 / +23000).toFixed(2),
+                                    },
+                                  },
+                                ],
+                              })
+                            }}
+                            onApprove={async (data, actions) => {
+                              const order = await actions.order.capture();
+                              setpaypal(true)
+                              console.log(order)
+                              toast.success("Thanh toán thành công");
+                            }}
+                            onCancel={() => { }}
+                            onError={() => {
+                            }}
+                          /> : ""
+                        }
                         <div id="itemFour" className="collapse" aria-labelledby="check_payments4" data-bs-parent="#PaymentMethodAccordion">
                         </div>
                       </div>
