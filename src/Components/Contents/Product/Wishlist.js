@@ -8,10 +8,22 @@ function Wishlist(){
   const [getItem, setItem] = useState("")
   const { getCart, setCart } = useContext(UserContext)
   const handleRemove=(e)=>{
-    console.log(e.target.id)
     const data ={
       pid: e.target.id
     }
+    let accessToken = getDataUser.token
+    let config = {
+          headers: {
+            'token': 'bearer' + accessToken
+          }
+    }
+    axios.delete("http://localhost:8000/users/wish-list",data,config)
+      .then(response => {
+        console.log(response)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
   }
   useEffect(() => {
     window.scrollTo(0, 0)
