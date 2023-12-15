@@ -3,21 +3,18 @@ import { useContext, useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { toast } from "react-toastify"
 import { UserContext } from "../../../UserContext"
-function Wishlist(){
+function Wishlist() {
   const [getWishlist, setWishlist] = useState("")
   const [getItem, setItem] = useState("")
   const { getCart, setCart } = useContext(UserContext)
-  const handleRemove=(e)=>{
-    const data ={
-      pid: e.target.id
-    }
+  const handleRemove = (e) => {
     let accessToken = getDataUser.token
     let config = {
-          headers: {
-            'token': 'bearer' + accessToken
-          }
+      headers: {
+        'token': 'bearer' + accessToken
+      }
     }
-    axios.delete("http://localhost:8000/users/wish-list",data,config)
+    axios.delete(`http://localhost:8000/users/wish-list/${e.target.id}`, config)
       .then(response => {
         console.log(response)
       })
@@ -29,19 +26,19 @@ function Wishlist(){
     window.scrollTo(0, 0)
     const getDataUser = JSON.parse(localStorage.getItem("User"))
     let accessToken = getDataUser.token
-        let config = {
-          headers: {
-            'token': 'bearer ' + accessToken,
-          }
-        }
-    axios.get("http://localhost:8000/users/wish-list",config)
+    let config = {
+      headers: {
+        'token': 'bearer ' + accessToken,
+      }
+    }
+    axios.get("http://localhost:8000/users/wish-list", config)
       .then(response => {
         setWishlist(response.data.mess.wishlist)
       })
       .catch(function (error) {
         console.log(error)
       })
-      axios.get("http://localhost:8000/products")
+    axios.get("http://localhost:8000/products")
       .then(response => {
         setItem(response.data.mess)
       })
@@ -50,41 +47,41 @@ function Wishlist(){
       })
   }, [])
   const getDataUser = JSON.parse(localStorage.getItem("User"))
-  function fetchDatwishlist(){
-    if(getWishlist?.length>0){
-      return getWishlist?.map((value,key)=>{
-        if(getItem.length>0){
-          return getItem?.map((value1,key1)=>{
-            if(value._id === value1._id){
-              return(
+  function fetchDatwishlist() {
+    if (getWishlist?.length > 0) {
+      return getWishlist?.map((value, key) => {
+        if (getItem.length > 0) {
+          return getItem?.map((value1, key1) => {
+            if (value._id === value1._id) {
+              return (
                 <tr className="tbody-item">
-                <td className="product-remove">
-                  <a className="remove" onClick={handleRemove} id ={""+value._id}>×</a>
-                </td>
-                <td className="product-thumbnail">
-                  <div className="thumb">
+                  <td className="product-remove">
+                    <a className="remove" onClick={handleRemove} id={"" + value._id}>×</a>
+                  </td>
+                  <td className="product-thumbnail">
+                    <div className="thumb">
+                      <Link to={`/product-details/${value1._id}`}>
+                        <a>
+                          <img src={"" + value1.image} style={{ width: "68", height: "84" }} width={68} height={84} alt="Image-HasTech" />
+                        </a>
+                      </Link>
+                    </div>
+                  </td>
+                  <td className="product-name">
                     <Link to={`/product-details/${value1._id}`}>
-                    <a>
-                      <img src={"" + value1.image} style={{ width: "68", height: "84" }} width={68} height={84} alt="Image-HasTech" />
-                    </a>
+                      <a className="title" href="single-product.html">{value1.title}</a>
                     </Link>
-                  </div>
-                </td>
-                <td className="product-name">
-                  <Link to={`/product-details/${value1._id}`}>
-                    <a className="title" href="single-product.html">{value1.title}</a>
-                  </Link>
-                </td>
-                <td className="product-price">
-                  <span className="price">{value1.price}</span>
-                </td>
-                <td className="product-stock-status">
-                  <span className="wishlist-in-stock">{value1.quantity > 0 ? "In Stock" : "Hết Hàng"}</span>
-                </td>
-                <td className="product-add-to-cart">
-                  <a className="btn-shop-cart" id={value._id} onClick={handleClick}>Add to Cart</a>
-                </td>
-              </tr>
+                  </td>
+                  <td className="product-price">
+                    <span className="price">{value1.price}</span>
+                  </td>
+                  <td className="product-stock-status">
+                    <span className="wishlist-in-stock">{value1.quantity > 0 ? "In Stock" : "Hết Hàng"}</span>
+                  </td>
+                  <td className="product-add-to-cart">
+                    <a className="btn-shop-cart" id={value._id} onClick={handleClick}>Add to Cart</a>
+                  </td>
+                </tr>
               )
             }
           })
@@ -116,8 +113,8 @@ function Wishlist(){
       toast.error("Vui lòng đăng nhập")
     }
   }
-    return(
-        <>
+  return (
+    <>
       {/*== Start Wishlist Area Wrapper ==*/}
       <section className="section-space">
         <div className="container">
@@ -135,7 +132,7 @@ function Wishlist(){
                   </tr>
                 </thead>
                 <tbody>
-                {fetchDatwishlist()}
+                  {fetchDatwishlist()}
                 </tbody>
               </table>
             </form>
@@ -143,7 +140,7 @@ function Wishlist(){
         </div>
       </section>
       {/*== End Wishlist Area Wrapper ==*/}
-        </>
-    )
+    </>
+  )
 }
 export default Wishlist
