@@ -19,6 +19,7 @@ function App(props) {
   const [getpageKey,setpageKey] = useState("")
   const [gettotalorder,settotalorder] = useState("")
   const [loading, setLoading] = useState(false)
+  const [refresh, setrefresh] = useState(false)
   const initialOptions = {
     clientId:"AUiz_-HyipJfmSMuQWlpURDajkySVzuQYjdm_xsEZ8chn0VThOm7HyBILax88CVxn9Ht2pzqRpsRnbOo",
     currency: "USD",
@@ -36,7 +37,8 @@ function App(props) {
         getvalueaorefresh,setvalueaorefresh,
         getpageKey,setpageKey,
         gettotalorder,settotalorder,
-        loading, setLoading}}>
+        loading, setLoading,
+        refresh, setrefresh}}>
           <Header/>
             <main class="main-content">
               {props.children}

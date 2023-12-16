@@ -17,7 +17,6 @@ function Productdetails() {
   let getDataUser = JSON.parse(localStorage.getItem("User"))
   const location = useLocation()
   const [getAllItem,setAllItem] = useState([])
-  console.log(location.state.data)
   const onChancequantity = (e) => {
     setquantity(e.target.value)
     if (e.target.value <= 1) {
@@ -25,26 +24,30 @@ function Productdetails() {
     }
   }
   const handleClick = (id) => {
-    if (getDataUser != null) {
-      let main = {}
-      let nameInput = id
-      let value = +getquantity
-      let test1 = localStorage.getItem("CartItem")
-      setid(nameInput)
-      if (test1) {
-        main = JSON.parse(test1)
-        for (var key in main) {
-          if (nameInput == key) {
-            value = main[nameInput] + +value
-            localStorage.setItem("CartItem", JSON.stringify(main))
+    if (product.quantity >0){
+      if (getDataUser != null) {
+        let main = {}
+        let nameInput = id
+        let value = +getquantity
+        let test1 = localStorage.getItem("CartItem")
+        setid(nameInput)
+        if (test1) {
+          main = JSON.parse(test1)
+          for (var key in main) {
+            if (nameInput == key) {
+              value = main[nameInput] + +value
+              localStorage.setItem("CartItem", JSON.stringify(main))
+            }
           }
         }
+        main[nameInput] = value
+        localStorage.setItem("CartItem", JSON.stringify(main))
+        setCart(main)
+      } else {
+        toast.error("Vui lòng đăng nhập")
       }
-      main[nameInput] = value
-      localStorage.setItem("CartItem", JSON.stringify(main))
-      setCart(main)
-    } else {
-      toast.error("Vui lòng đăng nhập")
+    }else{
+      toast.error("Sản phẩm này đã hết")
     }
   }
   useEffect(() => {

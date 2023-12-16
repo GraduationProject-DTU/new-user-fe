@@ -473,7 +473,7 @@ function ProductFilter() {
               category?.map((e, i) => (
                 <div className="col-6 col-lg-4 col-lg-2 col-xl-2">
                   <Link to={"/product/filter/" + e.title} state={{ data: e.title }}>
-                    <a id={"" + e.title} className="product-category-item" style={{ backgroundColor: "" + (location.state.data == e.title ? "blue" : "") }} >
+                    <a id={"" + e.title} className="product-category-item" style={{ backgroundColor: "" + (location.state.data == e.title ? "rgb(239 105 105)" : "") }} >
                       <img className="icon" src={`/assets/images/shop/category/${i + 1}.webp`} width={70} height={80} alt="Image-HasTech" />
                       <h3 className="title">{e.title}</h3>
                       {/* <span className="flag-new"></span> */}

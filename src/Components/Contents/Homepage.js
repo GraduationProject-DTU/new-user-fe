@@ -70,28 +70,33 @@ function Homepage() {
 
       })
   }, [getvalueaorefresh])
-  const handleClick = (id) => {
-    if (getDataUser != null) {
-      let main = {}
-      let nameInput = id
-      let value = 1
-      let test1 = localStorage.getItem("CartItem")
-      setid(nameInput)
-      if (test1) {
-        main = JSON.parse(test1)
-        for (var key in main) {
-          const getqty = main[key]
-          if (nameInput == key) {
-            value = main[nameInput] + 1
-            localStorage.setItem("CartItem", JSON.stringify(main))
+  const handleClick = (e) => {
+    console.log(e)
+    if (e.quantity >0){
+      if (getDataUser != null) {
+        let main = {}
+        let nameInput = e._id
+        let value = 1
+        let test1 = localStorage.getItem("CartItem")
+        setid(nameInput)
+        if (test1) {
+          main = JSON.parse(test1)
+          for (var key in main) {
+            const getqty = main[key]
+            if (nameInput == key) {
+              value = main[nameInput] + 1
+              localStorage.setItem("CartItem", JSON.stringify(main))
+            }
           }
         }
+        main[nameInput] = value
+        localStorage.setItem("CartItem", JSON.stringify(main))
+        setCart(main)
+      } else {
+        toast.error("Vui lòng đăng nhập")
       }
-      main[nameInput] = value
-      localStorage.setItem("CartItem", JSON.stringify(main))
-      setCart(main)
-    } else {
-      toast.error("Vui lòng đăng nhập")
+    }else{
+      toast.error("Sản phẩm này đã hết")
     }
   }
   const handleClicklarge = (id) => {
@@ -137,7 +142,7 @@ function Homepage() {
                     <button id={value._id} onClick={() => handleClicklarge(value._id)} type="button" className="product-action-btn action-btn-quick-view" data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
                       <i className="fa fa-expand" />
                     </button>
-                    <button id={value._id} onClick={() => handleClick(value._id)} type="button" className="product-action-btn action-btn-cart" data-bs-toggle={getDataUser ? "modal" : ""} data-bs-target="#action-CartAddModal">
+                    <button id={value._id} onClick={() => handleClick(value)} type="button" className="product-action-btn action-btn-cart" data-bs-toggle={getDataUser ? "modal" : ""} data-bs-target="#action-CartAddModal">
                       <span>Add to cart</span>
                     </button>
                     <button id={value._id} onClick={() => handleclickwishlist(value._id)} type="button" className="product-action-btn action-btn-wishlist" data-bs-toggle="" data-bs-target="#action-WishlistModal">
@@ -225,7 +230,7 @@ function Homepage() {
                         <button id={value._id} onClick={() => handleClicklarge(value._id)} type="button" className="product-action-btn action-btn-quick-view" data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
                           <i className="fa fa-expand" />
                         </button>
-                        <button id={value._id} onClick={() => handleClick(value._id)} type="button" className="product-action-btn action-btn-cart" data-bs-toggle={getDataUser ? "modal" : ""} data-bs-target="#action-CartAddModal">
+                        <button id={value._id} onClick={() => handleClick(value)} type="button" className="product-action-btn action-btn-cart" data-bs-toggle={getDataUser ? "modal" : ""} data-bs-target="#action-CartAddModal">
                           <span>Add to cart</span>
                         </button>
                         <button id={value._id} onClick={() => handleclickwishlist(value._id)} type="button" className="product-action-btn action-btn-wishlist" data-bs-toggle="" data-bs-target="#action-WishlistModal">
@@ -354,7 +359,7 @@ function Homepage() {
                         {/* <span className="price-old">300.00</span> */}
                       </div>
                       <div className="product-action">
-                        <button id={value._id} onClick={() => handleClick(value._id)} type="button" className="product-action-btn action-btn-cart" data-bs-toggle={getDataUser ? "modal" : ""} data-bs-target="#action-CartAddModal">
+                        <button id={value._id} onClick={() => handleClick(value)} type="button" className="product-action-btn action-btn-cart" data-bs-toggle={getDataUser ? "modal" : ""} data-bs-target="#action-CartAddModal">
                           <span>Add to cart</span>
                         </button>
                         <button id={value._id} onClick={() => handleClicklarge(value._id)} type="button" className="product-action-btn action-btn-quick-view" data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">

@@ -1,6 +1,8 @@
-import { Link } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 function Header() {
   const getDataUser = JSON.parse(localStorage.getItem("User"))
+  const params = useParams()
+  console.log(params)
   function Account(){
     if(getDataUser){
       return(
