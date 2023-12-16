@@ -176,11 +176,12 @@ function Productdetails() {
                   </div>
                   <button type="button" className="product-review-show">{product.brand}</button>
                   <button style={{ marginLeft: '32px' }} type="button" className="product-review-show">Đã bán {product.sold}</button>
+                  <button style={{ marginLeft: '32px' }} type="button" className="product-review-show">Số lượng {product.quantity}</button>
                 </div>
 
                 <div className="product-details-pro-qty">
                   <div className="pro-qty">
-                    <input type="number" title="Quantity" defaultValue={1} onChange={onChancequantity} min={1} />
+                    <input type="number" title="Quantity" defaultValue={1} onChange={onChancequantity} min={1} max={product?.quantity} />
                   </div>
                 </div>
                 <div className="product-details-shipping-cost">
@@ -191,7 +192,7 @@ function Productdetails() {
                 <div className="product-details-action">
                   <h4 style={{ color: 'rgb(239,84,53)' }} className="price">₫{Intl.NumberFormat().format(product.price * getquantity)}</h4>
                   <div className="product-details-cart-wishlist">
-                    <button id={product._id} onClick={() => handleclickwishlist(product._id)} type="button" className="btn-wishlist" data-bs-toggle={getDataUser && getidwishlist ? "modal" : ""} data-bs-target="#action-WishlistModal"><i className="fa fa-heart-o" /></button>
+                    <button id={product._id} onClick={() => handleclickwishlist(product._id)} type="button" className="btn-wishlist" data-bs-toggle="" data-bs-target="#action-WishlistModal"><i className="fa fa-heart-o" /></button>
                     <button id={product._id} onClick={() => handleClick(product._id)} type="button" className="btn" data-bs-toggle={getDataUser ? "modal" : ""} data-bs-target="#action-CartAddModal">Add to cart</button>
                   </div>
                 </div>

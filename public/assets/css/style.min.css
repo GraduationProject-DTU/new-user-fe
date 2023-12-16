@@ -58,3 +58,6 @@ input[type="file"]::file-selector-button {
     text-align: center;
     padding-bottom: 20px;
   }
+  .quantity-item-cart{
+    font-size: 12px;
+  }

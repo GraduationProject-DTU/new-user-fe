@@ -13,11 +13,13 @@ function Productcart() {
   const getDataUser = JSON.parse(localStorage.getItem("User"))
   const { gettotalorder, settotalorder } = useContext(UserContext)
   var gettong1 = 0
+  var gettong2 = 0
   const getMang = []
   useEffect(() => {
     axios.get('http://localhost:8000/coupons')
       .then(res => {
         setCoupon(res.data.coupon)
+        console.log(res)
       })
       .catch(err => {
         console.log(err)
@@ -32,7 +34,10 @@ function Productcart() {
     if (getItem.length > 0) {
       return getItem.map((value1, key) => {
         if (nameInput == value1._id) {
-          if (value <= value1.quantity) {
+          if(value < 1){
+            value = 1
+            toast.error("Số lượng sản phẩm không thể nhỏ hơn 1 ")
+          } else if (value < value1.quantity+1) {
             if (test1) {
               main = JSON.parse(test1)
               for (var key in main) {
@@ -48,7 +53,7 @@ function Productcart() {
           } else {
             value = value1.quantity
             toast.error("Số lượng sản phẩm quá lớn,giới hạn của sản phẩm này là : " + value1.quantity)
-          }
+          }          
         }
       })
     }
@@ -115,6 +120,7 @@ function Productcart() {
     axios.post('http://localhost:8000/coupons/apply-coupon', body, config)
       .then(res => {
         setCouponPrice(res.data.couponPrice)
+        console.log(couponPrice)
       })
       .catch(err => {
         console.log(err)
@@ -135,6 +141,7 @@ function Productcart() {
                   ? gettong1 += gettong - (gettong * couponPrice)
                   : gettong1 += gettong
               }
+              gettong2 += gettong
               settotalorder(gettong1)
               return (
                 <tr className="tbody-item" key={key}>
@@ -154,14 +161,15 @@ function Productcart() {
                     <Link to={"/product-details/" + value._id}>
                       <a className="title">{value.title}</a>
                     </Link>
+                    <span className="quantity-item-cart"><i>Số lượng sản phẩm hiện có : {value.quantity}</i></span>
                   </td>
                   <td className="product-price">
-                    <span className="price">{value.price}</span>
+                    <span className="price">{Intl.NumberFormat().format(value.price)}</span>
                   </td>
                   <td className="product-quantity">
                     <div className="pro-qty">
                       {/* <a onClick={decreaseqty} id={value._id} className="cart_quantity_up" href> - </a> */}
-                      <input id={value._id} type="number" className="quantity" title="Quantity" onChange={handleChangeInput} defaultValue={getdataCartItem[key1]} max={value.quantity} />
+                      <input id={value._id} type="number" className="quantity" title="Quantity" onChange={handleChangeInput} defaultValue={getdataCartItem[key1]} max={value.quantity} min={1} />
                       {/* <a onClick={increaseqty} id={value._id} className="cart_quantity_up" href> + </a> */}
                     </div>
                   </td>
@@ -231,30 +239,18 @@ function Productcart() {
                     <tr className="cart-subtotal">
                       <th>Subtotal</th>
                       <td>
-                        <span className="amount">{Intl.NumberFormat().format(gettong1, couponPrice)} VNĐ</span>
+                        <span className="amount">{Intl.NumberFormat().format(gettong2)} VNĐ</span>
                       </td>
                     </tr>
-                    {/* <tr className="shipping-totals">
-                      <th>Shipping</th>
-                      <td>
-                        <ul className="shipping-list">
-                          <li className="radio">
-                            <input type="radio" name="shipping" id="radio1" defaultChecked />
-                            <label htmlFor="radio1">Flat rate: <span>$3.00</span></label>
-                          </li>
-                          <li className="radio">
-                            <input type="radio" name="shipping" id="radio2" />
-                            <label htmlFor="radio2">Free shipping</label>
-                          </li>
-                          <li className="radio">
-                            <input type="radio" name="shipping" id="radio3" />
-                            <label htmlFor="radio3">Local pickup</label>
-                          </li>
-                        </ul>
-                        <p className="destination">Shipping to <strong>USA</strong>.</p>
-                        <a href="javascript:void(0)" className="btn-shipping-address">Change address</a>
-                      </td>
-                    </tr> */}
+                    {couponPrice? 
+                    <tr className="cart-coupon">
+                        <th>Coupon</th>
+                        <td>
+                          <span className="amount">{Intl.NumberFormat().format(couponPrice*100)} %</span>
+                        </td>
+                    </tr>
+                        : ""
+                    }
                     <tr className="order-total">
                       <th>Total</th>
                       <td>

@@ -34,10 +34,17 @@ function Product() {
     setLoading(true)
       axios.post("http://localhost:8000/products/find-image", formData)
       .then(response => {
-        setProducts(response.data.product)
-        setLoading(false)
-      }).catch(err => {
-        console.log(err)
+        if (!response.data.mess){
+          console.log(response)
+          setProducts(response.data.product)
+          setLoading(false)
+        }else{
+          toast.error("Không tồn tại sản phẩm")
+          setLoading(false)
+          setPage("")
+        }
+      }).catch(function (error) {
+        console.log(error)
       })
   }
   const handleClicklarge = (id) => {
@@ -71,35 +78,39 @@ function Product() {
     }
   }
   const handleClick = (id) => {
-    let main = {}
-    let nameInput = id
-    let value = 1
-    let test1 = localStorage.getItem("CartItem")
-    setid(nameInput)
-    if (test1) {
-      main = JSON.parse(test1)
-      for (var key in main) {
-        const getqty = main[key]
-        if (nameInput == key) {
-          value = main[nameInput] + 1
-          localStorage.setItem("CartItem", JSON.stringify(main))
+    if (getDataUser != null) {
+      let main = {}
+      let nameInput = id
+      let value = 1
+      let test1 = localStorage.getItem("CartItem")
+      setid(nameInput)
+      if (test1) {
+        main = JSON.parse(test1)
+        for (var key in main) {
+          const getqty = main[key]
+          if (nameInput == key) {
+            value = main[nameInput] + 1
+            localStorage.setItem("CartItem", JSON.stringify(main))
+          }
         }
       }
+      main[nameInput] = value
+      localStorage.setItem("CartItem", JSON.stringify(main))
+      setCart(main)
+    } else {
+      toast.error("Vui lòng đăng nhập")
     }
-    main[nameInput] = value
-    localStorage.setItem("CartItem", JSON.stringify(main))
-    setCart(main)
   }
   useEffect(() => {
     try {
       window.scrollTo(0, 0)
-      if(getPage  === ""){
-        axios.get(`http://localhost:8000/products?page=${getselected}`)
-        .then(res => {
-          setProducts(res.data.mess)
-          settotalpage(res.data.pageTotal)
-        })
-      }else{
+        if(getPage  === ""){
+          axios.get(`http://localhost:8000/products?page=${getselected}`)
+          .then(res => {
+            setProducts(res.data.mess)
+            settotalpage(res.data.pageTotal)
+          })
+        }else{
         if (getPage === "3"){
           axios.get(`http://localhost:8000/products?sort=title&type=asc&page=${getselected}`)
           .then(res => {
@@ -346,7 +357,7 @@ function Product() {
               </div>
             </div>
             <div className="col-md-7">
-              <h5 className="showing-pagination-results mt-5 mt-md-9 text-center text-md-end">Showing {products.length} Results</h5>
+              <h5 className="showing-pagination-results mt-5 mt-md-9 text-center text-md-end">Showing {products?.length} Results</h5>
             </div>
           </div>
         </div>
@@ -445,7 +456,7 @@ function Product() {
                         <button id={e._id} onClick={() => handleClick(e._id)} type="button" className="product-action-btn action-btn-cart" data-bs-toggle={getDataUser ? "modal" : ""} data-bs-target="#action-CartAddModal">
                           <span>Add to cart</span>
                         </button>
-                        <button id={e._id} onClick={() => handleclickwishlist(e._id)} type="button" className="product-action-btn action-btn-wishlist" data-bs-toggle={getDataUser && getidwishlist ? "modal" : ""} data-bs-target="#action-WishlistModal">
+                        <button id={e._id} onClick={() => handleclickwishlist(e._id)} type="button" className="product-action-btn action-btn-wishlist" data-bs-toggle="" data-bs-target="#action-WishlistModal">
                           <i className="fa fa-heart-o" />
                         </button>
                       </div>
