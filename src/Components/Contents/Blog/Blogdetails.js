@@ -19,9 +19,12 @@ function Blogdetails(props) {
   const [dislike, setdislike] = useState(false)
   let params = useParams()
   const getDataUser = JSON.parse(localStorage.getItem("User"))
-  console.log(getdata1)
+
   useEffect(() => {
     window.scrollTo(0, 0)
+  }, [])
+
+  useEffect(() => {
     axios.get(`http://localhost:8000/blogs`)
       .then(response => {
         settotalblog(response.data.blogs)

@@ -16,7 +16,7 @@ function Productdetails() {
   const [getquantity, setquantity] = useState(1)
   let getDataUser = JSON.parse(localStorage.getItem("User"))
   const location = useLocation()
-  const [getAllItem,setAllItem] = useState([])
+  const [getAllItem, setAllItem] = useState([])
   const onChancequantity = (e) => {
     setquantity(e.target.value)
     if (e.target.value <= 1) {
@@ -24,7 +24,7 @@ function Productdetails() {
     }
   }
   const handleClick = (id) => {
-    if (product.quantity >0){
+    if (product.quantity > 0) {
       if (getDataUser != null) {
         let main = {}
         let nameInput = id
@@ -46,13 +46,16 @@ function Productdetails() {
       } else {
         toast.error("Vui lòng đăng nhập")
       }
-    }else{
+    } else {
       toast.error("Sản phẩm này đã hết")
     }
   }
   useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
+  useEffect(() => {
     try {
-      window.scrollTo(0, 0)
       axios.get('http://localhost:8000/products/' + params.id)
         .then(res => {
           setProduct(res.data.product)
@@ -76,7 +79,7 @@ function Productdetails() {
         .catch(err => {
           console.log('catch log', err)
         })
-        axios.get('http://localhost:8000/products/' + params.id)
+      axios.get('http://localhost:8000/products/' + params.id)
         .then(res => {
           setProduct(res.data.product)
         })
@@ -90,24 +93,24 @@ function Productdetails() {
   const handleclickwishlist = (id) => {
     if (getDataUser != null) {
       let accessToken = getDataUser.token
-        let config = {
-          headers: {
-            'token': 'bearer ' + accessToken,
-          }
+      let config = {
+        headers: {
+          'token': 'bearer ' + accessToken,
         }
-        const data ={
-          pid: id
-        }
-        
-      axios.post("http://localhost:8000/users/wish-list",data,config)
-      .then(res => {
-        setidwishlist(id)
-        toast.success("Thêm sản phẩm thành công")
-      })
-      .catch(function (error) {
-        toast.error("Bạn đã thêm sản phẩm này")
-        setidwishlist("")
-      })
+      }
+      const data = {
+        pid: id
+      }
+
+      axios.post("http://localhost:8000/users/wish-list", data, config)
+        .then(res => {
+          setidwishlist(id)
+          toast.success("Thêm sản phẩm thành công")
+        })
+        .catch(function (error) {
+          toast.error("Bạn đã thêm sản phẩm này")
+          setidwishlist("")
+        })
     } else {
       toast.error("Vui lòng đăng nhập")
     }
@@ -316,7 +319,7 @@ function Productdetails() {
                       <div key={i} style={{ width: '370px' }} className="swiper mb-10">
                         <div className="product-item product-st2-item">
                           <div className="product-thumb">
-                            <Link to={"/product-details/" + e._id} state={{data: e.category.title}}>
+                            <Link to={"/product-details/" + e._id} state={{ data: e.category.title }}>
                               <a className="d-block">
                                 <img src={e.image} style={{ height: '400px' }} width={370} height={450} alt="Image-HasTech" />
                               </a>
