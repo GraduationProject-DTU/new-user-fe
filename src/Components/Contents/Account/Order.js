@@ -12,13 +12,6 @@ function Orderpage(props){
     var gettong1 = 0
     gettong1 = location.state.data.total
     useEffect(() => {
-            axios.get("http://localhost:8000/products")
-            .then(response => {
-                setItem(response.data.mess)
-            })
-            .catch(function (error) {
-                console.log(error)
-            })
         const getDataUser = JSON.parse(localStorage.getItem("User"))
         let accessToken = getDataUser.token
         let config = {
@@ -28,59 +21,59 @@ function Orderpage(props){
         }
             axios.get("http://localhost:8000/orders",config)
             .then(response => {
-            setOrders(response.data.order)
+            const result = response.data.order.filter(e => (e.codeBill.includes(location.state.data.codeBill)))
+            setOrders(result)
             })
             .catch(function (error) {
             console.log(error)
             })
       }, [])
       function fetchData(){
-        if(getItem.length>0){
-            return getItem.map((value,key)=>{
-                if(location.state.data.products.length>0){
-                    return location.state.data.products.map((value1,key1)=>{
-                        if(value._id == value1.product._id){
-                            const gettong = parseInt( value1.quatity * value.price)
-                            return (
-                                <tr className="tbody-item" key={key}>
-                                  <td className="product-remove">
-                                    <span className="number_order">{key1+1}
-                                    </span>
-                                  </td>
-                                  <td className="product-thumbnail">
-                                    <div className="thumb">
-                                      <Link to={"/product-details/" + value._id}>
-                                        <a>
-                                          <img src={"" + value.image} style={{ width: "68px", height: "84px" }} width={68} height={84} alt="Image-HasTech" />
-                                        </a>
-                                      </Link>
-                                    </div>
-                                  </td>
-                                  <td className="product-name">
-                                    <Link to={"/product-details/" + value._id}>
-                                      <a className="title">{value.title}</a>
-                                    </Link>
-                                  </td>
-                                  <td className="product-price">
-                                    <span className="price">{Intl.NumberFormat().format(value.price)}</span>
-                                  </td>
-                                  <td className="product-quantity">
-                                    <div className="pro-qty">
-                                      {/* <a onClick={decreaseqty} id={value._id} className="cart_quantity_up" href> - </a> */}
-                                      <input id={value._id} className="quantity" title="Quantity" value={value1.quatity} readOnly />
-                                      {/* <a onClick={increaseqty} id={value._id} className="cart_quantity_up" href> + </a> */}
-                                    </div>
-                                  </td>
-                                  <td className="product-subtotal">
-                                    <span className="price">{Intl.NumberFormat().format(gettong)} VNĐ</span>
-                                  </td>
-                                </tr>
-                              )
-                        }
-                    })
-                }
-            })
-        }
+              if (getOrders.length>0){
+                return getOrders.map((value,key)=>{
+                  console.log(value)
+                  return value.products.map((value1,key1)=>{
+                      const gettong = parseInt(+value1.quatity * value1.product.price)
+                    return (
+                      <tbody>
+                        <tr className="tbody-item"key={key1}>
+                          <td className="product-remove">
+                            <span className="number_order">{key1+1}
+                            </span>
+                          </td>
+                          <td className="product-thumbnail">
+                            <div className="thumb">
+                              <Link to={"/product-details/" + value1.product._id}>
+                                <a>
+                                  <img src={""} style={{ width: "68px", height: "84px" }} width={68} height={84} alt="Image-HasTech" />
+                                </a>
+                              </Link>
+                            </div>
+                          </td>
+                          <td className="product-name">
+                            <Link to={"/product-details/" + value1.product._id}>
+                              <a className="title">{value1.product.title}</a>
+                            </Link>
+                          </td>
+                          <td className="product-price">
+                            <span className="price">{Intl.NumberFormat().format(value1.product.price)} </span>
+                          </td>
+                          <td className="product-quantity">
+                            <div className="pro-qty">
+                              {/* <a onClick={decreaseqty} id={value._id} className="cart_quantity_up" href> - </a> */}
+                              <input id={value._id} className="quantity" title="Quantity" value={value1.quatity} readOnly />
+                              {/* <a onClick={increaseqty} id={value._id} className="cart_quantity_up" href> + </a> */}
+                            </div>
+                          </td>
+                          <td className="product-subtotal">
+                            <span className="price">{Intl.NumberFormat().format(gettong)} VNĐ</span>
+                          </td>
+                        </tr>
+                      </tbody>
+                      )
+                  })
+                })
+              }
       }
       return(
       <section className="section-space">
@@ -98,9 +91,7 @@ function Orderpage(props){
                     <th className="product-subtotal">Total</th>
                   </tr>
                 </thead>
-                <tbody>
                   {fetchData()}
-                </tbody>
               </table>
             </form>
           </div>

@@ -55,6 +55,7 @@ function Myaccount(props) {
     axios.get("http://localhost:8000/orders", config)
       .then(response => {
         const result = response.data.order.filter(e => (e.orderBy.email.includes(getDataUser?.user?.email)))
+        console.log(result)
         setOrders(result)
       })
       .catch(function (error) {
@@ -125,7 +126,8 @@ function Myaccount(props) {
               <td>{key + 1}</td>
               <td>{new Date(value?.updatedAt).toDateString()}</td>
               <td>{value.status}</td>
-              <td>{Intl.NumberFormat().format(value.total)}</td>
+              <td>{Intl.NumberFormat().format(value.total)} VNĐ</td>
+              <td>{value.payments}</td>
               <td><Link to={`/order/${+key + 1}`} state={{ data: value }} ><a className="check-btn sqr-btn ">View</a></Link></td>
             </tr>
           )
@@ -198,6 +200,7 @@ function Myaccount(props) {
                             <th>Date</th>
                             <th>Status</th>
                             <th>Total</th>
+                            <th>Method</th>
                             <th>Action</th>
                           </tr>
                         </thead>
