@@ -31,8 +31,8 @@ function Category({ handleCategory }) {
             <h4 className="blog-widget-title">Popular Categoris</h4>
             <ul className="blog-widget-category">
                 {getItem?.map((e,i)=>(
-                    <Link to={"/blog/filter/"+e.title} state={{data:e.title}}>
-                        <li>
+                    <Link to={"/blog/filter/"+e.title} state={{data:e.title}} key={i}>
+                        <li >
                             <a>{e.title}</a>
                         </li>
                     </Link>

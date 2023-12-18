@@ -304,7 +304,7 @@ function Productcheckout() {
                         <div className="card-header" id="check_payments4">
                           <h5 className="title" data-bs-toggle="collapse" data-bs-target="#itemFour" aria-controls="itemTwo" aria-expanded="false" >Direct bank transfer</h5>
                         </div>
-                        {getOption === 2 ?
+                        {getOption === 2 && getDataUser ?
                           <PayPalButtons style={{
                             color: "silver",
                             layout: "horizontal",
@@ -346,7 +346,10 @@ function Productcheckout() {
                         <label htmlFor="privacy" className="custom-control-label">I have read and agree to the website terms and conditions <span className="required">*</span></label>
                       </div>
                     </div>
-                    <a className="btn-place-order" onClick={handleSubmit} type="submit">Place order</a>
+                    {getOption !== 2 ?
+                      <a className="btn-place-order" onClick={handleSubmit} type="submit">Place order</a> 
+                      : ""
+                    }
                   </div>
                 </div>
               </div>

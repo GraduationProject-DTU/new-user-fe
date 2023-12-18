@@ -98,11 +98,12 @@ function Register(){
         }
           axios.post("http://localhost:8000/auth/register",data)
           .then((res)=>{
-            toast.success("Dang Ky Thanh Cong", {
+            toast.success("Đăng Ký Thành Công", {
               position: toast.POSITION.TOP_RIGHT,
             });
-            // window.location.reload();
-            setvalueaorefresh("ok")
+            setTimeout(() => {
+              window.location.reload()
+            }, 2000);
           })
           .catch((error)=>{
             if(error.response){

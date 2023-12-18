@@ -30,18 +30,21 @@ function Scroll(){
             console.log(error)
         })
   }, [])
-    const handleClick = (id) => {
-      if(getDataUser != null){
+  const handleClick = (e) => {
+    console.log(e.quantity)
+    if (e.quantity > 0){
+      if (getDataUser != null) {
         let main = {}
-        let nameInput = id
-        let value = +getquantity
+        let nameInput = e._id
+        let value = 1
         let test1 = localStorage.getItem("CartItem")
         setid(nameInput)
         if (test1) {
           main = JSON.parse(test1)
           for (var key in main) {
+            const getqty = main[key]
             if (nameInput == key) {
-              value = main[nameInput] + +value
+              value = main[nameInput] + 1
               localStorage.setItem("CartItem", JSON.stringify(main))
             }
           }
@@ -49,10 +52,14 @@ function Scroll(){
         main[nameInput] = value
         localStorage.setItem("CartItem", JSON.stringify(main))
         setCart(main)
-      }else{
+      } else {
         toast.error("Vui lòng đăng nhập")
       }
+    }else{
+      toast.error("Sản phẩm này đã hết")
+      setid("")
     }
+  }
     const deleteItem = (e) => {
       e.preventDefault()
       if(Object.keys(getdataCartItem).length>0){
@@ -66,43 +73,43 @@ function Scroll(){
       }
     }
     function FetchCart(){
-      if(getItem.length>0){
-        return getItem.map((value,key)=>{
-          if(Object.keys(getCart).length>0){
-            return Object.keys(getCart).map((key1,index)=>{
-              if (key1 == value._id ){
-                const gettong = parseInt(getCart[key1] * value.price)
-                gettong1+= gettong
-                return(
-                  <li className="aside-product-list-item" key={key}>
-                  <a href="" id={value._id} onClick={deleteItem} className="remove">×</a>
-                  <a href={"product-details/" + value._id}>
-                    <img src={""+value.image} style={{width:"68px",height:"84px"}} width={68} height={84} alt="Image" />
-                    <span className="product-title">{value.title}</span>
-                  </a>
-                  <span className="product-price">{Intl.NumberFormat().format(getCart[key1])} × {Intl.NumberFormat().format(value.price)}</span>
-                </li>
-                )
-              }
-            })
-          }else if (getdataCartItem != null){
-            return Object.keys(getdataCartItem).map((key2,index2)=>{
-              if (key2 == value._id ){
-                const gettong = parseInt(getdataCartItem[key2] * value.price)
-                gettong1+= gettong
-                return(
-                  <li className="aside-product-list-item" key={key}>
-                  <a href="" id={value._id} onClick={deleteItem} className="remove">×</a>
-                  <a href={"product-details/" + value._id}>
-                    <img src={""+value.image} style={{width:"68px",height:"84px"}} width={68} height={84} alt="Image" />
-                    <span className="product-title">{value.title}</span>
-                  </a>
-                  <span className="product-price">{Intl.NumberFormat().format(getdataCartItem[key2])} × {Intl.NumberFormat().format(value.price)}</span>
-                </li>
-                )
-              }
-            })
-          }
+      if(Object.keys(getCart)){
+        return Object.keys(getCart).map((key1,index)=>{
+          return getItem.map((value,key) =>{
+            if (key1 == value._id ){
+              const gettong = parseInt(getCart[key1] * value.price)
+              gettong1+= gettong
+              return(
+                <li className="aside-product-list-item" key={key}>
+                <a href="" id={value._id} onClick={deleteItem} className="remove">×</a>
+                <a href={"product-details/" + value._id}>
+                  <img src={""+value.image} style={{width:"68px",height:"84px"}} width={68} height={84} alt="Image" />
+                  <span className="product-title">{value.title}</span>
+                </a>
+                <span className="product-price">{Intl.NumberFormat().format(getCart[key1])} × {Intl.NumberFormat().format(value.price)}</span>
+              </li>
+              )
+            }
+          })
+        })
+      }else if (getdataCartItem != null){
+        return Object.keys(getdataCartItem).map((key2,index2)=>{
+          return getItem.map((value,key) => {
+            if (key2 == value._id ){
+              const gettong = parseInt(getdataCartItem[key2] * value.price)
+              gettong1+= gettong
+              return(
+                <li className="aside-product-list-item" key={key}>
+                <a href="" id={value._id} onClick={deleteItem} className="remove">×</a>
+                <a href={"product-details/" + value._id}>
+                  <img src={""+value.image} style={{width:"68px",height:"84px"}} width={68} height={84} alt="Image" />
+                  <span className="product-title">{value.title}</span>
+                </a>
+                <span className="product-price">{Intl.NumberFormat().format(getdataCartItem[key2])} × {Intl.NumberFormat().format(value.price)}</span>
+              </li>
+              )
+            }
+          })
         })
       }
     }
@@ -160,7 +167,7 @@ function Scroll(){
                   <div className="product-details-action">
                     <h4 className="price">{Intl.NumberFormat().format(value3.price * getquantity)}</h4>
                     <div className="product-details-cart-wishlist">
-                      <button id={value3._id} onClick={()=>handleClick(value3._id)} type="button" className="btn" data-bs-toggle={getDataUser ? "modal" : ""} data-bs-target="#action-CartAddModal">Add to cart</button>
+                      <button id={value3._id} onClick={()=>handleClick(value3)} type="button" className="btn" data-bs-toggle={getDataUser && value3.quantity>0 ? "modal" : ""} data-bs-target="#action-CartAddModal">Add to cart</button>
                     </div>
                   </div>
                 </div>

@@ -19,7 +19,6 @@ function Productcart() {
     axios.get('http://localhost:8000/coupons')
       .then(res => {
         setCoupon(res.data.coupon)
-        console.log(res)
       })
       .catch(err => {
         console.log(err)
@@ -120,7 +119,6 @@ function Productcart() {
     axios.post('http://localhost:8000/coupons/apply-coupon', body, config)
       .then(res => {
         setCouponPrice(res.data.couponPrice)
-        console.log(couponPrice)
       })
       .catch(err => {
         console.log(err)

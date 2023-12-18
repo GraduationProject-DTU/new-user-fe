@@ -7,6 +7,36 @@ import { Link } from "react-router-dom"
 import axios from "axios";
 function Myaccount(props) {
   const [getOrders, setOrders] = useState("")
+  const [getRemainPassword, setRemainPassword] = useState("")
+  const [getPassword, setPassword] = useState("")
+  
+  const handleChangePass = (e) => {
+    e.preventDefault()
+    let accessToken = getDataUser?.token
+    const data = {
+      oldPassword : getRemainPassword,
+      newPassword : getPassword
+    }
+    let config = {
+      headers: {
+          'token': 'Bearer ' + accessToken,
+      }
+    }
+    axios.post("http://localhost:8000/auth/change-password", data, config)
+    .then(response => {
+        console.log(response)
+        toast.success(response.data.mess)
+        localStorage.clear()
+        setTimeout(() => {
+          navigate("/account")
+          window.location.reload()
+        }, 3000);
+    })
+    .catch(function (error) {
+      console.log(error)
+      toast.error("Đổi mật khẩu thất bại")
+    })
+  }
   useEffect(() => {
     window.scrollTo(0, 0)
     const getDataUser = JSON.parse(localStorage.getItem("User"))
@@ -16,7 +46,7 @@ function Myaccount(props) {
       lastname: getDataUser?.user?.lastname,
       phone: getDataUser?.user?.phone
     })
-    let accessToken = getDataUser.token
+    let accessToken = getDataUser?.token
     let config = {
       headers: {
         'token': 'bearer ' + accessToken,
@@ -24,7 +54,7 @@ function Myaccount(props) {
     }
     axios.get("http://localhost:8000/orders", config)
       .then(response => {
-        const result = response.data.order.filter(e => (e.orderBy.email.includes(getDataUser.user.email)))
+        const result = response.data.order.filter(e => (e.orderBy.email.includes(getDataUser?.user?.email)))
         setOrders(result)
       })
       .catch(function (error) {
@@ -34,7 +64,6 @@ function Myaccount(props) {
   const { getvalueaorefresh, setvalueaorefresh } = useContext(UserContext)
   const navigate = useNavigate()
   let getDataUser = JSON.parse(localStorage.getItem("User"))
-  console.log(getDataUser.user.role)
   const [inputs, setInputs] = useState({
     email: "",
     password: "",
@@ -89,7 +118,7 @@ function Myaccount(props) {
   function fetchDataOrder() {
     if (getOrders.length > 0) {
       return getOrders.map((value, key) => {
-        if (value?.orderBy?.email == getDataUser.user.email) {
+        if (value?.orderBy?.email == getDataUser?.user?.email) {
           const i = 0
           return (
             <tr key={key}>
@@ -140,7 +169,7 @@ function Myaccount(props) {
                 <button className="nav-link" id="orders-tab" data-bs-toggle="tab" data-bs-target="#orders" type="button" role="tab" aria-controls="orders" aria-selected="false"> Orders</button>
                 <button className="nav-link" id="address-edit-tab" data-bs-toggle="tab" data-bs-target="#address-edit" type="button" role="tab" aria-controls="address-edit" aria-selected="false">Password Change</button>
                 <button className="nav-link" id="account-info-tab" data-bs-toggle="tab" data-bs-target="#account-info" type="button" role="tab" aria-controls="account-info" aria-selected="false">Account Details</button>
-                {getDataUser.user.role === "admin" ?
+                {getDataUser?.user?.role === "admin" ?
                   <button className="nav-link" id="create-blog-tab" onClick={createBlog} >Create Blog</button>
                   : ""}
                 <button className="nav-link" id="wishlist-tab" onClick={onClickwishlist} >Wishlist</button>
@@ -153,7 +182,7 @@ function Myaccount(props) {
                   <div className="myaccount-content">
                     <h3>Dashboard</h3>
                     <div className="welcome">
-                      <p>Hello, <strong>{getDataUser?.user.firstname} {getDataUser?.user?.lastname}</strong> (If Not <strong>{getDataUser?.user.firstname} {getDataUser?.user.lastname} !</strong><a onClick={logout} className="logout"> Logout</a>)</p>
+                      <p>Hello, <strong>{getDataUser?.user?.firstname} {getDataUser?.user?.lastname}</strong> (If Not <strong>{getDataUser?.user?.firstname} {getDataUser?.user?.lastname} !</strong><a onClick={logout} className="logout"> Logout</a>)</p>
                     </div>
                     <p>From your account dashboard. you can easily check &amp; view your recent orders, manage your shipping and billing addresses and edit your password and account details.</p>
                   </div>
@@ -225,16 +254,16 @@ function Myaccount(props) {
                           <div className="col-lg-6">
                             <div className="single-input-item">
                               <label htmlFor="first-name" className="required">Remain password</label>
-                              <input type="password" id="remain-password" onChange={handleInput} />
+                              <input type="password" id="remain-password" value={getRemainPassword} onChange={e => { setRemainPassword(e.target.value) }} />
                             </div>
                             <div className="single-input-item">
                               <label htmlFor="first-name" className="required">New password</label>
-                              <input type="password" id="password" onChange={handleInput} />
+                              <input type="password" id="password" value={getPassword} onChange={e => { setPassword(e.target.value) }} />
                             </div>
                           </div>
                         </div>
                         <div className="single-input-item">
-                          <button className="check-btn sqr-btn">Save Changes</button>
+                          <button className="check-btn sqr-btn" onClick={handleChangePass}>Save Changes</button>
                         </div>
                       </form>
                     </div>
@@ -261,7 +290,7 @@ function Myaccount(props) {
                         </div>
                         <div className="single-input-item">
                           <label htmlFor="display-name" className="required">Display Name</label>
-                          <input type="text" id="display-name" defaultValue={getDataUser?.user.firstname + " " + getDataUser?.user.lastname} readOnly></input>
+                          <input type="text" id="display-name" defaultValue={getDataUser?.user?.firstname + " " + getDataUser?.user?.lastname} readOnly></input>
                         </div>
                         <div className="single-input-item">
                           <label htmlFor="email" className="required">Email Addres</label>

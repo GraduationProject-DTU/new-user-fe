@@ -456,7 +456,7 @@ function Product() {
                         <button id={e._id} onClick={() => handleClicklarge(e._id)} type="button" className="product-action-btn action-btn-quick-view" data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
                           <i className="fa fa-expand" />
                         </button>
-                        <button id={e._id} value={e.quantity} onClick={() => handleClick(e)} type="button" className="product-action-btn action-btn-cart" data-bs-toggle={getDataUser ? "modal" : ""} data-bs-target="#action-CartAddModal">
+                        <button id={e._id} value={e.quantity} onClick={() => handleClick(e)} type="button" className="product-action-btn action-btn-cart" data-bs-toggle={getDataUser && e.quantity>0 ? "modal" : ""} data-bs-target="#action-CartAddModal">
                           <span>Add to cart</span>
                         </button>
                         <button id={e._id} onClick={() => handleclickwishlist(e._id)} type="button" className="product-action-btn action-btn-wishlist" data-bs-toggle="" data-bs-target="#action-WishlistModal">

@@ -39,7 +39,6 @@ function Blog() {
     if (getItem?.length > 0) {
       return getItem?.map((value, key) => {
         const setimage = value.images["0"]
-        console.log(value)
         return (
           <div className="col-sm-6 col-lg-4 col-xl-6 mb-8">
             <div className="post-item">

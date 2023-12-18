@@ -1,10 +1,11 @@
 import axios from "axios"
-import { useContext, useEffect } from "react"
+import { useContext, useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { toast } from "react-toastify"
 import { UserContext } from "../../../UserContext"
 
 function Listcomment(props) {
+    const [comment, setcomment] = useState("")
     const getDataUser = JSON.parse(localStorage.getItem("User"))
     let blog = useParams()
 
@@ -19,6 +20,7 @@ function Listcomment(props) {
         axios.delete(`http://localhost:8000/blogs/comment/${blog.id}/${commentId}`, config)
             .then(res => {
                 toast.success('Xóa Thành Công !')
+                props.getcmt("ok")
             })
             .catch(err => {
                 toast.error('Xóa Thất Bại !')

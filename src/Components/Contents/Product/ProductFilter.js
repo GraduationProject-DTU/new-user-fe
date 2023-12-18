@@ -448,7 +448,7 @@ function ProductFilter() {
               <option value={5}>Price, low to high</option>
               <option value={6}>Price, high to low</option>
             </select>
-            <div className="select-price-range" onChange={e => handleChangePrice(e)} >
+            {/* <div className="select-price-range" onChange={e => handleChangePrice(e)} >
               <h4 className="title" style={{ marginRight: '16px' }}>Pricing</h4>
               <input style={{ width: '100px' }} min={0} max={800000} step={10000} type="range"
                 class="form-range" id="customRange1" onChange={(e) => setValue(e.currentTarget.value)}>
@@ -456,10 +456,11 @@ function ProductFilter() {
               <p style={{ marginLeft: '10px' }}>
                 ₫{value} - ₫{Number(value) + 200000}
               </p>
-            </div>
-            <div className="product-search-widget">
-              <div>
+            </div> */}
+            <div className="product-middle-widget">
+              <div className="product-search-widget">
                 <input type="search" onChange={e => setSearch(e.target.value)} placeholder="Search Here" />
+                <button className="submit-search" type="submit" onClick={handleSearch}><i className="fa fa-search" /></button>
               </div>
             </div>
           </div>

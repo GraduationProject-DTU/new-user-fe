@@ -26,7 +26,7 @@ function BlogFilter(){
           })?.map((value, key) => {
             const setimage = value.images["0"]
             return (
-              <div className="col-sm-6 col-lg-4 col-xl-6 mb-8">
+              <div className="col-sm-6 col-lg-4 col-xl-6 mb-8" key={key}>
                 <div className="post-item">
                   <Link to={`/blog-details/${value?._id}`} id={value._id}>
                     <img src={"" + setimage} style={{ width: "370px", height: "320px" }} id={value._id} alt="Image-HasTech" />
@@ -56,11 +56,10 @@ function BlogFilter(){
       function fetchRecentPost() {
         if (gettotalblog?.length > 0) {
           return gettotalblog?.map((value, key) => {
-            console.log(value)
             const setimage = value.images["0"]
             if (gettotalblog?.length - 3 <= key) {
               return (
-                <div className="blog-widget-single-post">
+                <div className="blog-widget-single-post" key={key}>
                   <Link to={`/blog-details/${value?._id}`}>
                     <a>
                       <img src={"" + setimage} style={{ width: "75px", height: "78px" }} alt="Image-HasTech" />

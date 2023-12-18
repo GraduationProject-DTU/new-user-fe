@@ -45,6 +45,9 @@ function Comment(props) {
                         position: toast.POSITION.TOP_RIGHT,
                     });
                 })
+                .catch(function (error) {
+                    console.log(error)
+                })
 
         }
     }

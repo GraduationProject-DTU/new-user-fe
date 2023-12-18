@@ -19,7 +19,6 @@ function Blogdetails(props) {
   const [dislike, setdislike] = useState(false)
   let params = useParams()
   const getDataUser = JSON.parse(localStorage.getItem("User"))
-
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
@@ -194,7 +193,7 @@ function Blogdetails(props) {
                 </div>
                   {fetchDataNext()}
               </div> */}
-          <Listcomment getComment={getComment} />
+          <Listcomment getComment={getComment} getcmt={getcmt} />
           <Comment idBlog={params.id} getcmt={getcmt} />
         </div>
       </section>

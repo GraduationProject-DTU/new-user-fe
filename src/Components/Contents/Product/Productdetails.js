@@ -59,7 +59,6 @@ function Productdetails() {
       axios.get('http://localhost:8000/products/' + params.id)
         .then(res => {
           setProduct(res.data.product)
-          console.log(res.data.product)
         })
         .catch(err => {
           console.log('catch log', err)
@@ -183,6 +182,7 @@ function Productdetails() {
                   <button type="button" className="product-review-show">{product.brand}</button>
                   <button style={{ marginLeft: '32px' }} type="button" className="product-review-show">Đã bán {product.sold}</button>
                   <button style={{ marginLeft: '32px' }} type="button" className="product-review-show">Số lượng {product.quantity}</button>
+                  <button style={{ marginLeft: '32px' }} type="button" className="product-review-show">Tình trạng : {product.quantity > 0 ? "Còn hàng" : "Hết hàng"}</button>
                 </div>
 
                 <div className="product-details-pro-qty">
