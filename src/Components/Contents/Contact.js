@@ -1,9 +1,32 @@
-import { useEffect } from "react"
+import axios from "axios"
+import { useEffect, useState } from "react"
+import { toast } from "react-toastify"
 
 function Contact() {
+  const [email, setEmail] = useState('')
+  const [text, setText] = useState('')
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const body = {
+      email,
+      text
+    }
+
+    axios.post('http://localhost:8000/users/contact', body)
+      .then(res => {
+        setEmail('')
+        setText('')
+        toast.success(res.data.mess)
+      })
+      .catch(err => {
+        toast.error('Gửi thất bại')
+      })
+  }
+
   return (
     <>
       {/*== Start Contact Area Wrapper ==*/}
@@ -13,36 +36,28 @@ function Contact() {
             <div className="offset-lg-6 col-lg-6">
               <div className="section-title position-relative">
                 <h2 className="title">Get in touch</h2>
-                <p className="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing aliquam, purus sit amet luctus venenatis</p>
+                <p className="m-0">Nếu có vấn đề gì thắc mắc thì làm ơn để lại thông tin dưới đây ! Chúng tôi sẽ sớm liên lạc lại với bạn </p>
                 <div className="line-left-style mt-4 mb-1" />
               </div>
               {/*== Start Contact Form ==*/}
               <div className="contact-form">
-                <form id="contact-form" action="https://whizthemes.com/mail-php/raju/arden/mail.php" method="POST">
+                <form id="contact-form">
                   <div className="row">
                     <div className="col-md-6">
-                      <div className="form-group">
-                        <input className="form-control" type="text" name="con_name" placeholder="First Name" />
-                      </div>
                     </div>
-                    <div className="col-md-6">
+                    <div className="col-12">
                       <div className="form-group">
-                        <input className="form-control" type="text" placeholder="Last Name" />
+                        <input type='email' value={email} onChange={e => { setEmail(e.target.value) }} className="form-control" name="con_email" placeholder="Email address" />
                       </div>
                     </div>
                     <div className="col-12">
                       <div className="form-group">
-                        <input className="form-control" type="email" name="con_email" placeholder="Email address" />
-                      </div>
-                    </div>
-                    <div className="col-12">
-                      <div className="form-group">
-                        <textarea className="form-control" name="con_message" placeholder="Message" defaultValue={""} />
+                        <textarea onChange={e => { setText(e.target.value) }} value={text} className="form-control" required name="con_message" placeholder="Message" defaultValue={""} />
                       </div>
                     </div>
                     <div className="col-12">
                       <div className="form-group mb-0">
-                        <button className="btn btn-sm" type="submit">SUBMIT</button>
+                        <button className="btn btn-sm" onClick={e => handleSubmit(e)}>SUBMIT</button>
                       </div>
                     </div>
                   </div>
