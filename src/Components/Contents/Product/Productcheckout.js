@@ -24,6 +24,7 @@ function Productcheckout() {
     email: "",
     note: ""
   })
+
   useEffect(() => {
     const getDataUser = JSON.parse(localStorage.getItem("User"))
     const getdataCartItem = JSON.parse(localStorage.getItem("CartItem"))
@@ -47,19 +48,20 @@ function Productcheckout() {
           'token': 'bearer ' + accessToken,
         }
       }
-      const body = [];
+      const body = []
+
       for (const key in getdataCartItem) {
         body.push({
           pid: key,
           quatity: getdataCartItem[key],
           address: inputs.street,
+          coupon: location?.state?.couponPrice,
           payment: getOption == 2 && 'Chuyển khoản'
-        });
+        })
       }
 
       axios.post('http://localhost:8000/orders/placeOrders', body, config)
         .then(res => {
-          console.log(res)
           navigate("/")
           setCart("")
           localStorage.removeItem("CartItem")
@@ -139,6 +141,7 @@ function Productcheckout() {
           body.push({
             pid: key,
             quatity: getdataCartItem[key],
+            coupon: location?.state?.couponPrice,
             address: inputs.street
           });
         }
@@ -347,7 +350,7 @@ function Productcheckout() {
                       </div>
                     </div>
                     {getOption !== 2 ?
-                      <a className="btn-place-order" onClick={handleSubmit} type="submit">Place order</a> 
+                      <a className="btn-place-order" onClick={handleSubmit} type="submit">Place order</a>
                       : ""
                     }
                   </div>
