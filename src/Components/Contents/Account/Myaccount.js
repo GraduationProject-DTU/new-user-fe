@@ -55,7 +55,6 @@ function Myaccount(props) {
     axios.get("http://localhost:8000/orders", config)
       .then(response => {
         const result = response.data.order.filter(e => (e.orderBy.email.includes(getDataUser?.user?.email)))
-        console.log(result)
         setOrders(result)
       })
       .catch(function (error) {

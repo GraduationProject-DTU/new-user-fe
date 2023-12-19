@@ -38,6 +38,7 @@ function Product() {
           console.log(response)
           setProducts(response.data.product)
           setLoading(false)
+          settotalpage(Math.ceil(response.data.product.length/9))
         }else{
           toast.error("Không tồn tại sản phẩm")
           setLoading(false)
@@ -336,6 +337,7 @@ function Product() {
       .then(res => {
         if (res.data.product != null) {
           setProducts(res.data.product)
+          settotalpage(Math.ceil(res.data.product.length/9))
         } else {
           toast.error("Sản phẩm không tồn tại")
         }
@@ -412,7 +414,7 @@ function Product() {
             {/*== Start Product Category Item ==*/}
             {
               category?.map((e, i) => (
-                <div className="col-6 col-lg-4 col-lg-2 col-xl-2">
+                <div className="col-6 col-lg-4 col-lg-2 col-xl-2" key={i}>
                   <Link to={"/product/filter/" + e.title} state={{ data: e.title }}>
                     <a id={"" + e.title} className="product-category-item">
                       <img className="icon" src={`/assets/images/shop/category/${i + 1}.webp`} width={70} height={80} alt="Image-HasTech" />

@@ -1,19 +1,20 @@
-import { useLocation, useParams } from "react-router-dom"
+import { useLocation, useNavigate, useParams } from "react-router-dom"
 import { useContext, useEffect, useState } from "react"
 import axios from "axios"
+import { toast } from "react-toastify"
 import { Link } from "react-router-dom"
 function Orderpage(props){
     const [getItem, setItem] = useState("")
     const [getOrders,setOrders] = useState("")
     let params = useParams()
+    const navigate = useNavigate()
     let location = useLocation()
-    console.log(location.state.data)
     let getDataUser = JSON.parse(localStorage.getItem("User"))
     var gettong1 = 0
     gettong1 = location.state.data.total
     useEffect(() => {
         const getDataUser = JSON.parse(localStorage.getItem("User"))
-        let accessToken = getDataUser.token
+        let accessToken = getDataUser?.token
         let config = {
                 headers: {
                 'token': 'bearer ' + accessToken,
@@ -28,12 +29,27 @@ function Orderpage(props){
             console.log(error)
             })
       }, [])
+      const handleDelete  = () =>{
+        let accessToken = getDataUser.token
+        let config = {
+                headers: {
+                'token': 'bearer ' + accessToken,
+            }
+        }
+        axios.delete(`http://localhost:8000/orders/${location.state.data._id}`,config)
+        .then(res => {
+          toast.success("Hủy đơn thành công")
+          navigate("/myaccount")
+        })
+        .catch(err => {
+            console.log(err)
+        })
+      }
       function fetchData(){
               if (getOrders.length>0){
                 return getOrders.map((value,key)=>{
-                  console.log(value)
                   return value.products.map((value1,key1)=>{
-                      const gettong = parseInt(+value1.quatity * value1.product.price)
+                    const gettong = parseInt(+value1.quatity * value1.product.price)
                     return (
                       <tbody>
                         <tr className="tbody-item"key={key1}>
@@ -45,7 +61,7 @@ function Orderpage(props){
                             <div className="thumb">
                               <Link to={"/product-details/" + value1.product._id}>
                                 <a>
-                                  <img src={""} style={{ width: "68px", height: "84px" }} width={68} height={84} alt="Image-HasTech" />
+                                  <img src={""+value1.product.image} style={{ width: "68px", height: "84px" }} width={68} height={84} alt="Image-HasTech" />
                                 </a>
                               </Link>
                             </div>
@@ -113,6 +129,12 @@ function Orderpage(props){
                         <span className="amount">{Intl.NumberFormat().format(gettong1)} VNĐ</span>
                       </td>
                     </tr>
+                    <tr className="method-order">
+                      <th>Method</th>
+                      <td>
+                        <span className="amount">{location.state.data.payments}</span>
+                      </td>
+                    </tr>
                     <tr className="status">
                       <th>Status</th>
                       <td>
@@ -123,6 +145,9 @@ function Orderpage(props){
                 </table>
               </div>
             </div>
+          </div>
+          <div className="delete-order-page">
+                  <button className="delete-order" onClick={handleDelete}>Delete Order</button>
           </div>
         </div>
       </section>
