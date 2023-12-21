@@ -19,6 +19,7 @@ function Productcart() {
     axios.get('http://localhost:8000/coupons')
       .then(res => {
         setCoupon(res.data.coupon)
+        console.log(res.data.coupon)
       })
       .catch(err => {
         console.log(err)
