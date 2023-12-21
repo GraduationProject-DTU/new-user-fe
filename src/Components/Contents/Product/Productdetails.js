@@ -82,7 +82,7 @@ function Productdetails() {
       axios.get('http://localhost:8000/products/')
         .then(res => {
           const result = res.data.mess.filter(e => (e.category.title.includes(location.state.data)))
-          setAllItem(result)
+          setAllItem(result.slice(0,3))
         })
         .catch(err => {
           console.log('catch log', err)

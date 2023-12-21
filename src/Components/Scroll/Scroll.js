@@ -55,13 +55,14 @@ function Scroll(){
       console.log(e.quantity)
       if (e.quantity > 0){
         if (getDataUser != null) {
-          let main = {}
-          let nameInput = e._id
-          let value = getquantity
-          let test1 = localStorage.getItem("CartItem")
-          setid(nameInput)
-          if (test1) {
-            main = JSON.parse(test1)
+          if (getquantity <= e.quantity){
+            let main = {}
+            let nameInput = e._id
+            let value = getquantity
+            let test1 = localStorage.getItem("CartItem")
+            setid(nameInput)
+            if (test1) {
+              main = JSON.parse(test1)
             for (var key in main) {
               const getqty = main[key]
               if (nameInput == key) {
@@ -74,6 +75,10 @@ function Scroll(){
           localStorage.setItem("CartItem", JSON.stringify(main))
           setCart(main)
           toast.success("Thêm sản phẩm thành công")
+          }else{
+            console.log("test")
+            toast.error("Quá nhiều sản phẩm")
+          }
         } else {
           toast.error("Vui lòng đăng nhập")
         }
@@ -194,7 +199,7 @@ function Scroll(){
                   <div className="product-details-action">
                     <h4 className="price">{Intl.NumberFormat().format(value3.price * getquantity)}</h4>
                     <div className="product-details-cart-wishlist">
-                      <button id={value3._id} onClick={()=>handleClick(value3)} type="button" className="btn" data-bs-toggle={getDataUser && value3.quantity>0 ? "modal" : ""} data-bs-target="#action-CartAddModal">Add to cart</button>
+                      <button id={value3._id} onClick={()=>handleClick(value3)} type="button" className="btn" data-bs-toggle="" data-bs-target="#action-CartAddModal">Add to cart</button>
                     </div>
                   </div>
                 </div>
