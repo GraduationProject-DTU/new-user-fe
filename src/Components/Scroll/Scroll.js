@@ -12,18 +12,34 @@ function Scroll(){
   const {getidlarge,setidlarge} = useContext(UserContext)
   const {getidwishlist,setidwishlist} = useContext(UserContext)
   var gettong1 = 0
+  const [errors, setErrors] = useState({})
   const [getquantity,setquantity] = useState(1)
   let getDataUser = JSON.parse(localStorage.getItem("User"))
-  const onChancequantity= (e) =>{
-    setquantity(e.target.value)
-    console.log(getItem)
-    if (e.target.value < 1) {
-      setquantity(1)
-      toast.error("Số lượng sản phẩm không thể nhỏ hơn 1")
-    }else if(e.target.value < getItem.quantity){
-      toast.error("Số lượng sản phẩm không thể lớn hơn:"+getItem.quantity)
-      setquantity(+getItem.quantity)
+  function renderError() {
+    if (Object.keys(errors).length > 0) {
+        return Object.keys(errors).map((key, index) => {
+            return (
+                <p key={index}>{errors[key]}</p>
+            )
+        })
     }
+  }
+  const onChancequantity= (e) =>{
+    let quantity = +e.target.value
+    setquantity(e.target.value)
+    let flag = true
+    let errorSubmit = {}
+        if (e.target.value <=0){
+          toast.error("Số lượng sản phẩm không thể nhỏ hơn 1")
+        } else{
+          if (e.target.id > 0){
+            if(quantity > +e.target.id){
+              toast.error("Số lượng sản phẩm không thể lớn hơn : " +quantity)
+            }
+        }else {
+          toast.error("Sản phẩm đã hết")
+        }
+      }
   }
   useEffect(() => {
     axios.get("http://localhost:8000/products")
@@ -41,7 +57,7 @@ function Scroll(){
         if (getDataUser != null) {
           let main = {}
           let nameInput = e._id
-          let value = 1
+          let value = getquantity
           let test1 = localStorage.getItem("CartItem")
           setid(nameInput)
           if (test1) {
@@ -57,6 +73,7 @@ function Scroll(){
           main[nameInput] = value
           localStorage.setItem("CartItem", JSON.stringify(main))
           setCart(main)
+          toast.success("Thêm sản phẩm thành công")
         } else {
           toast.error("Vui lòng đăng nhập")
         }
@@ -144,7 +161,6 @@ function Scroll(){
       if(getItem.length>0){
         return getItem.map((value3,key3)=>{
           if(getidlarge == value3._id){
-            console.log(value3)
             return(
               <div className="row">
               <div className="col-lg-6">
@@ -172,7 +188,7 @@ function Scroll(){
                   <p className="mb-6">{value3.description}</p>
                   <div className="product-details-pro-qty">
                     <div className="pro-qty">
-                      <input type="text" title="Quantity" defaultValue={1} onChange={onChancequantity} min={1} />
+                      <input type="text" title="Quantity" id={""+value3.quantity} defaultValue={1} onChange={onChancequantity} min={1} />
                     </div>
                   </div>
                   <div className="product-details-action">

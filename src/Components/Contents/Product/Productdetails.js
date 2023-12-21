@@ -30,13 +30,6 @@ function Productdetails() {
         toast.error("Sản phẩm đã hết")
       }
     }
-    // else if (e.target.value >product.quantity ){
-    //   toast.error("Số lượng sản phẩm không thể lớn hơn :" +product.quantity)
-    // }
-    // if (product.quantity>0){
-    // } else{
-    //   toast.error("Sản phẩm đã hết")
-    // }
   }
   const handleClick = (id) => {
     if(getquantity >0){
