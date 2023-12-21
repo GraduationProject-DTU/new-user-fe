@@ -8,7 +8,6 @@ function Listcomment(props) {
     const [comment, setcomment] = useState("")
     const getDataUser = JSON.parse(localStorage.getItem("User"))
     let blog = useParams()
-
     const handleDelete = (commentId) => {
         let accessToken = getDataUser.token
         let config = {

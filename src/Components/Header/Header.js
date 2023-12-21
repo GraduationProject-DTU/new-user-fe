@@ -1,7 +1,8 @@
-import { Link, useParams } from "react-router-dom"
+import { Link, useLocation, useParams } from "react-router-dom"
 function Header() {
   const getDataUser = JSON.parse(localStorage.getItem("User"))
   const params = useParams()
+  const location = useLocation()
   function Account(){
     if(getDataUser){
       return(
@@ -48,7 +49,7 @@ function Header() {
           <div className="col-5 col-sm-6 col-lg-3">
             <div className="header-logo">
               <Link to={"/"}>
-              <img className="logo-main" src="/assets/images/logo.webp" width={115} height={88} alt="Logo" />
+              <img className="logo-main" src="/assets/images/logo.webp"  width={115} height={88} alt="Logo" />
               </Link>
             </div>
           </div>
@@ -56,18 +57,18 @@ function Header() {
             <div className="header-navigation">
               <ul className="main-nav justify-content-start">
                 <li><Link to="/">
-                <i class="fa fa-home" aria-hidden="true">Home</i>
+                <i class="fa fa-home" aria-hidden="true" style={{color:"" + (location.pathname === "/" ? "#ff6565" : "")}}>Home</i>
                   </Link></li>
-                <li><Link to="/about"><i class="fa fa-address-card-o" aria-hidden="true">About</i></Link></li>
-                <li><Link to="/product"><i class="fa fa-shopping-basket" aria-hidden="true">Shop</i></Link></li>
-                <li><Link to="/blog"><i class="fa fa-book" aria-hidden="true">Blog</i></Link></li>
-                <li><Link to="/contact"><i class="fa fa-envelope" aria-hidden="true">Contact</i></Link></li>
+                <li><Link to="/about"><i class="fa fa-address-card-o" aria-hidden="true" style={{color:"" + (location.pathname === "/about" ? "#ff6565" : "")}}>About</i></Link></li>
+                <li><Link to="/product"><i class="fa fa-shopping-basket" aria-hidden="true" style={{color:"" + (location.pathname === "/product" ? "#ff6565" : "")}}>Shop</i></Link></li>
+                <li><Link to="/blog"><i class="fa fa-book" aria-hidden="true" style={{color:"" + (location.pathname === "/blog" ? "#ff6565" : "")}}>Blog</i></Link></li>
+                <li><Link to="/contact"><i class="fa fa-envelope" aria-hidden="true" style={{color:"" + (location.pathname === "/contact" ? "#ff6565" : "")}}>Contact</i></Link></li>
               </ul>
             </div>
           </div>
           <div className="col-7 col-sm-6 col-lg-3">
             <div className="header-action justify-content-end">
-              <button className="header-action-btn ms-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#AsideOffcanvasSearch" aria-controls="AsideOffcanvasSearch">
+              {/* <button className="header-action-btn ms-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#AsideOffcanvasSearch" aria-controls="AsideOffcanvasSearch">
                 <span className="icon">
                   <svg width={30} height={30} viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
                     <rect className="icon-rect" width={30} height={30} fill="url(#pattern1)" />
@@ -80,7 +81,7 @@ function Header() {
                     </defs>
                   </svg>
                 </span>
-              </button>
+              </button> */}
               <button className="header-action-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#AsideOffcanvasCart" aria-controls="AsideOffcanvasCart">
                 <span className="icon">
                   <svg width={30} height={30} viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
