@@ -24,7 +24,6 @@ function Productcheckout() {
     email: "",
     note: ""
   })
-
   useEffect(() => {
     const getDataUser = JSON.parse(localStorage.getItem("User"))
     const getdataCartItem = JSON.parse(localStorage.getItem("CartItem"))
@@ -32,7 +31,8 @@ function Productcheckout() {
       email: getDataUser?.user?.email,
       firstname: getDataUser?.user?.firstname,
       lastname: getDataUser?.user?.lastname,
-      phone: getDataUser?.user?.phone
+      phone: getDataUser?.user?.phone,
+      street: getDataUser?.user?.address
     })
     axios.get("http://localhost:8000/products")
       .then(response => {

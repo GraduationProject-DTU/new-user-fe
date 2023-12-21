@@ -92,10 +92,14 @@ function Myaccount(props) {
     }
     axios.put(url, data, config)
       .then(response => {
-        console.log(response)
+        console.log(response.data.data)
         toast.success("Update thông tin thành công", {
           position: toast.POSITION.TOP_RIGHT,
         });
+        const user ={
+          user: response.data.data
+        }
+        localStorage.setItem("User", JSON.stringify(user))
       })
       .catch(function (error) {
         console.log(error)
