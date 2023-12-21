@@ -12,6 +12,7 @@ function Orderpage(props){
     let getDataUser = JSON.parse(localStorage.getItem("User"))
     var gettong1 = 0
     gettong1 = location.state.data.total
+    console.log(location.state.data)
     useEffect(() => {
         const getDataUser = JSON.parse(localStorage.getItem("User"))
         let accessToken = getDataUser?.token
@@ -146,9 +147,11 @@ function Orderpage(props){
               </div>
             </div>
           </div>
-          <div className="delete-order-page">
-                  <button className="delete-order" onClick={handleDelete}>Delete Order</button>
-          </div>
+          {location.state.data.payments === "Thanh Toán Khi Nhận Hàng" && location.state.data.status === "Processing"?
+            <div className="delete-order-page">
+                    <button className="delete-order" onClick={handleDelete}>Cancel Order</button>
+            </div> : ""
+          }
         </div>
       </section>
     )

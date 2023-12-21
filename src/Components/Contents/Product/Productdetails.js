@@ -19,35 +19,58 @@ function Productdetails() {
   const [getAllItem, setAllItem] = useState([])
   const onChancequantity = (e) => {
     setquantity(e.target.value)
-    if (e.target.value <= 1) {
-      setquantity(1)
+    if (e.target.value <0){
+      toast.error("Số lượng sản phẩm không thể nhỏ hơn 1")
+    } else if (e.target.value >=1){
+      if (product.quantity > 0){
+        if(e.target.value > product.quantity){
+          toast.error("Số lượng sản phẩm không thể lớn hơn : " +product.quantity)
+        }
+      }else {
+        toast.error("Sản phẩm đã hết")
+      }
     }
+    // else if (e.target.value >product.quantity ){
+    //   toast.error("Số lượng sản phẩm không thể lớn hơn :" +product.quantity)
+    // }
+    // if (product.quantity>0){
+    // } else{
+    //   toast.error("Sản phẩm đã hết")
+    // }
   }
   const handleClick = (id) => {
-    if (product.quantity > 0) {
-      if (getDataUser != null) {
-        let main = {}
-        let nameInput = id
-        let value = +getquantity
-        let test1 = localStorage.getItem("CartItem")
-        setid(nameInput)
-        if (test1) {
-          main = JSON.parse(test1)
-          for (var key in main) {
-            if (nameInput == key) {
-              value = main[nameInput] + +value
-              localStorage.setItem("CartItem", JSON.stringify(main))
+    if(getquantity >0){
+      if (product.quantity > 0) {
+        if (getDataUser != null) {
+          if (product.quantity < getquantity){
+            toast.error("Số lượng quá nhiều")
+          }else {
+            let main = {}
+            let nameInput = id
+            let value = +getquantity
+            let test1 = localStorage.getItem("CartItem")
+            setid(nameInput)
+            if (test1) {
+              main = JSON.parse(test1)
+              for (var key in main) {
+                if (nameInput == key) {
+                  value = main[nameInput] + +value
+                  localStorage.setItem("CartItem", JSON.stringify(main))
+                }
+              }
             }
+            main[nameInput] = value
+            localStorage.setItem("CartItem", JSON.stringify(main))
+            setCart(main)
           }
+        } else {
+          toast.error("Vui lòng đăng nhập")
         }
-        main[nameInput] = value
-        localStorage.setItem("CartItem", JSON.stringify(main))
-        setCart(main)
       } else {
-        toast.error("Vui lòng đăng nhập")
+        toast.error("Sản phẩm này đã hết")
       }
-    } else {
-      toast.error("Sản phẩm này đã hết")
+    }else{
+      toast.error("Sản phẩm không thể nhỏ hơn 1")
     }
   }
   useEffect(() => {
@@ -199,7 +222,7 @@ function Productdetails() {
                   <h4 style={{ color: 'rgb(239,84,53)' }} className="price">₫{Intl.NumberFormat().format(product.price * getquantity)}</h4>
                   <div className="product-details-cart-wishlist">
                     <button id={product._id} onClick={() => handleclickwishlist(product._id)} type="button" className="btn-wishlist" data-bs-toggle="" data-bs-target="#action-WishlistModal"><i className="fa fa-heart-o" /></button>
-                    <button id={product._id} onClick={() => handleClick(product._id)} type="button" className="btn" data-bs-toggle={getDataUser ? "modal" : ""} data-bs-target="#action-CartAddModal">Add to cart</button>
+                    <button id={product._id} onClick={() => handleClick(product._id)} type="button" className="btn" data-bs-toggle="" data-bs-target="#action-CartAddModal">Add to cart</button>
                   </div>
                 </div>
               </div>

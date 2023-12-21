@@ -16,8 +16,13 @@ function Scroll(){
   let getDataUser = JSON.parse(localStorage.getItem("User"))
   const onChancequantity= (e) =>{
     setquantity(e.target.value)
-    if (e.target.value <=1){
+    console.log(getItem)
+    if (e.target.value < 1) {
       setquantity(1)
+      toast.error("Số lượng sản phẩm không thể nhỏ hơn 1")
+    }else if(e.target.value < getItem.quantity){
+      toast.error("Số lượng sản phẩm không thể lớn hơn:"+getItem.quantity)
+      setquantity(+getItem.quantity)
     }
   }
   useEffect(() => {
@@ -30,36 +35,36 @@ function Scroll(){
             console.log(error)
         })
   }, [])
-  const handleClick = (e) => {
-    console.log(e.quantity)
-    if (e.quantity > 0){
-      if (getDataUser != null) {
-        let main = {}
-        let nameInput = e._id
-        let value = 1
-        let test1 = localStorage.getItem("CartItem")
-        setid(nameInput)
-        if (test1) {
-          main = JSON.parse(test1)
-          for (var key in main) {
-            const getqty = main[key]
-            if (nameInput == key) {
-              value = main[nameInput] + 1
-              localStorage.setItem("CartItem", JSON.stringify(main))
+    const handleClick = (e) => {
+      console.log(e.quantity)
+      if (e.quantity > 0){
+        if (getDataUser != null) {
+          let main = {}
+          let nameInput = e._id
+          let value = 1
+          let test1 = localStorage.getItem("CartItem")
+          setid(nameInput)
+          if (test1) {
+            main = JSON.parse(test1)
+            for (var key in main) {
+              const getqty = main[key]
+              if (nameInput == key) {
+                value = main[nameInput] + 1
+                localStorage.setItem("CartItem", JSON.stringify(main))
+              }
             }
           }
+          main[nameInput] = value
+          localStorage.setItem("CartItem", JSON.stringify(main))
+          setCart(main)
+        } else {
+          toast.error("Vui lòng đăng nhập")
         }
-        main[nameInput] = value
-        localStorage.setItem("CartItem", JSON.stringify(main))
-        setCart(main)
-      } else {
-        toast.error("Vui lòng đăng nhập")
+      }else{
+        toast.error("Sản phẩm này đã hết")
+        setid("")
       }
-    }else{
-      toast.error("Sản phẩm này đã hết")
-      setid("")
     }
-  }
     const deleteItem = (e) => {
       e.preventDefault()
       if(Object.keys(getdataCartItem).length>0){
@@ -73,44 +78,50 @@ function Scroll(){
       }
     }
     function FetchCart(){
-      if(Object.keys(getCart)){
+      if(Object.keys(getCart).length>0){
         return Object.keys(getCart).map((key1,index)=>{
-          return getItem.map((value,key) =>{
-            if (key1 == value._id ){
-              const gettong = parseInt(getCart[key1] * value.price)
-              gettong1+= gettong
-              return(
-                <li className="aside-product-list-item" key={key}>
-                <a href="" id={value._id} onClick={deleteItem} className="remove">×</a>
-                <a href={"product-details/" + value._id}>
-                  <img src={""+value.image} style={{width:"68px",height:"84px"}} width={68} height={84} alt="Image" />
-                  <span className="product-title">{value.title}</span>
-                </a>
-                <span className="product-price">{Intl.NumberFormat().format(getCart[key1])} × {Intl.NumberFormat().format(value.price)}</span>
-              </li>
-              )
-            }
-          })
+          if(getItem?.length>0){
+            return getItem?.map((value,key) =>{
+              if (key1 == value._id ){
+                const gettong = parseInt(getCart[key1] * value.price)
+                gettong1+= gettong
+                return(
+                  <li className="aside-product-list-item" key={key}>
+                  <a href="" id={value._id} onClick={deleteItem} className="remove">×</a>
+                  <a href={"product-details/" + value._id}>
+                    <img src={""+value.image} style={{width:"68px",height:"84px"}} width={68} height={84} alt="Image" />
+                    <span className="product-title">{value.title}</span>
+                  </a>
+                  <span className="product-price">{Intl.NumberFormat().format(getCart[key1])} × {Intl.NumberFormat().format(value.price)}</span>
+                </li>
+                )
+              }
+            })
+          }
         })
       }else if (getdataCartItem != null){
-        return Object.keys(getdataCartItem).map((key2,index2)=>{
-          return getItem.map((value,key) => {
-            if (key2 == value._id ){
-              const gettong = parseInt(getdataCartItem[key2] * value.price)
-              gettong1+= gettong
-              return(
-                <li className="aside-product-list-item" key={key}>
-                <a href="" id={value._id} onClick={deleteItem} className="remove">×</a>
-                <a href={"product-details/" + value._id}>
-                  <img src={""+value.image} style={{width:"68px",height:"84px"}} width={68} height={84} alt="Image" />
-                  <span className="product-title">{value.title}</span>
-                </a>
-                <span className="product-price">{Intl.NumberFormat().format(getdataCartItem[key2])} × {Intl.NumberFormat().format(value.price)}</span>
-              </li>
-              )
+        if(Object.keys(getdataCartItem).length>0){
+          return Object.keys(getdataCartItem).map((key2,index2)=>{
+            if(getItem.length>0){
+            return getItem?.map((value,key) => {
+              if (key2 == value._id ){
+                const gettong = parseInt(getdataCartItem[key2] * value.price)
+                gettong1+= gettong
+                return(
+                  <li className="aside-product-list-item" key={key}>
+                  <a href="" id={value._id} onClick={deleteItem} className="remove">×</a>
+                  <a href={"product-details/" + value._id}>
+                    <img src={""+value.image} style={{width:"68px",height:"84px"}} width={68} height={84} alt="Image" />
+                    <span className="product-title">{value.title}</span>
+                  </a>
+                  <span className="product-price">{Intl.NumberFormat().format(getdataCartItem[key2])} × {Intl.NumberFormat().format(value.price)}</span>
+                </li>
+                )
+              }
+            })
             }
           })
-        })
+        }
       }
     }
     function fetchProduct(){

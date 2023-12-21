@@ -414,7 +414,7 @@ function Product() {
             {/*== Start Product Category Item ==*/}
             {
               category?.map((e, i) => (
-                <div className="col-6 col-lg-4 col-lg-2 col-xl-2" key={i}>
+                <div className="col-6 col-lg-4 col-lg-2 col-xl-2" key={i} style={{marginTop:"20px"}}>
                   <Link to={"/product/filter/" + e.title} state={{ data: e.title }}>
                     <a id={"" + e.title} className="product-category-item">
                       <img className="icon" src={`/assets/images/shop/category/${i + 1}.webp`} width={70} height={80} alt="Image-HasTech" />

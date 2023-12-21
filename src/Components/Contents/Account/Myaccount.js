@@ -44,7 +44,8 @@ function Myaccount(props) {
       email: getDataUser?.user?.email,
       firstname: getDataUser?.user?.firstname,
       lastname: getDataUser?.user?.lastname,
-      phone: getDataUser?.user?.phone
+      phone: getDataUser?.user?.phone,
+      address: getDataUser?.user?.address
     })
     let accessToken = getDataUser?.token
     let config = {
@@ -69,7 +70,8 @@ function Myaccount(props) {
     password: "",
     phone: "",
     firstname: "",
-    lastname: ""
+    lastname: "",
+    address: ""
   })
   const handleSaveChange = (e) => {
     e.preventDefault()
@@ -85,7 +87,8 @@ function Myaccount(props) {
       email: inputs.email,
       firstname: inputs.firstname,
       lastname: inputs.lastname,
-      phone: inputs.phone
+      phone: inputs.phone,
+      address: inputs.address
     }
     axios.put(url, data, config)
       .then(response => {
@@ -296,11 +299,15 @@ function Myaccount(props) {
                         </div>
                         <div className="single-input-item">
                           <label htmlFor="email" className="required">Email Addres</label>
-                          <input type="email" id="email" value={inputs.email} readOnly />
+                          <input type="text" id="email" value={inputs?.email} readOnly />
                         </div>
                         <div className="single-input-item">
-                          <label htmlFor="email" className="required">Phone</label>
-                          <input type="number" name="phone" id="phone" value={inputs.phone} onChange={handleInput} />
+                          <label htmlFor="phone" className="required">Phone</label>
+                          <input type="number" name="phone" id="phone" value={inputs?.phone} onChange={handleInput} />
+                        </div>
+                        <div className="single-input-item">
+                          <label htmlFor="address" className="required">Address</label>
+                          <input type="text" name="address" id="address" defaultValue={inputs?.address} onChange={handleInput} />
                         </div>
                         <div className="single-input-item">
                           <button className="check-btn sqr-btn" onClick={handleSaveChange}>Save Changes</button>
